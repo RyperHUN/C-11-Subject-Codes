@@ -8,46 +8,73 @@
 
 class Ratio {       /* rational number */
 public:
-	Ratio(int num, int den);
-	int num() const { return num_; }
-	int den() const { return den_; }
+	Ratio(int num, int den)
+	{
+		/* Euclidean: gcd -> a */
+		int a = num, b = den, t;
+		while (b != 0)
+			t = a%b, a = b, b = t;
+		_num = num / a;
+		_den = den / a;
+	}
+	int num() const { return _num; }
+	int den() const { return _den; }
 private:
-	int num_;       /* numerator */
-	int den_;       /* denominator */
+	int _num;       /* numerator */
+	int _den;       /* denominator */
 
 public:
 	Ratio operator+(Ratio r1)
 	{
 		return Ratio(
-			num_ * r1.den() + r1.num() * den_,
-			r1.den() * den_);
+			_num * r1.den() + r1.num() * _den,
+			r1.den() * _den);
 	}
 	Ratio& operator+=(Ratio r1)
 	{
 		*this = *this + r1;
 		return *this;
 	}
-	///Egyoperandusu -
-	//Ratio operator-(Ratio r1)
-	//{
-	//	return Ratio(
-	//		num_ * r1.den() + r1.num() * den_,
-	//		r1.den() * den_);
-	//}
+	/// -
+	Ratio operator-(Ratio r1)
+	{
+		return Ratio(
+			_num * r1.den() - r1.num() * _den,
+			r1.den() * _den);
+	}
 	///-=
+	Ratio& operator-=(Ratio r1)
+	{
+		*this = *this - r1;
+		return *this;
+	}
+	///Negalas
+	//Ratio operator-()
+	//{
+	//	return Ratio(-1 * _num, _den);
+	//}
 	///*
 	Ratio operator*(Ratio r1)
 	{
-		return Ratio (num_ * r1.num (), den_ * r1.den ());
+		return Ratio (_num * r1.num (), _den * r1.den ());
 	}
 	///*=
+	Ratio& operator*=(Ratio r1)
+	{
+		*this = *this * r1;
+		return *this;
+	}
 	///  /
 	Ratio operator/(Ratio r1)
 	{
-		return Ratio(num_ * r1.den(), den_ * r1.num());
+		return Ratio(_num * r1.den(), _den * r1.num());
 	}
 	///  /=
-	
+	Ratio& operator/=(Ratio r1)
+	{
+		*this = *this / r1;
+		return *this;
+	}
 
 	friend std::istream &operator>>(std::istream &is, Ratio &r) {
 		int num = 0, den = 0;
@@ -62,24 +89,12 @@ public:
 		os << r.num() << '/' << r.den();
 		return os;
 	}
-
-	/// (double) cast
+	
+	operator double() const 
+	{
+		return (double)_num/_den;
+	}
 };
-
-Ratio::Ratio(int num, int den) {
-	/* Euclidean: gcd -> a */
-	int a = num, b = den, t;
-	while (b != 0)
-		t = a%b, a = b, b = t;
-	num_ = num / a;
-	den_ = den / a;
-}
-
-//Ratio operator+(Ratio r1, Ratio r2) {
-//	return Ratio(
-//		r1.num() * r2.den() + r2.num() * r1.den(),
-//		r1.den() * r2.den());
-//}
 
 int main() {
 	Ratio r1(1, 10);
@@ -96,7 +111,13 @@ int main() {
 	/// Operator += test - Passed
 	Ratio result3 (1, 1); 
 	result3 += r1; //Expecter 11/10
-	
+	Ratio result4(1, 1);
+	Ratio finalResult = r1 + result4 += r1; //Expected 6/5
+	/// Double cast - Passed
+	std::cout << (double)r1 << std::endl; //expected 0.1
+	/// Operator - -  Passed
+	std::cout << r2 - -r1 << std::endl;  //expected 3/5 => Removing 1 operand - still works => 0.6
+
 	Ratio r3 = r1 + r2;
 	std::cout << r1 << '+' << r2 << '=' << r3 << std::endl;
 
