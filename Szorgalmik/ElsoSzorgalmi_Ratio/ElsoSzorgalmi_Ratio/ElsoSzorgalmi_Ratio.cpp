@@ -24,28 +24,30 @@ private:
 	int _den;       /* denominator */
 
 public:
-	Ratio operator+(Ratio r1)
-	{
-		return Ratio(
-			_num * r1.den() + r1.num() * _den,
-			r1.den() * _den);
-	}
+	//Ratio operator+(Ratio r1)
+	//{
+	//	return Ratio(
+	//		_num * r1.den() + r1.num() * _den,
+	//		r1.den() * _den);
+	//}
 	Ratio& operator+=(Ratio r1)
 	{
-		*this = *this + r1;
+		*this = Ratio(_num * r1.den() + r1.num() * _den,
+					  r1.den() * _den);
 		return *this;
 	}
 	/// -
-	Ratio operator-(Ratio r1)
-	{
-		return Ratio(
-			_num * r1.den() - r1.num() * _den,
-			r1.den() * _den);
-	}
+	//Ratio operator-(Ratio r1)
+	//{
+	//	return Ratio(
+	//		_num * r1.den() - r1.num() * _den,
+	//		r1.den() * _den);
+	//}
 	///-=
 	Ratio& operator-=(Ratio r1)
 	{
-		*this = *this - r1;
+		*this = Ratio(_num * r1.den() - r1.num() * _den,
+				      r1.den() * _den);
 		return *this;
 	}
 	///Negalas
@@ -54,47 +56,84 @@ public:
 	//	return Ratio(-1 * _num, _den);
 	//}
 	///*
-	Ratio operator*(Ratio r1)
-	{
-		return Ratio (_num * r1.num (), _den * r1.den ());
-	}
+	//Ratio operator*(Ratio r1)
+	//{
+	//	return Ratio (_num * r1.num (), _den * r1.den ());
+	//}
 	///*=
 	Ratio& operator*=(Ratio r1)
 	{
-		*this = *this * r1;
+		*this = Ratio(_num * r1.num(), _den * r1.den());
 		return *this;
 	}
 	///  /
-	Ratio operator/(Ratio r1)
-	{
-		return Ratio(_num * r1.den(), _den * r1.num());
-	}
+	//Ratio operator/(Ratio r1)
+	//{
+	//	return Ratio(_num * r1.den(), _den * r1.num());
+	//}
 	///  /=
 	Ratio& operator/=(Ratio r1)
 	{
-		*this = *this / r1;
+		*this = Ratio(_num * r1.den(), _den * r1.num());
 		return *this;
 	}
 
-	friend std::istream &operator>>(std::istream &is, Ratio &r) {
-		int num = 0, den = 0;
-		is >> num >> den;
-		Ratio result (num, den);
-		r = result;
+	//friend std::istream &operator>>(std::istream &is, Ratio &r) {
+	//	int num = 0, den = 0;
+	//	is >> num >> den;
+	//	Ratio result (num, den);
+	//	r = result;
 
-		return is;
-	}
+	//	return is;
+	//}
 
-	friend std::ostream &operator<<(std::ostream &os, Ratio r) {
-		os << r.num() << '/' << r.den();
-		return os;
-	}
+	//friend std::ostream &operator<<(std::ostream &os, Ratio r) {
+	//	os << r.num() << '/' << r.den();
+	//	return os;
+	//}
 	
 	operator double() const 
 	{
 		return (double)_num/_den;
 	}
 };
+
+Ratio operator-(Ratio r0, Ratio r1)
+{
+	return Ratio(
+		r0.num() * r1.den() - r1.num() * r0.den(),
+		r1.den() * r0.den());
+}
+//
+Ratio operator+(Ratio r0, Ratio r1)
+{
+	return Ratio(
+		r0.num() * r1.den() + r1.num() * r0.den(),
+		r1.den() * r0.den());
+}
+Ratio operator*(Ratio r0, Ratio r1)
+{
+	return Ratio(r0.num() * r1.num(), r1.den() * r1.den());
+}
+/////  /
+Ratio operator/(Ratio r0, Ratio r1)
+{
+	return Ratio(r0.num() * r1.den(), r0.den() * r1.num());
+}
+
+std::istream &operator>>(std::istream &is, Ratio &r) {
+	int num = 0, den = 0;
+	is >> num >> den;
+	Ratio result (num, den);
+	r = result;
+
+	return is;
+}
+
+std::ostream &operator<<(std::ostream &os, Ratio r) {
+	os << r.num() << '/' << r.den();
+	return os;
+}
 
 int main() {
 	Ratio r1(1, 10);
