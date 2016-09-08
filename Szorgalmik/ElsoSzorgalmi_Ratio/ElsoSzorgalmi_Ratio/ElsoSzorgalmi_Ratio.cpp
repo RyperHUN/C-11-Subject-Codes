@@ -30,53 +30,53 @@ public:
 	//		_num * r1.den() + r1.num() * _den,
 	//		r1.den() * _den);
 	//}
-	Ratio& operator+=(Ratio r1)
-	{
-		*this = Ratio(_num * r1.den() + r1.num() * _den,
-					  r1.den() * _den);
-		return *this;
-	}
-	/// -
+	//Ratio& operator+=(Ratio r1)
+	//{
+	//	*this = Ratio(_num * r1.den() + r1.num() * _den,
+	//				  r1.den() * _den);
+	//	return *this;
+	//}
+	///// -
 	//Ratio operator-(Ratio r1)
 	//{
 	//	return Ratio(
 	//		_num * r1.den() - r1.num() * _den,
 	//		r1.den() * _den);
 	//}
-	///-=
-	Ratio& operator-=(Ratio r1)
+	/////-=
+	/*Ratio& operator-=(Ratio r1)
 	{
 		*this = Ratio(_num * r1.den() - r1.num() * _den,
 				      r1.den() * _den);
 		return *this;
+	}*/
+	/////Negalas
+	Ratio operator-()
+	{
+		return Ratio(-1 * _num, _den);
 	}
-	///Negalas
-	//Ratio operator-()
-	//{
-	//	return Ratio(-1 * _num, _den);
-	//}
-	///*
+	/////*
 	//Ratio operator*(Ratio r1)
 	//{
 	//	return Ratio (_num * r1.num (), _den * r1.den ());
 	//}
-	///*=
-	Ratio& operator*=(Ratio r1)
-	{
-		*this = Ratio(_num * r1.num(), _den * r1.den());
-		return *this;
-	}
-	///  /
+	/////*=
+	//Ratio& operator*=(Ratio r1)
+	//{
+	//	*this = Ratio(_num * r1.num(), _den * r1.den());
+	//	return *this;
+	//}
+	/////  /
 	//Ratio operator/(Ratio r1)
 	//{
 	//	return Ratio(_num * r1.den(), _den * r1.num());
 	//}
-	///  /=
-	Ratio& operator/=(Ratio r1)
-	{
-		*this = Ratio(_num * r1.den(), _den * r1.num());
-		return *this;
-	}
+	/////  /=
+	//Ratio& operator/=(Ratio r1)
+	//{
+	//	*this = Ratio(_num * r1.den(), _den * r1.num());
+	//	return *this;
+	//}
 
 	//friend std::istream &operator>>(std::istream &is, Ratio &r) {
 	//	int num = 0, den = 0;
@@ -92,11 +92,37 @@ public:
 	//	return os;
 	//}
 	
-	operator double() const 
+	operator double() const
 	{
-		return (double)_num/_den;
+		return (double)_num / _den;
 	}
 };
+
+Ratio& operator*=(Ratio &r0, Ratio r1)
+{
+	r0 = Ratio(r0.num() * r1.num(), r1.den() * r1.den());
+	return r0;
+}
+
+Ratio& operator-=(Ratio &r0, Ratio r1)
+{
+	r0 = Ratio(r0.num() * r1.den() - r1.num() * r0.den(),
+				  r1.den() * r0.den());;
+	return r0;
+}
+
+Ratio& operator+=(Ratio &r0,Ratio r1)
+{
+	r0 = Ratio(r0.num() * r1.den() + r1.num() * r0.den(),
+				r1.den() * r0.den());
+	return r0;
+}
+
+Ratio& operator/=(Ratio &r0, Ratio r1)
+{
+	r0 = Ratio(r0.num() * r1.den(), r0.den() * r1.num());
+	return r0;
+}
 
 Ratio operator-(Ratio r0, Ratio r1)
 {
