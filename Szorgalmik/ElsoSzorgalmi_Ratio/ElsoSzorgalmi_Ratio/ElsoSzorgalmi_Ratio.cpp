@@ -51,10 +51,10 @@ public:
 		return *this;
 	}*/
 	/////Negalas
-	Ratio operator-()
-	{
-		return Ratio(-1 * _num, _den);
-	}
+	//Ratio operator-()
+	//{
+	//	return Ratio(-1 * _num, _den);
+	//}
 	/////*
 	//Ratio operator*(Ratio r1)
 	//{
@@ -97,6 +97,11 @@ public:
 		return (double)_num / _den;
 	}
 };
+
+Ratio operator-(Ratio &r0)
+{
+	return Ratio(-1 * r0.num(), r0.den());
+}
 
 Ratio& operator*=(Ratio &r0, Ratio r1)
 {
