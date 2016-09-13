@@ -229,6 +229,88 @@ private:
 	}
 };
 
+class Function : public Expression 
+{
+private:
+	Expression * inside;
+public:
+	Function(Expression *inside) : inside{ inside } {}
+	Function(Function const & other)
+		: inside{other.inside} 
+	{}
+	/* no copy assignment */
+	Function & operator=(Function const &) = delete;
+
+	virtual double evaluate(double x) const override final
+	{
+		return sin (inside->evaluate (x));
+	}
+
+	virtual Expression * derivative() const override final
+	{
+		return new Product{
+			get_functionDerivative (inside),
+			inside->derivative()
+		};
+	}
+
+	virtual void print(std::ostream & os) const override final
+	{
+		os << get_functionName ();
+		os << '(';
+		os << *inside;
+		os << ')';
+	}
+private:
+	virtual char* get_functionName() const = 0;
+	virtual Expression* get_functionDerivative(Expression* inside) const = 0;
+};
+
+class Sin final : public Function
+{
+public:
+	using Function::Function;
+
+	virtual Sin * clone() const override {
+		return new Sin{ *this };
+	}
+private:
+	virtual char* get_functionName() const override
+	{
+		return "sin";
+	}
+
+	virtual Expression * get_functionDerivative(Expression* inside) const override;
+};
+
+class Cos final : public Function
+{
+public:
+	using Function::Function;
+	virtual Cos * clone() const override {
+		return new Cos{ *this };
+	}
+private:
+	virtual Expression* get_functionDerivative(Expression* inside) const override
+	{
+		return new Product
+		{
+			new Constant{ -1 },
+			new Sin{ inside->clone() }
+		};
+	}
+	virtual char* get_functionName() const override
+	{
+		return "cos";
+	}
+};
+
+Expression * Sin::get_functionDerivative(Expression* inside) const 
+{
+	return new Cos{ inside->clone() };
+}
+
+
 
 int main() {
 	Expression *c = new Product{
@@ -243,9 +325,27 @@ int main() {
 
 	Expression *cd = c->derivative();
 	std::cout << "f'(x) = " << *cd << std::endl;
+	Expression *simp = c->simplify ();
+
+	std::cout << *simp << std::endl;
 
 	delete c;
 	delete cd;
+	delete simp;
+
+	Expression *funcTest = new Sin {
+		new Product {
+			new Constant {5},
+			new Variable {}
+		}
+	};
+
+	Expression *funcTestDeriv = funcTest->derivative ();
+	std::cout << "sin(5x)' = " << *funcTestDeriv;
+
+	delete funcTest;
+	delete funcTestDeriv;
+
 #ifdef _DEBUG
 	int i;
 	std::cin >> i;
