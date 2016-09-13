@@ -241,11 +241,6 @@ public:
 	/* no copy assignment */
 	Function & operator=(Function const &) = delete;
 
-	virtual double evaluate(double x) const override final
-	{
-		return sin (inside->evaluate (x));
-	}
-
 	virtual Expression * derivative() const override final
 	{
 		return new Product{
@@ -261,9 +256,16 @@ public:
 		os << *inside;
 		os << ')';
 	}
+	// Inherited via Expression ///TODO
+	virtual double evaluate(double x) const override
+	{
+		return 0.0;
+	}
 private:
-	virtual char* get_functionName() const = 0;
+	virtual const char* get_functionName() const = 0;
 	virtual Expression* get_functionDerivative(Expression* inside) const = 0;
+
+	
 };
 
 class Sin final : public Function
@@ -275,7 +277,7 @@ public:
 		return new Sin{ *this };
 	}
 private:
-	virtual char* get_functionName() const override
+	virtual const char* get_functionName() const override
 	{
 		return "sin";
 	}
@@ -299,7 +301,7 @@ private:
 			new Sin{ inside->clone() }
 		};
 	}
-	virtual char* get_functionName() const override
+	virtual const char* get_functionName() const override
 	{
 		return "cos";
 	}
@@ -350,4 +352,5 @@ int main() {
 	int i;
 	std::cin >> i;
 #endif
+	return 0;
 }
