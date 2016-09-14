@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include <iostream>
+#include <cmath>
 
 
 class Expression {
@@ -232,7 +233,7 @@ private:
 class Function : public Expression 
 {
 private:
-	Expression * inside;
+	const Expression * inside;
 public:
 	Function(Expression *inside) : inside{ inside } {}
 	Function(Function const & other)
@@ -256,16 +257,15 @@ public:
 		os << *inside;
 		os << ')';
 	}
-	// Inherited via Expression ///TODO
-	virtual double evaluate(double x) const override
+protected:
+	//Igy nemkell protectedde tenni az inside ot!
+	double inside_eval (double x) const
 	{
-		return 0.0;
+		return inside->evaluate (x);
 	}
 private:
 	virtual const char* get_functionName() const = 0;
-	virtual Expression* get_functionDerivative(Expression* inside) const = 0;
-
-	
+	virtual Expression* get_functionDerivative(const Expression* inside) const = 0;
 };
 
 class Sin final : public Function
@@ -281,8 +281,12 @@ private:
 	{
 		return "sin";
 	}
+	virtual double evaluate(double x) const override
+	{
+		return sin (inside_eval (x));
+	}
 
-	virtual Expression * get_functionDerivative(Expression* inside) const override;
+	virtual Expression * get_functionDerivative(const Expression* inside) const override;
 };
 
 class Cos final : public Function
@@ -293,7 +297,7 @@ public:
 		return new Cos{ *this };
 	}
 private:
-	virtual Expression* get_functionDerivative(Expression* inside) const override
+	virtual Expression* get_functionDerivative(const Expression* inside) const override
 	{
 		return new Product
 		{
@@ -305,9 +309,13 @@ private:
 	{
 		return "cos";
 	}
+	virtual double evaluate(double x) const override
+	{
+		return cos(inside_eval (x));
+	}
 };
 
-Expression * Sin::get_functionDerivative(Expression* inside) const 
+Expression * Sin::get_functionDerivative(const Expression* inside) const 
 {
 	return new Cos{ inside->clone() };
 }
@@ -343,7 +351,9 @@ int main() {
 	};
 
 	Expression *funcTestDeriv = funcTest->derivative ();
-	std::cout << "sin(5x)' = " << *funcTestDeriv;
+	std::cout << "sin(5x) : x = 1 := " << funcTest->evaluate (2) << std::endl;
+	std::cout << "sin(5x)' = " << *funcTestDeriv << std::endl;
+	
 
 	delete funcTest;
 	delete funcTestDeriv;
