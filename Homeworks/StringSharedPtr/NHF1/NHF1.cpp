@@ -232,6 +232,27 @@ public:
 
 		return *this;
 	}
+
+	bool operator<(String const& rhs) const
+	{
+		return strcmp(ptr.get(), rhs.ptr.get()) > 0;
+	}
+	bool operator>(String const& rhs) const
+	{
+		return strcmp(ptr.get(), rhs.ptr.get()) < 0;
+	}
+	bool operator==(String const& rhs) const
+	{
+		return strcmp(ptr.get(), rhs.ptr.get()) == 0;
+	}
+};
+
+template <typename T>
+struct TreeElement
+{
+	T* elem;
+	TreeElement* left;
+	TreeElement* right;
 };
 
 
@@ -282,7 +303,20 @@ int main()
 		cout << "+= expected :" << endl << "leftright" << endl;
 		cout << left << endl;
 	}
+	cout << "-------------------------------" << endl;
+	{
+		cout << "Operator </==/> test" << endl;
+		String left("a");
+		String right("b");
+		String same("a");
+		cout << "< expected :" << endl << "a" << endl;
+		if( left < right)
+			cout << left << endl;
 
+		cout << "== expected :" << endl << "a" << endl;
+		if( left == same)
+			cout << same << endl;
+	}
 	cout << "-------------------------------" << endl;
 	{ //Operator >>
 		cout << "Operator >> test" << endl;
