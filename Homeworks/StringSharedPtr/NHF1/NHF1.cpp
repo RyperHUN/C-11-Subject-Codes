@@ -98,7 +98,7 @@ public:
 
 	void ReallocateUnattached ()
 	{
-		char* ptrNew = new char[strlen(ptr)];
+		char* ptrNew = new char[strlen(ptr) + 1];
 		strcpy (ptrNew, ptr);
 		Release ();
 		ptr = ptrNew;
@@ -117,13 +117,40 @@ public:
 	}
 };
 
+class CharacterProxy {
+private:
+	SmartPointer& ptr;
+	size_t index;
+public:
+	CharacterProxy (SmartPointer & ptr, size_t index)
+		:ptr (ptr), index (index)
+	{}
+
+	CharacterProxy& operator=(char rhs)
+	{
+		ptr.ReallocateUnattached ();
+		ptr.get ()[index] = rhs;
+
+		return *this;
+	}
+	operator char ()
+	{
+		return ptr.get ()[index];
+	}
+};
+
+///TODO Mozgato konstruktor
+///String összefûzés +, +=
+///TODO Sok komment minden fuggvenyhez!
+
+///TODO szorgalmi Kereso fa
 class String 
 {
 	size_t size;   //str len + 1 ('\0')
 	//SmartPointer<char> ptr;
 	SmartPointer ptr;
 public:
-	String (const char *str)
+	String (const char *str = "")
 		: ptr (initStr (str))
 	{
 	}
@@ -160,36 +187,37 @@ public:
 		return ptr.get ()[index];
 	}
 
-	char & operator[] (size_t index)
+	CharacterProxy operator[] (size_t index)
 	{
-		///TODO - Somewhere an error after writing out str
 		//Prohibits modifications with non const String
-		ptr.ReallocateUnattached ();
-		return ptr.get ()[index];
+		return CharacterProxy {ptr, index};
 	}
 
-	friend ostream& operator<<(ostream &os, String& str)
+	friend ostream& operator<< (ostream &os, String& str)
 	{
 		os << str.ptr.get ();  ///TODO * operator not works
 		return os;
 	}
-};
 
-class CharacterProxy 
-{
-private:
-	char &c;
-public:
-	CharacterProxy (char &c)
-		:c(c)
+	friend istream& operator>> (istream &is, String& str)
 	{
-	}
+		char* readLine = nullptr;
+		//is.getline (readLine, sizeof(readLine));
+		is >> readLine;
+		str.ptr = readLine;
+		str.size = strlen (readLine + 1);
 
+		return is;
+	}
 };
+
+
 
 int main()
 {
 	{
+		String empty{}; //Letrehoz uresen
+		cout << empty;
 		cout << "Init teszt";
 		String init {"hello vilag - Init Teszt + Copy"};
 
@@ -218,6 +246,16 @@ int main()
 		normalCopy[0] = 'c';
 		cout << "Not Const expected :" << endl << "c - ab" << endl;
 		cout << normalCopy[0] << " - " << normal << endl;
+	}
+
+	cout << "-------------------------------" << endl;
+
+	{ //Operator >>
+		cout << "Operator >> test" << endl;
+		String reading;
+		cin >> reading;
+		cout << reading;
+
 	}
 	/*String a, b, c;
 	c = "Hello vilag";*/
