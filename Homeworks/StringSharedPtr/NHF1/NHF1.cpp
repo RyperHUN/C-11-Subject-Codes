@@ -193,7 +193,7 @@ public:
 		return CharacterProxy {ptr, index};
 	}
 
-	friend ostream& operator<< (ostream &os, String& str)
+	friend ostream& operator<< (ostream &os, String const& str)
 	{
 		os << str.ptr.get ();  ///TODO * operator not works
 		return os;
@@ -215,6 +215,19 @@ public:
 
 		return is;
 	}
+	String operator+(const String& rhs)
+	{
+		int concatLength = size + rhs.size - 1; // -1 because we only need 1 '\0' terminating null
+		char* destString = new char [concatLength];
+		strcpy (destString, ptr.get());
+
+		strcat (destString, rhs.ptr.get ());
+		String result(destString);
+		delete[] destString;
+
+		return result;
+	}
+
 };
 
 
@@ -241,7 +254,7 @@ int main()
 	cout << "-------------------------------" << endl;
 
 	{
-		cout << "Operator[] teszt";
+		cout << "Operator[] teszt" << endl;
 		String normal {"ab"};
 		String const constCopy = normal;
 		String normalCopy = normal;
@@ -254,7 +267,17 @@ int main()
 	}
 
 	cout << "-------------------------------" << endl;
+	{
+		cout << "Operator +/+= test" << endl;
+		String left ("left");
+		String right ("right");
+		cout << "+ expected :" << endl << "leftright" << endl;
+		cout << left + right << endl;
 
+
+	}
+
+	cout << "-------------------------------" << endl;
 	{ //Operator >>
 		cout << "Operator >> test" << endl;
 		String reading{"DELETE ME PLEASE"};
