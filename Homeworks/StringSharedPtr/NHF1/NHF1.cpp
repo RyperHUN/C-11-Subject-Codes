@@ -140,7 +140,6 @@ public:
 };
 
 ///TODO Mozgato konstruktor
-///String összefûzés +, +=
 ///TODO Sok komment minden fuggvenyhez!
 
 ///TODO szorgalmi Kereso fa
@@ -227,7 +226,12 @@ public:
 
 		return result;
 	}
+	String operator+=(const String& rhs)
+	{
+		*this = *this + rhs;
 
+		return *this;
+	}
 };
 
 
@@ -274,7 +278,9 @@ int main()
 		cout << "+ expected :" << endl << "leftright" << endl;
 		cout << left + right << endl;
 
-
+		left += right;
+		cout << "+= expected :" << endl << "leftright" << endl;
+		cout << left << endl;
 	}
 
 	cout << "-------------------------------" << endl;
