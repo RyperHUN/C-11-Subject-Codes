@@ -151,7 +151,7 @@ class String
 	SmartPointer ptr;
 public:
 	String (const char *str = "")
-		: ptr (initStr (str))
+		: ptr (allocateStr (str))
 	{
 	}
 
@@ -162,13 +162,13 @@ public:
 	String& operator= (String const& rhs)
 	{
 		size = rhs.size;
-		ptr = rhs.ptr;      //Deletes this string reference to the allocated memory 
+		ptr  = rhs.ptr;      //Deletes this string reference to the allocated memory 
 							//Sets new ref to the rhs's ref
 
 		return *this;       //allows str = str2 = str3;
 	}
-
-	char* initStr (const char* str)
+	//Copies parameter to a newly allocated char*
+	char* allocateStr (const char* str)
 	{
 		size  = strlen (str) + 1; //string length includes '\0'
 		char* newStr = new char[size];
@@ -201,16 +201,21 @@ public:
 
 	friend istream& operator>> (istream &is, String& str)
 	{
-		char* readLine = nullptr;
-		//is.getline (readLine, sizeof(readLine));
-		is >> readLine;
-		str.ptr = readLine;
-		str.size = strlen (readLine + 1);
+		const size_t BUFFERSIZE = 200;
+		char* word              = new char[BUFFERSIZE];
+		//is.getline (word, sizeof(word));
+		is >> word;
+
+		///This way leak!!
+		//str.ptr = str.allocateStr (word);
+		String newStr {word};
+		str = newStr;
+
+		delete[] word;
 
 		return is;
 	}
 };
-
 
 
 int main()
@@ -252,7 +257,7 @@ int main()
 
 	{ //Operator >>
 		cout << "Operator >> test" << endl;
-		String reading;
+		String reading{"DELETE ME PLEASE"};
 		cin >> reading;
 		cout << reading;
 
