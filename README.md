@@ -12,7 +12,6 @@ Feladatok
 >Ha kész vannak a függvény, szinusz és koszinusz osztályok, akkor most írd meg azok deriválását is! Figyelj arra, hogy az összetett függvény deriválási szabályát kell alkalmaznod: f(g(x))'=f'(g(x))·g'(x), mert a szinusz vagy a koszinusz objektum is egy kifejezést kell tartalmaz. Használd a függvénysablon tervezési mintát! Próbáld meg a függvény osztályban megvalósítani, amit csak lehet, hogy a leszármazottak minél egyszerűbbek legyenek. </p>
 
 3. 2. <b>Literal Suffix Operator - Date</b> 
-
 ><p>Date d = "2013.08.11"_date; <br/>
 > std::cout << d << std::endl;                    /* 2013.08.11. */ <br/>
 > std::cout << "'99.08.11"_date << std::endl;     /* 1999.08.11. */ <br/>
