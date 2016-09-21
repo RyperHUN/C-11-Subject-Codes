@@ -19,6 +19,8 @@ public:
 	int Month () { return month; } const
 	int Day ()   { return day;   } const
 
+	Date (Date const&) = default; //Using default CopyCTOR
+
 	explicit Date (string str)
 	{
 		stringstream iss (str);
@@ -28,23 +30,50 @@ public:
 			exploded.push_back (token);
 		}
 
-		SetYear (exploded);
+		SetAttributes (exploded);
+	}
+
+private:
+	void SetAttributes (const vector<string>& strs)
+	{
+		SetYear (strs);
 	}
 
 	void SetYear (const vector<string>& strs)
 	{
-		for (const string& str : strs) // access by const reference
+		string yearStr = strs[FindYearIndex (strs)];
+		
+		size_t index = yearStr.find ("'");
+		if (index == string::npos) 
 		{
-			if (str.size () > 3) 
-			{
-				return;
-			}
+			year = stoi (yearStr);
+		}
+		else 
+		{
+			yearStr = yearStr.substr (1);
+			int twoDigitNum = stoi (yearStr);
+			if (twoDigitNum < 20)
+			    year = 2000 + twoDigitNum;
+			else
+				year = 1900 + twoDigitNum;
 		}
 	}
 
+	size_t FindYearIndex (const vector<string>& strs)
+	{
+		for (size_t i = 0; i < strs.size (); i++) 
+		{
+			if (strs[i].size () >= 3)
+				return i;
+		}
+
+		return string::npos;
+	}
+
+public:
 	friend ostream& operator << (ostream &os, Date date) ///TODO Const& el nem mukodik ?!
 	{
-		os << date.Year () << '.' << date.Month () << '.' << date.Day () << '.' << std::endl;
+		os << date.Year () << '.' << date.Month () << '.' << date.Day () << '.';
 		return os;
 	}
 };
@@ -57,11 +86,15 @@ Date operator"" _date(const char* str, std::size_t)
 int main()
 {
 	Date d = "2013.08.11"_date;
-	//std::cout << d << std::endl;                    /* 2013.08.11. */
-	//std::cout << "'99.08.11"_date << std::endl;     /* 1999.08.11. */
-	//std::cout << "'12.08.11"_date << std::endl;     /* 2012.08.11. */
-	//std::cout << "08.11.2013"_date << std::endl;    /* 2013.08.11. */
+	std::cout << d << std::endl;                    /* 2013.08.11. */
+	std::cout << "'99.08.11"_date << std::endl;     /* 1999.08.11. */
+	std::cout << "'12.08.11"_date << std::endl;     /* 2012.08.11. */
+	std::cout << "08.11.2013"_date << std::endl;    /* 2013.08.11. */
 
+#ifdef _DEBUG
+	int i;
+	std::cin >> i;
+#endif
     return 0;
 }
 
