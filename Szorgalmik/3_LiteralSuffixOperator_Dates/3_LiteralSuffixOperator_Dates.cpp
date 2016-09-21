@@ -37,6 +37,7 @@ private:
 	void SetAttributes (const vector<string>& strs)
 	{
 		SetYear (strs);
+		SetMonthDay (strs);
 	}
 
 	void SetYear (const vector<string>& strs)
@@ -68,6 +69,21 @@ private:
 		}
 
 		return string::npos;
+	}
+
+	void SetMonthDay (const vector<string>& strs)
+	{
+		size_t yearIndex = FindYearIndex (strs);
+		if (yearIndex == 0) 
+		{
+			month = stoi (strs[1]);
+			day   = stoi (strs[2]);
+		} 
+		else if (yearIndex == 2) 
+		{
+			month = stoi (strs[0]);
+			day   = stoi (strs[1]);
+		}
 	}
 
 public:
