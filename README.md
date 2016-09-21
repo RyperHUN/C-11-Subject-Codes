@@ -10,3 +10,11 @@ Feladatok
 ><p>Az előadás kifejezésfáival kapcsolatos feladat. <br/>
 >Tervezz és implementálj egy általános függvény osztályt! Hova illik ez be az osztályhierarchiába? Implementálj egy szinusz és egy koszinusz osztályt! Ha ügyesen tervezted meg a függvény osztályt, akkor ezek az összeghez és a szorzathoz hasonlóan pár sorból fognak állni.<br/>
 >Ha kész vannak a függvény, szinusz és koszinusz osztályok, akkor most írd meg azok deriválását is! Figyelj arra, hogy az összetett függvény deriválási szabályát kell alkalmaznod: f(g(x))'=f'(g(x))·g'(x), mert a szinusz vagy a koszinusz objektum is egy kifejezést kell tartalmaz. Használd a függvénysablon tervezési mintát! Próbáld meg a függvény osztályban megvalósítani, amit csak lehet, hogy a leszármazottak minél egyszerűbbek legyenek. </p>
+
+3. 2. <b>Literal Suffix Operator - Date</b> 
+
+><p>Date d = "2013.08.11"_date; <br/>
+> std::cout << d << std::endl;                    /* 2013.08.11. */ <br/>
+> std::cout << "'99.08.11"_date << std::endl;     /* 1999.08.11. */ <br/>
+> std::cout << "'12.08.11"_date << std::endl;     /* 2012.08.11. */ <br/>
+> std::cout << "08.11.2013"_date << std::endl;    /* 2013.08.11. */ </p>
