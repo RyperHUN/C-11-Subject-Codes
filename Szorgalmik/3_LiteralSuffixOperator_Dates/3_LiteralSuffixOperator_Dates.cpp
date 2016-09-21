@@ -15,9 +15,9 @@ class Date
 	int month = 0;
 	int day   = 0;
 public:
-	int Year ()  { return year;  } const
-	int Month () { return month; } const
-	int Day ()   { return day;   } const
+	int Year ()  const { return year;  }
+	int Month () const { return month; }
+	int Day ()   const { return day;   }
 
 	Date (Date const&) = default; //Using default CopyCTOR
 
