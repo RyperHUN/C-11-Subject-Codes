@@ -87,7 +87,7 @@ private:
 	}
 
 public:
-	friend ostream& operator << (ostream &os, Date& date) ///TODO Const& el nem mukodik ?! 'int Date::Year(void)': cannot convert 'this' pointer from 'const Date' to 'Date &' why?
+	friend ostream& operator << (ostream &os,const Date& date) 
 	{
 		os << date.Year () << '.' << date.Month () << '.' << date.Day () << '.';
 		return os;
