@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1_Szorgalmi_Ratio", "Projec
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2_FV_Osztaly", "Projects\2_FV_Osztaly\2_FV_Osztaly.vcxproj", "{D9C5B3A9-7118-4003-AD10-2DA49EA6B9F4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3_LiteralSuffixOperator_Dates", "3_LiteralSuffixOperator_Dates\3_LiteralSuffixOperator_Dates.vcxproj", "{AA6AC3EB-CCDF-4FE6-92E7-CB97F7B98EE2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3_LiteralSuffixOperator_Dates", "Projects\3_LiteralSuffixOperator_Dates\3_LiteralSuffixOperator_Dates.vcxproj", "{AA6AC3EB-CCDF-4FE6-92E7-CB97F7B98EE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
