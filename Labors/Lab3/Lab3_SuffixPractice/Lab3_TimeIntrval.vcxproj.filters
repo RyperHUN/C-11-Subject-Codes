@@ -26,7 +26,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Lab3_LiteralStringConversion.cpp">
+    <ClCompile Include="Lab3_LiteralSuffixPractice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -49,13 +50,28 @@ TimeInterval operator"" _m(unsigned long long int mins)
 	return TimeInterval::Minutes ((int)mins);
 }
 
+///FONTOS ATVENNI A MERETET!
+std::string operator"" _s(const char* str, size_t size)
+{
+	return std::string(str, size); //Fontos hogy a meretet megkapja a konstruktor, kulonben az elso lezaro nullaig fogja kiirni!
+}
+
 int main()
 {
+	//Interval
 	TimeInterval il{65};
 	std::cout << il << std::endl;
 
 	TimeInterval i2 = 5_h + 79_m;
 	std::cout << i2 << std::endl;
+
+	/////////////////////////////////////////////////
+	//String conversion
+	
+	
+	std::cout << "Hello"_s + " vilag" << std::endl; //Hello vilag
+	std::cout << "hello\0vilag"_s.length() << std::endl;
+
 
 #ifdef _DEBUG
 	int i;
