@@ -50,10 +50,33 @@ TimeInterval operator"" _m(unsigned long long int mins)
 	return TimeInterval::Minutes ((int)mins);
 }
 
-///FONTOS ATVENNI A MERETET!
+///FONTOS ATVENNI A MERETET! - Ekkor ""-vel kell hivni
 std::string operator"" _s(const char* str, size_t size)
 {
 	return std::string(str, size); //Fontos hogy a meretet megkapja a konstruktor, kulonben az elso lezaro nullaig fogja kiirni!
+}
+
+int kettoHatvany (int power)
+{
+	int hatvany = 1;
+	for (int i = 0; i < power; i++)
+	{
+		hatvany = hatvany * 2;
+	}
+	return hatvany;
+}
+
+//Igy siman stringkent fogja ertelmeni!
+int operator"" _bin(const char* str)
+{
+	size_t size  = strlen (str);
+	size_t index = size - 1;
+	int sum = 0;
+	for( int power = 0; power < size; power++, index--)
+	{
+		sum += ('0' - str[index]) * kettoHatvany (power) * -1;
+	}
+	return sum;
 }
 
 int main()
@@ -71,6 +94,10 @@ int main()
 	
 	std::cout << "Hello"_s + " vilag" << std::endl; //Hello vilag
 	std::cout << "hello\0vilag"_s.length() << std::endl;
+
+	//Binary literal
+	cout << 1111_bin << endl;     // 15
+	cout << 10000000_bin << endl; // 128
 
 
 #ifdef _DEBUG
