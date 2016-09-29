@@ -5,6 +5,9 @@
 
 
 #include <iostream>
+#include <memory>
+
+using namespace std;
 
 
 class Expression {
@@ -16,7 +19,7 @@ public:
 	virtual void print(std::ostream &os) const = 0;
 
 	/* return dynamically allocated derivative expression */
-	virtual Expression * derivative() const = 0;
+	virtual shared_ptr<Expression> derivative() const = 0;
 
 	/* return dynamically allocated copy of expression */
 	virtual Expression * clone() const = 0;
@@ -50,8 +53,8 @@ public:
 		os << c_;
 	}
 
-	virtual Expression * derivative() const override {
-		return new Constant{ 0 };
+	virtual shared_ptr<Expression> derivative() const override {
+		return shared_ptr<Constant> {new Constant {0} };
 	}
 
 	virtual Constant * clone() const override {
@@ -74,8 +77,8 @@ public:
 		os << 'x';
 	}
 
-	virtual Expression * derivative() const override {
-		return new Constant{ 1 };
+	virtual shared_ptr<Expression> derivative() const override {
+		return make_shared<Constant> (1);
 	}
 
 	virtual Variable * clone() const override {
@@ -87,22 +90,22 @@ public:
 class TwoOperand : public Expression {
 public:
 	/* create object, adopt dynamically allocated expressions */
-	TwoOperand(Expression *lhs, Expression *rhs) : lhs_{ lhs }, rhs_{ rhs } {}
+	//TwoOperand(Expression *lhs, Expression *rhs) : lhs_{ lhs }, rhs_{ rhs } {}
+	TwoOperand(const shared_ptr<Expression>& lhs,const shared_ptr<Expression>& rhs) : lhs_{ lhs }, rhs_{ rhs } {}
 
 	~TwoOperand() {
-		delete lhs_;
-		delete rhs_;
 	}
 
 	/* copy constructor */
 	TwoOperand(TwoOperand const & the_other)
-		: lhs_{ the_other.lhs_->clone() }, rhs_{ the_other.rhs_->clone() } {
+		: lhs_{ the_other.lhs_ }, rhs_{ the_other.rhs_ } {
 	}
 
 	/* no copy assignment */
 	TwoOperand & operator=(TwoOperand const &) = delete;
 
 	virtual double evaluate(double x) const override final {
+		
 		return do_operator(lhs_->evaluate(x), rhs_->evaluate(x));
 	}
 
@@ -119,7 +122,7 @@ private:
 
 protected:
 	/* left and right hand side operands */
-	Expression *lhs_, *rhs_;
+	shared_ptr<Expression> lhs_, rhs_; /// NEM KELL KITENNI * ot!
 };
 
 
@@ -127,8 +130,8 @@ class Sum final : public TwoOperand {
 public:
 	using TwoOperand::TwoOperand;
 
-	virtual Expression * derivative() const override {
-		return new Sum{ lhs_->derivative(), rhs_->derivative() };
+	virtual shared_ptr<Expression> derivative() const override {
+		return shared_ptr<Sum> {new Sum{lhs_->derivative (), rhs_->derivative ()}};
 	}
 
 	virtual Sum * clone() const override {
@@ -150,11 +153,18 @@ class Product final : public TwoOperand {
 public:
 	using TwoOperand::TwoOperand;
 
-	virtual Expression * derivative() const override {
-		return new Sum{
-			new Product{ lhs_->derivative(), rhs_->clone() },
-			new Product{ lhs_->clone(), rhs_->derivative() }
+	virtual shared_ptr<Expression> derivative() const override {
+		return shared_ptr<Sum>{ 
+			new Sum {
+				shared_ptr<Product>{ new Product { lhs_->derivative(), rhs_} },
+				shared_ptr<Product>{ new Product {lhs_, rhs_->derivative() } }
+			}
 		};
+		//Mas szintaktikaval!
+		/*return make_shared<Sum> (
+			     make_shared<Product>( lhs_->derivative(), rhs_ ),
+			     make_shared<Product>(lhs_, rhs_->derivative() )
+		);*/
 	}
 
 	virtual Product * clone() const override {
@@ -173,19 +183,23 @@ private:
 
 
 int main() {
-	Expression *c = new Product{
-		new Constant{ 5 },
-		new Sum{
-		new Constant{ 3 },
-		new Variable
-	}
-	};
+	shared_ptr<Expression > c = make_shared<Product>( 
+		make_shared<Constant>( 5 ),
+		make_shared<Sum>
+		(
+			make_shared<Constant>(3 ),
+			make_shared<Variable>()
+			)
+	);
 	std::cout << "f(x) = " << *c << std::endl;
 	std::cout << "f(3) = " << c->evaluate(3) << std::endl;
 
-	Expression *cd = c->derivative();
+	shared_ptr<Expression> cd = c->derivative();
 	std::cout << "f'(x) = " << *cd << std::endl;
 
-	delete c;
-	delete cd;
+
+#ifdef _DEBUG
+	int i;
+	std::cin >> i;
+#endif
 }
