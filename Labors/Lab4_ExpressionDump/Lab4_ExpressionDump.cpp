@@ -21,9 +21,6 @@ public:
 	/* return dynamically allocated derivative expression */
 	virtual shared_ptr<Expression> derivative() const = 0;
 
-	/* return dynamically allocated copy of expression */
-	virtual Expression * clone() const = 0;
-
 	Expression() = default;
 	Expression(Expression const &) = default;
 
@@ -57,10 +54,6 @@ public:
 		return shared_ptr<Constant> {new Constant {0} };
 	}
 
-	virtual Constant * clone() const override {
-		return new Constant{ *this };
-	}
-
 	double get_value() const {
 		return c_;
 	}
@@ -79,10 +72,6 @@ public:
 
 	virtual shared_ptr<Expression> derivative() const override {
 		return make_shared<Constant> (1);
-	}
-
-	virtual Variable * clone() const override {
-		return new Variable{ *this };
 	}
 };
 
@@ -134,10 +123,6 @@ public:
 		return shared_ptr<Sum> {new Sum{lhs_->derivative (), rhs_->derivative ()}};
 	}
 
-	virtual Sum * clone() const override {
-		return new Sum{ *this };
-	}
-
 private:
 	virtual char get_operator() const override {
 		return '+';
@@ -165,10 +150,6 @@ public:
 			     make_shared<Product>( lhs_->derivative(), rhs_ ),
 			     make_shared<Product>(lhs_, rhs_->derivative() )
 		);*/
-	}
-
-	virtual Product * clone() const override {
-		return new Product{ *this };
 	}
 
 private:
