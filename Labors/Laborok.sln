@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab4_ExpressionDump", "Lab4
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab4_FunargProblems", "Lab4_FunargProblems\Lab4_FunargProblems.vcxproj", "{596C16D6-6C37-48EB-BA79-CE27ABCF562A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab4_RAII_UnmanagedResource", "Lab4_RAII_UnmanagedResource\Lab4_RAII_UnmanagedResource.vcxproj", "{BB8CDCEC-15D0-4D69-AF2A-F7F007B8CC49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -59,6 +61,14 @@ Global
 		{596C16D6-6C37-48EB-BA79-CE27ABCF562A}.Release|x64.Build.0 = Release|x64
 		{596C16D6-6C37-48EB-BA79-CE27ABCF562A}.Release|x86.ActiveCfg = Release|Win32
 		{596C16D6-6C37-48EB-BA79-CE27ABCF562A}.Release|x86.Build.0 = Release|Win32
+		{BB8CDCEC-15D0-4D69-AF2A-F7F007B8CC49}.Debug|x64.ActiveCfg = Debug|x64
+		{BB8CDCEC-15D0-4D69-AF2A-F7F007B8CC49}.Debug|x64.Build.0 = Debug|x64
+		{BB8CDCEC-15D0-4D69-AF2A-F7F007B8CC49}.Debug|x86.ActiveCfg = Debug|Win32
+		{BB8CDCEC-15D0-4D69-AF2A-F7F007B8CC49}.Debug|x86.Build.0 = Debug|Win32
+		{BB8CDCEC-15D0-4D69-AF2A-F7F007B8CC49}.Release|x64.ActiveCfg = Release|x64
+		{BB8CDCEC-15D0-4D69-AF2A-F7F007B8CC49}.Release|x64.Build.0 = Release|x64
+		{BB8CDCEC-15D0-4D69-AF2A-F7F007B8CC49}.Release|x86.ActiveCfg = Release|Win32
+		{BB8CDCEC-15D0-4D69-AF2A-F7F007B8CC49}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
