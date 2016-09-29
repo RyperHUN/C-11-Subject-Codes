@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cstdio>
 
+//Shared pointernek a konstruktoraba meglehet adni felszabaditot
 class FilePtr
 {
 	FILE* file = nullptr;
@@ -30,8 +31,11 @@ public:
 	{
 		(*refCount)--;
 		if(*refCount == 0)
+		{
+			delete refCount;
 			if (file != nullptr)
 				fclose (file);
+		}
 	}
 
 	FilePtr& operator=(FilePtr const& rhs)
