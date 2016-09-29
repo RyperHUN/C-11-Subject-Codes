@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab3_SmartFloat", "Lab3\Lab
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab4_ExpressionDump", "Lab4_ExpressionDump\Lab4_ExpressionDump.vcxproj", "{F13F79A2-90E3-40EB-8FA0-D8DDAA33B224}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab4_FunargProblems", "Lab4_FunargProblems\Lab4_FunargProblems.vcxproj", "{596C16D6-6C37-48EB-BA79-CE27ABCF562A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -49,6 +51,14 @@ Global
 		{F13F79A2-90E3-40EB-8FA0-D8DDAA33B224}.Release|x64.Build.0 = Release|x64
 		{F13F79A2-90E3-40EB-8FA0-D8DDAA33B224}.Release|x86.ActiveCfg = Release|Win32
 		{F13F79A2-90E3-40EB-8FA0-D8DDAA33B224}.Release|x86.Build.0 = Release|Win32
+		{596C16D6-6C37-48EB-BA79-CE27ABCF562A}.Debug|x64.ActiveCfg = Debug|x64
+		{596C16D6-6C37-48EB-BA79-CE27ABCF562A}.Debug|x64.Build.0 = Debug|x64
+		{596C16D6-6C37-48EB-BA79-CE27ABCF562A}.Debug|x86.ActiveCfg = Debug|Win32
+		{596C16D6-6C37-48EB-BA79-CE27ABCF562A}.Debug|x86.Build.0 = Debug|Win32
+		{596C16D6-6C37-48EB-BA79-CE27ABCF562A}.Release|x64.ActiveCfg = Release|x64
+		{596C16D6-6C37-48EB-BA79-CE27ABCF562A}.Release|x64.Build.0 = Release|x64
+		{596C16D6-6C37-48EB-BA79-CE27ABCF562A}.Release|x86.ActiveCfg = Release|Win32
+		{596C16D6-6C37-48EB-BA79-CE27ABCF562A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
