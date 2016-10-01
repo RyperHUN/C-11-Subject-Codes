@@ -8,63 +8,7 @@
 
 using namespace std;
 
-///TODO - Maybe char kent kellene letrehozni es az egesz struktura jo a get fuggveny adna vissza a teljes ptr-t
-//template <typename T>
-//class SmartPointer 
-//{
-//	unsigned int _refCount;
-//public:
-//	T* _pointer;
-//public:
-////Ctors
-//	SmartPointer () = delete;
-//
-//	SmartPointer (T* pointer)
-//		: _pointer{pointer}
-//	{
-//	}
-//
-//	~SmartPointer ()
-//	{
-//		_refCount--;        //Decrements refcount
-//		if (_refCount == 0) //If no more reference to the pointer, deletes it
-//			delete _pointer;
-//	}
-//
-//	T& operator* ()
-//	{
-//		return _pointer;
-//	}
-//
-//	T* operator-> ()
-//	{
-//		return _pointer;
-//	}
-//};
-
 class SmartPointer final{
-	unsigned int* refCount; //it is a pointer, so it can be shared between smartPointers
-	char* ptr;  
-
-private:
-	//Releases pointers if reference counter is equals 0
-	void Release ()
-	{
-		(*refCount)--;        //Decrements refcount
-		if (*refCount == 0)   //If no more reference to the pointer, deletes it
-		{
-			delete ptr;
-			ptr = nullptr;
-			delete refCount;
-			refCount = nullptr; //nullptr makes it more safe
-		}
-	}
-	void AllocateCounter ()
-	{
-		refCount  = new unsigned int; //Allocates memory for shared reference counter
-		*refCount = 0;
-		(*refCount)++;
-	}
 public:
 	//Ctors
 	SmartPointer () = delete; 
@@ -110,11 +54,35 @@ public:
 		return ptr;
 	}
 
-	///TODO
-	char* operator* ()
+	/////TODO
+	//char* operator* ()
+	//{
+	//	return ptr;
+	//}
+	
+
+private:
+	//Releases pointers if reference counter is equals 0
+	void Release()
 	{
-		return ptr;
+		(*refCount)--;        //Decrements refcount
+		if (*refCount == 0)   //If no more reference to the pointer, deletes it
+		{
+			delete[] ptr;
+			ptr = nullptr;
+			delete refCount;
+			refCount = nullptr; //nullptr makes it more safe
+		}
 	}
+	void AllocateCounter()
+	{
+		refCount = new unsigned int; //Allocates memory for shared reference counter
+		*refCount = 0;
+		(*refCount)++;
+	}
+
+	unsigned int* refCount; //it is a pointer, so it can be shared between smartPointers
+	char*         ptr;
 };
 
 class CharacterProxy {
@@ -133,6 +101,7 @@ public:
 
 		return *this;
 	}
+
 	operator char ()
 	{
 		return ptr.get ()[index];
@@ -142,7 +111,6 @@ public:
 ///TODO Mozgato konstruktor
 ///TODO Sok komment minden fuggvenyhez!
 
-///TODO szorgalmi Kereso fa
 class String 
 {
 	size_t size;   //str len + 1 ('\0')
@@ -181,11 +149,6 @@ public:
 		size = 0;
 	}
 	size_t Size () const { return size; }
-
-	bool IsEmpty ()
-	{
-		return size == 0 && ptr.get == nullptr; ///TODO Maybe throw error if only one is true
-	}
 
 	char const& operator[] (size_t index) const
 	{
