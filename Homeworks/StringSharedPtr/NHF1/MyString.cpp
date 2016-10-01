@@ -5,13 +5,16 @@ SmartPointer::SmartPointer()
 	ptr = nullptr;
 	AllocateCounter();
 }
-SmartPointer::SmartPointer(SmartPointer && str)
+//Move constructor
+//Moves the rhs part to the lhs, and deletes rhs with nullptr
+//This way in rhs destructor, it won't delete the pointers
+SmartPointer::SmartPointer(SmartPointer && rhs)
 {
-	ptr = str.ptr;
-	refCount = str.refCount;
+	ptr      = rhs.ptr;
+	refCount = rhs.refCount;
 
-	str.ptr = nullptr;
-	str.refCount = nullptr;
+	rhs.ptr      = nullptr;
+	rhs.refCount = nullptr;
 }
 //Explicittel nem fog minden pointert egybol SmartPointerre castolni
 SmartPointer::SmartPointer(char* pointer)
@@ -29,7 +32,7 @@ SmartPointer& SmartPointer::operator= (SmartPointer const& rhs)
 {
 	Release(); //Releases the current reference
 
-	ptr = rhs.ptr;
+	ptr      = rhs.ptr;
 	refCount = rhs.refCount;
 	(*refCount)++; //One more pointer to the data, need to increment counter!
 
@@ -72,6 +75,8 @@ void SmartPointer::Release()
 		}
 	}
 }
+
+//If there is no pointer, then it wont allocate anything
 void SmartPointer::AllocateCounter()
 {
 	if (ptr)
@@ -89,6 +94,8 @@ CharacterProxy::CharacterProxy(SmartPointer & ptr, size_t index)
 	:ptr(ptr), index(index)
 {}
 
+//This will be called if we use str[i] = something
+//This way the smartpointer will be reallocated ina different place, and other copies won't be modified
 CharacterProxy& CharacterProxy::operator=(char rhs)
 {
 	ptr.ReallocateUnattached();
@@ -97,6 +104,8 @@ CharacterProxy& CharacterProxy::operator=(char rhs)
 	return *this;
 }
 
+//Implicit char chast operator,
+//This is used when we read the value of the character e.x := cout << str[i]
 CharacterProxy::operator char()
 {
 	return ptr.get()[index];
@@ -108,6 +117,7 @@ String::String(const char *str /*= ""*/)
 {
 }
 
+//Move ctor
 String::String(String&& str)
 	: ptr(std::move(str.ptr)), size(str.size)
 {
@@ -117,6 +127,7 @@ String::String(String &rhs)
 	: ptr(rhs.ptr), size(rhs.size)
 {
 }
+
 String& String::operator= (String const& rhs)
 {
 	size = rhs.size;
@@ -154,7 +165,7 @@ CharacterProxy String::operator[] (size_t index)
 
 ostream& operator<< (ostream &os, String const& str)
 {
-	os << str.ptr.get();  ///TODO * operator not works
+	os << str.ptr.get();  
 	return os;
 }
 
@@ -173,25 +184,32 @@ istream& operator >> (istream &is, String& str)
 
 	return is;
 }
+
 String String::operator+(const String& rhs)
 {
 	size_t concatLength = size + rhs.size - 1; // -1 because we only need 1 '\0' terminating null
-	char* destString = new char[concatLength];
-	strcpy(destString, ptr.get());
+	char* destString    = new char[concatLength];
+	strcpy(destString, ptr.get());            //Copying lhs to destination
 
-	strcat(destString, rhs.ptr.get());
+	strcat(destString, rhs.ptr.get());        //Copying after lhs the rhs part
 	String result(destString);
 	delete[] destString;
 
 	return result;
 }
+
 String String::operator+=(const String& rhs)
 {
-	*this = *this + rhs;
+	*this = std::move(*this + rhs); //Uses operator + this way no code duplication
+									// also uses move CTOR, this way it is faster
 
 	return *this;
 }
 
+//Comparsion operators for string
+//If strcmp > 0 then lhs < rhs
+//if strcmp < 0 then lhs > rhs
+//if strcmp == 0 then lhs == rhs
 bool String::operator<(String const& rhs) const
 {
 	return strcmp(ptr.get(), rhs.ptr.get()) > 0;
