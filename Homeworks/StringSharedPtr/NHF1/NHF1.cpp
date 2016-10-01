@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include <cstring>
 #include <iostream>
-#include <memory>
 
 using namespace std;
 
@@ -25,7 +24,7 @@ public:
 		str.refCount = nullptr;
 	}
 	//Explicittel nem fog minden pointert egybol SmartPointerre castolni
-	explicit SmartPointer(char* pointer) ///TODO It can be called after constructor call with = but why??
+	explicit SmartPointer(char* pointer) 
 		: ptr{ pointer }
 	{
 		AllocateCounter();
@@ -67,13 +66,6 @@ public:
 	{
 		return ptr;
 	}
-
-	/////TODO
-	//char* operator* ()
-	//{
-	//	return ptr;
-	//}
-	
 
 private:
 	//Releases pointers if reference counter is equals 0
@@ -157,7 +149,6 @@ public:
 		size = rhs.size;
 		ptr  = rhs.ptr;      //Deletes this string reference to the allocated memory 
 							//Sets new ref to the rhs's ref
-		///TODO Maybe remove reference increasing from = and add ptr.IncrementRef function -> This way we can move the ptr
 
 		return *this;       //allows str = str2 = str3;
 	}
@@ -198,7 +189,6 @@ public:
 	{
 		const size_t BUFFERSIZE = 200;
 		char* word              = new char[BUFFERSIZE];
-		//is.getline (word, sizeof(word));
 		is >> word;
 
 		///This way leak!!
