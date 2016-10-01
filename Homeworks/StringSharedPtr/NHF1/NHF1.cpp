@@ -16,6 +16,14 @@ public:
 		ptr = nullptr;
 		AllocateCounter ();
 	}
+	SmartPointer(SmartPointer && str)
+	{
+		ptr      = str.ptr;
+		refCount = str.refCount;
+
+		str.ptr      = nullptr;
+		str.refCount = nullptr;
+	}
 	//Explicittel nem fog minden pointert egybol SmartPointerre castolni
 	explicit SmartPointer(char* pointer) ///TODO It can be called after constructor call with = but why??
 		: ptr{ pointer }
@@ -71,13 +79,16 @@ private:
 	//Releases pointers if reference counter is equals 0
 	void Release()
 	{
-		(*refCount)--;        //Decrements refcount
-		if (*refCount == 0)   //If no more reference to the pointer, deletes it
+		if (ptr != nullptr)
 		{
-			delete[] ptr;
-			ptr = nullptr;
-			delete refCount;
-			refCount = nullptr; //nullptr makes it more safe
+			(*refCount)--;        //Decrements refcount
+			if (*refCount == 0)   //If no more reference to the pointer, deletes it
+			{
+				delete[] ptr;
+				ptr = nullptr;
+				delete refCount;
+				refCount = nullptr; //nullptr makes it more safe
+			}
 		}
 	}
 	void AllocateCounter()
@@ -119,7 +130,6 @@ public:
 	}
 };
 
-///TODO Mozgato konstruktor
 ///TODO Sok komment minden fuggvenyhez!
 
 class String 
@@ -134,8 +144,8 @@ public:
 	}
 
 	String (String&& str)
+		: ptr (std::move(str.ptr)), size (str.size)
 	{
-		
 	}
 
 	String (String &rhs)
@@ -164,6 +174,7 @@ public:
 	{
 		size = 0;
 	}
+
 	size_t Size () const { return size; }
 
 	char const& operator[] (size_t index) const
@@ -193,7 +204,7 @@ public:
 		///This way leak!!
 		//str.ptr = str.allocateStr (word);
 		String newStr {word};
-		str = newStr;
+		str = std::move(newStr);
 
 		delete[] word;
 
