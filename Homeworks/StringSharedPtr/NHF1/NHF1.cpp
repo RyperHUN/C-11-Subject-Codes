@@ -11,7 +11,17 @@ using namespace std;
 class SmartPointer final{
 public:
 	//Ctors
-	SmartPointer () = delete; 
+	SmartPointer ()
+	{
+		ptr = nullptr;
+		AllocateCounter ();
+	}
+	//Explicittel nem fog minden pointert egybol SmartPointerre castolni
+	explicit SmartPointer(char* pointer) ///TODO It can be called after constructor call with = but why??
+		: ptr{ pointer }
+	{
+		AllocateCounter();
+	}
 	SmartPointer (SmartPointer &rhs)
 		: ptr {rhs.ptr}, refCount {rhs.refCount}
 	{
@@ -29,11 +39,7 @@ public:
 		return *this;  //This way we can do things like this ptr = ptr2 = ptr3
 	}
 
-	SmartPointer (char* pointer) ///TODO It can be called after constructor call with = but why??
-		: ptr{pointer}
-	{
-		AllocateCounter ();
-	}
+	
 
 	~SmartPointer ()
 	{
@@ -76,9 +82,14 @@ private:
 	}
 	void AllocateCounter()
 	{
-		refCount = new unsigned int; //Allocates memory for shared reference counter
-		*refCount = 0;
-		(*refCount)++;
+		if (ptr)
+		{
+			refCount = new unsigned int; //Allocates memory for shared reference counter
+			*refCount = 0;
+			(*refCount)++;
+		}
+		else
+			refCount = nullptr;
 	}
 
 	unsigned int* refCount; //it is a pointer, so it can be shared between smartPointers
@@ -120,6 +131,11 @@ public:
 	String (const char *str = "")
 		: ptr (allocateStr (str))
 	{
+	}
+
+	String (String&& str)
+	{
+		
 	}
 
 	String (String &rhs)
@@ -185,7 +201,7 @@ public:
 	}
 	String operator+(const String& rhs)
 	{
-		int concatLength = size + rhs.size - 1; // -1 because we only need 1 '\0' terminating null
+		size_t concatLength = size + rhs.size - 1; // -1 because we only need 1 '\0' terminating null
 		char* destString = new char [concatLength];
 		strcpy (destString, ptr.get());
 
