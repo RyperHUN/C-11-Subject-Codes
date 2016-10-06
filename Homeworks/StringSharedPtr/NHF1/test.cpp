@@ -5,6 +5,7 @@
 
 #include "MyString.h"
 
+
 using namespace std;
 
 
@@ -54,6 +55,7 @@ int main()
 		left += right;
 		cout << "+= expected :" << endl << "leftright" << endl;
 		cout << left << endl;
+		left[0] = right[0]; ///TODO write test
 	}
 	cout << "-------------------------------" << endl;
 	{

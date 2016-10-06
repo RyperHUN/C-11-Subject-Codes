@@ -47,6 +47,8 @@ public:
 
 	CharacterProxy& operator=(char rhs);
 
+	CharacterProxy& operator=(CharacterProxy &) = delete;
+
 	operator char();
 };
 
