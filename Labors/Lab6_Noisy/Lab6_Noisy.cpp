@@ -44,7 +44,7 @@ public:
 	void push (T const& newElem)
 	{
 		if (size == capacity)
-			allocDoubleCapacity ();
+			increaseCapacityWMultiplier (2);
 
 		new (data + size) T {newElem}; //Placement new - Only calls T Copy CTOR!!
 		size++;
@@ -52,13 +52,15 @@ public:
 
 	T pop ()
 	{
-		if(size == 0)
+		if (size == 0)
 			throw "empty stack";
-
+		
 		size--;
 		Noisy copy = data[size];
-
 		data[size].~T();    //Only calls T Destructor
+
+		if (size < capacity / 4)
+			decraseCapacityWMultiplier (2);
 
 		return copy;
 	}
@@ -79,18 +81,29 @@ private:
 		return static_cast<T*> ( ::operator new (sizeof(T) * howBig) ); // Eqvivalens malloccal!
 	}
 
-	void allocDoubleCapacity ()
+	void increaseCapacityWMultiplier (int increaseBy)
 	{
-		capacity = capacity * 2;
-		T* newData = allocate (capacity);  //Alloc new container for data
-		
-		for (int i = 0; i < size; i++)  //Copy existing data
+		capacity = capacity * increaseBy;
+		modifyCapacity (capacity);
+	}
+
+	void decraseCapacityWMultiplier (int decraseBy)
+	{
+		capacity = capacity / decraseBy;
+		modifyCapacity (capacity);
+	}
+
+	void modifyCapacity (int capacity)
+	{
+		T* newData = allocate(capacity);  //Alloc new container for data
+
+		for (size_t i = 0; i < size; i++)  //Copy existing data
 		{
-			new (newData + i) T {data[i]}; //Calls newData[i] CopyCtor
+			new (newData + i) T{ data[i] }; //Calls newData[i] CopyCtor
 		}
-		 
-		callDestructors ();
-		deleteMemory ();
+
+		callDestructors();
+		deleteMemory();
 
 		//Set new ptr for this->data
 		data = newData;
@@ -99,7 +112,7 @@ private:
 	void callDestructors ()
 	{
 		//Call Dtor for old members
-		for (int i = 0; i < size; i++)
+		for (size_t i = 0; i < size; i++)
 		{
 			data[i].~T();
 		}
@@ -118,11 +131,11 @@ int main()
 {
 	{
 		Noisy noisy{2};
-		Stack<Noisy> stack {1};
+		Stack<Noisy> stack {10};
 		stack.push (noisy);
-		stack.push (Noisy{4});
-
-		//stack.pop ();
+		stack.push (Noisy{4}); //Doubling size if stackCap == 1
+		cout << "------------" << endl;
+		stack.pop (); //shrink capacity by 2
 	
 		Noisy::report ();
 	}
