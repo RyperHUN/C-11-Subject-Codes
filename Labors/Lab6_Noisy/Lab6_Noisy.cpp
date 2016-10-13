@@ -44,7 +44,7 @@ public:
 	void push (T const& newElem)
 	{
 		if (size == capacity)
-			increaseCapacityWMultiplier (2);
+			multiplyCapacity (2);
 
 		new (data + size) T {newElem}; //Placement new - Only calls T Copy CTOR!!
 		size++;
@@ -60,7 +60,7 @@ public:
 		data[size].~T();    //Only calls T Destructor
 
 		if (size < capacity / 4)
-			decraseCapacityWMultiplier (2);
+			divideCapacity (2);
 
 		return copy;
 	}
@@ -81,13 +81,13 @@ private:
 		return static_cast<T*> ( ::operator new (sizeof(T) * howBig) ); // Eqvivalens malloccal!
 	}
 
-	void increaseCapacityWMultiplier (int increaseBy)
+	void multiplyCapacity (int increaseBy)
 	{
 		capacity = capacity * increaseBy;
 		modifyCapacity (capacity);
 	}
 
-	void decraseCapacityWMultiplier (int decraseBy)
+	void divideCapacity (int decraseBy)
 	{
 		capacity = capacity / decraseBy;
 		modifyCapacity (capacity);
