@@ -38,15 +38,15 @@ public:
 	Stack (size_t capacity = 20) 
 		: capacity(capacity), size(0)
 	{
-		allocate ();
+		data = allocate (capacity);
 	}
 
 	void push (T const& newElem)
 	{
 		if (size == capacity)
-			throw "Stack full";
+			allocDoubleCapacity ();
 
-		new (data + size) T {newElem};
+		new (data + size) T {newElem}; //Placement new - Only calls T Copy CTOR!!
 		size++;
 	}
 
@@ -58,14 +58,14 @@ public:
 		size--;
 		Noisy copy = data[size];
 
-		data[size].~T();
+		data[size].~T();    //Only calls T Destructor
 
 		return copy;
 	}
 
 	~Stack ()
 	{
-		::operator delete (data);
+		::operator delete (data);  // == free(data) no DTOR call
 	}
 
 	//Don't allow these
@@ -73,24 +73,44 @@ public:
 	Stack& operator=(Stack const&) = delete;
 
 private:
-	void allocate ()
+	T* allocate (size_t howBig)
 	{
-		data = static_cast<T*> ( ::operator new (sizeof(T) * capacity) ); // Eqvivalens malloccal!
+		return static_cast<T*> ( ::operator new (sizeof(T) * howBig) ); // Eqvivalens malloccal!
 	}
 
+	void allocDoubleCapacity ()
+	{
+		capacity = capacity * 2;
+		T* newData = allocate (capacity);  //Alloc new container for data
+		
+		for (int i = 0; i < size; i++)  //Copy existing data
+		{
+			new (newData + i) T {data[i]}; //Calls newData[i] CopyCtor
+		}
+		 
+		//Call Dtor for old members
+		for (int i = 0; i < size; i++)
+		{
+			data[i].~T();
+		}
+		//Delete old ptr
+		::operator delete(data); // == free(data), no DTOR call
+
+		//Set new ptr for this->data
+		data = newData;
+	}
 };
 
 using namespace std;
 
-///TODO Dynamic Stack
-
 int main()
 {
 	Noisy noisy{2};
-	Stack<Noisy> stack;
+	Stack<Noisy> stack {1};
 	stack.push (noisy);
+	stack.push (Noisy{4});
 
-	stack.pop ();
+	//stack.pop ();
 	
 	noisy.report ();
 #ifdef _DEBUG
