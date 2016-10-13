@@ -27,10 +27,76 @@ private:
 
 int Noisy::count = 0;
 
+//T nek nincs T{} és T= sem!!!
+template <typename T>
+class Stack
+{
+	size_t size;
+	size_t capacity;
+	T* data;
+public:
+	Stack (size_t capacity = 20) 
+		: capacity(capacity), size(0)
+	{
+		allocate ();
+	}
+
+	void push (T const& newElem)
+	{
+		if (size == capacity)
+			throw "Stack full";
+
+		new (data + size) T {newElem};
+		size++;
+	}
+
+	T pop ()
+	{
+		if(size == 0)
+			throw "empty stack";
+
+		size--;
+		Noisy copy = data[size];
+
+		data[size].~T();
+
+		return copy;
+	}
+
+	~Stack ()
+	{
+		::operator delete (data);
+	}
+
+	//Don't allow these
+	Stack (Stack const &) = delete;
+	Stack& operator=(Stack const&) = delete;
+
+private:
+	void allocate ()
+	{
+		data = static_cast<T*> ( ::operator new (sizeof(T) * capacity) ); // Eqvivalens malloccal!
+	}
+
+};
+
+using namespace std;
+
+///TODO Dynamic Stack
+
 int main()
 {
+	Noisy noisy{2};
+	Stack<Noisy> stack;
+	stack.push (noisy);
 
-
+	stack.pop ();
+	
+	noisy.report ();
+#ifdef _DEBUG
+	int i;
+	std::cin >> i;
+#endif
     return 0;
 }
 
