@@ -65,7 +65,8 @@ public:
 
 	~Stack ()
 	{
-		::operator delete (data);  // == free(data) no DTOR call
+		callDestructors ();
+		deleteMemory ();
 	}
 
 	//Don't allow these
@@ -88,16 +89,26 @@ private:
 			new (newData + i) T {data[i]}; //Calls newData[i] CopyCtor
 		}
 		 
+		callDestructors ();
+		deleteMemory ();
+
+		//Set new ptr for this->data
+		data = newData;
+	}
+
+	void callDestructors ()
+	{
 		//Call Dtor for old members
 		for (int i = 0; i < size; i++)
 		{
 			data[i].~T();
 		}
+	}
+
+	void deleteMemory ()
+	{
 		//Delete old ptr
 		::operator delete(data); // == free(data), no DTOR call
-
-		//Set new ptr for this->data
-		data = newData;
 	}
 };
 
@@ -105,14 +116,17 @@ using namespace std;
 
 int main()
 {
-	Noisy noisy{2};
-	Stack<Noisy> stack {1};
-	stack.push (noisy);
-	stack.push (Noisy{4});
+	{
+		Noisy noisy{2};
+		Stack<Noisy> stack {1};
+		stack.push (noisy);
+		stack.push (Noisy{4});
 
-	//stack.pop ();
+		//stack.pop ();
 	
-	noisy.report ();
+		Noisy::report ();
+	}
+	Noisy::report ();
 #ifdef _DEBUG
 	int i;
 	std::cin >> i;
