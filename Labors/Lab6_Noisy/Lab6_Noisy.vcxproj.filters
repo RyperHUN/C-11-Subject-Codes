@@ -26,7 +26,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Lab6_Noisy.cpp">
+    <ClCompile Include="Lab6_StackPlacementNew.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
