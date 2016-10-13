@@ -5,14 +5,16 @@
 
 #include <vector>
 #include <iostream>
+#include "NameOfType.h"
 
 //decltype(*begin) == int&
 //auto = *begin; // Ekkor auto == int
 
 template <typename ITER>
-auto find_min(ITER begin, ITER end) -> decltype(*begin) {
+auto find_min(ITER begin, ITER end) -> decltype((*begin)) {
 	if (begin == end)
 		throw "ures";
+	cout << NameOfType<decltype(*begin)>::get() << endl;
 	auto min = *begin;
 	while (++begin != end)
 		if (*begin < min)
