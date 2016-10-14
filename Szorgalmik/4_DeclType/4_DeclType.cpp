@@ -18,17 +18,22 @@
 
 //Tehát ha nem írjuk ki a decltype ot akkor visszatérési értékbõl majd kitalálja
 //auto min = *begin; sorban decltype(auto) == T, és pont ez kell nekünk, ebbõl ki tudja //találni a visszatérési értéket.
+//IF c++14 >= 
+//template <typename ITER>
+//auto find_min (ITER begin, ITER end)
+
 
 template <typename ITER>
-auto find_min(ITER begin, ITER end) {
+auto find_min(ITER begin, ITER end) -> decltype(*begin) {
 	if (begin == end)
 		throw "ures";
 
-	auto min = *begin;
+	ITER minIter = begin;
 	while (++begin != end)
-		if (*begin < min)
-			min = *begin;
-	return min;
+		if (*begin < *minIter)
+			minIter = begin;
+
+	return *minIter;
 }
 
 
