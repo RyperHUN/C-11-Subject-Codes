@@ -10,17 +10,27 @@
 //decltype(*begin) == int&
 //auto = *begin; // Ekkor auto == int
 
+
+//decltype(*begin) == (T& || T const&) // Ez nekünk nem jó hiszen a visszaadott változó a //stacken lesz, ami a függvény visszatérése után megszûnik.
+
+//http://en.cppreference.com/w/cpp/language/auto
+//(3)In a function declaration that does not use the trailing return type syntax, the //keyword auto indicates that the return type will be deduced from the operand of its //return statement using the rules for template argument deduction.
+
+//Tehát ha nem írjuk ki a decltype ot akkor visszatérési értékbõl majd kitalálja
+//auto min = *begin; sorban decltype(auto) == T, és pont ez kell nekünk, ebbõl ki tudja //találni a visszatérési értéket.
+
 template <typename ITER>
-auto find_min(ITER begin, ITER end) -> decltype((*begin)) {
+auto find_min(ITER begin, ITER end) {
 	if (begin == end)
 		throw "ures";
-	cout << NameOfType<decltype(*begin)>::get() << endl;
+
 	auto min = *begin;
 	while (++begin != end)
 		if (*begin < min)
 			min = *begin;
 	return min;
 }
+
 
 class iterTest
 {
