@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include <string>
+#include <vector>
 
 /* FILE* RAII */
 class FilePtr {
@@ -71,10 +72,20 @@ void fclose(FilePtr) = delete;
 int main() {
 	//FilePtr fpOld{ "hello.txt", "wt" };
 
-	FilePtr fp;
-	fp = open_for_writing("hello.txt");
-	fprintf(fp, "Hello vilag");
-	fp = open_for_writing("hello2.txt");
-	fprintf(fp, "Hello vilag");
+	//FilePtr fp;
+	//fp = open_for_writing("hello.txt");
+	//fprintf(fp, "Hello vilag");
+	//fp = open_for_writing("hello2.txt");
+	//fprintf(fp, "Hello vilag");
+
+	std::vector<FilePtr> files;
+	files.push_back(open_for_writing("hello.txt"));
+	files.push_back(open_for_writing("hello2.txt"));
+	fprintf(files[0], "hello.txt");
+	fprintf(files[1], "hello.txt");
+
+	std::vector<FilePtr> filesMoved = std::move (files);
+	//std::vector<FilePtr> filesCOpied = filesMoved;
+	// The last is compile time error which is what we wanted!!!! :)
 }
 
