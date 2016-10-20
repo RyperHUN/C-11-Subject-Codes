@@ -11,15 +11,73 @@ private:
 	size_t w_, h_;
 	double *data_;
 public:
-	size_t getW () {return w_;}
-	size_t getH () {return h_;}
+	size_t getW () const {return w_;}
+	size_t getH () const {return h_;}
 
 	Matrix () 
 		: w_(0), h_(0), 
 		  data_ (nullptr)
 	{}
 
-	Matrix (size_t w, size_t h) 
+	Matrix (Matrix const& rhs)
+	{
+		std::cout << "Copy CTOR" << std::endl;
+		w_ = rhs.getW();
+		h_ = rhs.getH();
+		data_ = (double*)malloc(sizeof(double) * (w_ * h_));
+		for (size_t i = 0; i < w_ * h_; i++)
+		{
+			data_[i] = rhs.data_[i];
+		}
+	}
+	// Move CTOR
+	Matrix (Matrix && rhs)
+	{
+		std::cout << "Move CTOR" << std::endl;
+
+		w_ = rhs.getW();
+		h_ = rhs.getH();
+		data_	  = rhs.data_;
+		rhs.data_ = nullptr;
+	}
+
+	Matrix& operator=(Matrix const& rhs)
+	{
+		if (this != &rhs)
+		{
+			if (data_ != nullptr)
+				free (data_);
+
+			w_ = rhs.getW();
+			h_ = rhs.getH();
+			data_ = (double*)malloc(sizeof(double) * (w_ * h_));
+			for (size_t i = 0; i < w_ * h_; i++)
+			{
+				data_[i] = rhs.data_[i];
+			}
+		}
+
+		return *this;
+	}
+
+	Matrix& operator=(Matrix && rhs)
+	{
+		std::cout << "Move =" << std::endl;
+		if (this != &rhs)
+		{
+			if (data_ != nullptr)
+				free(data_);
+
+			w_ = rhs.getW();
+			h_ = rhs.getH();
+			data_ = rhs.data_;
+		}
+
+		return *this;
+	}
+
+
+	Matrix (size_t h, size_t w)
 		: w_(w), h_(h)
 	{
 		data_ = (double*) malloc (sizeof (double) * (w_ * h_) );
@@ -67,7 +125,12 @@ int main()
 {
 	Matrix m{ 3, 3 };
 	m(0, 0) = 9;  m(2, 1) = 5;
-	std::cout << m;
+	std::cout << m << std::endl;
+
+	Matrix copyMtx = m;
+	std::cout << copyMtx;
+
+	std::swap(copyMtx, m);
 
     return 0;
 }
