@@ -122,6 +122,26 @@ Matrix operator+ (Matrix const& lhs, Matrix const& rhs)
 	return newMatrix;
 }
 
+//THis way we don`t need to allocate memory for matrix, we put the result into the RValue
+Matrix operator+ (Matrix const&& lhs, Matrix const& rhs)
+{
+	assert(lhs.getW() == rhs.getW() && lhs.getH() == rhs.getH());
+
+	for (size_t i = 0; i < rhs.getH(); i++)
+	{
+		for (size_t j = 0; j < rhs.getW(); j++)
+		{
+			lhs(i, j) = lhs(i, j) + rhs(i, j);
+		}
+	}
+
+	return lhs;
+}
+Matrix operator+ (Matrix const& lhs, Matrix const&& rhs)
+{
+	return (std::move (rhs) + lhs);
+}
+
 std::ostream& operator<<(std::ostream &os, Matrix m)
 {
 	for (size_t i = 0 ; i < m.getH (); i++)
@@ -147,7 +167,7 @@ int main()
 
 	std::swap(copyMtx, m);
 
-	Matrix sum = copyMtx + m;
+	Matrix sum = m + (copyMtx + m) ;
 
 	std:: cout << sum << std::endl;
 
