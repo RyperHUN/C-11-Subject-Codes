@@ -65,9 +65,6 @@ public:
 		std::cout << "Move =" << std::endl;
 		if (this != &rhs)
 		{
-			if (data_ != nullptr)
-				free(data_);
-
 			w_ = rhs.getW();
 			h_ = rhs.getH();
 			data_ = rhs.data_;
@@ -108,6 +105,23 @@ public:
 	}
 };
 
+Matrix operator+ (Matrix const& lhs, Matrix const& rhs)
+{
+	assert(lhs.getW () == rhs.getW() && lhs.getH () == rhs.getH ());
+
+	Matrix newMatrix(lhs.getH (), lhs.getW ());
+
+	for (size_t i = 0; i < rhs.getH(); i++)
+	{
+		for (size_t j = 0; j < rhs.getW(); j++)
+		{
+			newMatrix(i, j) = lhs (i, j) + rhs (i, j);
+		}
+	}
+
+	return newMatrix;
+}
+
 std::ostream& operator<<(std::ostream &os, Matrix m)
 {
 	for (size_t i = 0 ; i < m.getH (); i++)
@@ -128,9 +142,14 @@ int main()
 	std::cout << m << std::endl;
 
 	Matrix copyMtx = m;
-	std::cout << copyMtx;
+	copyMtx (0,0) = 1.4;
+	std::cout << copyMtx << std::endl;
 
 	std::swap(copyMtx, m);
+
+	Matrix sum = copyMtx + m;
+
+	std:: cout << sum << std::endl;
 
     return 0;
 }
