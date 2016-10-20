@@ -15,9 +15,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab4_FunargProblems", "Lab4
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab4_RAII_UnmanagedResource", "Lab4_RAII_UnmanagedResource\Lab4_RAII_UnmanagedResource.vcxproj", "{BB8CDCEC-15D0-4D69-AF2A-F7F007B8CC49}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab6_Noisy", "Lab6_Noisy\Lab6_Noisy.vcxproj", "{5C40CE21-B600-4B9C-81FA-8777CF70D7E8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab6_StackPlacementNew", "Lab6_Noisy\Lab6_Noisy.vcxproj", "{5C40CE21-B600-4B9C-81FA-8777CF70D7E8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab6_GlobalOperatorNew", "Lab6_GlobalOperatorNew\Lab6_GlobalOperatorNew.vcxproj", "{5DD086AA-39D6-40A6-84E1-DE7CC8EA047C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab7_RAII_ImproveWithMove", "Lab7_RAII_ImproveWithMove\Lab7_RAII_ImproveWithMove.vcxproj", "{697A5A4E-B441-4F61-8ECE-E872D76C6B92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,14 @@ Global
 		{5DD086AA-39D6-40A6-84E1-DE7CC8EA047C}.Release|x64.Build.0 = Release|x64
 		{5DD086AA-39D6-40A6-84E1-DE7CC8EA047C}.Release|x86.ActiveCfg = Release|Win32
 		{5DD086AA-39D6-40A6-84E1-DE7CC8EA047C}.Release|x86.Build.0 = Release|Win32
+		{697A5A4E-B441-4F61-8ECE-E872D76C6B92}.Debug|x64.ActiveCfg = Debug|x64
+		{697A5A4E-B441-4F61-8ECE-E872D76C6B92}.Debug|x64.Build.0 = Debug|x64
+		{697A5A4E-B441-4F61-8ECE-E872D76C6B92}.Debug|x86.ActiveCfg = Debug|Win32
+		{697A5A4E-B441-4F61-8ECE-E872D76C6B92}.Debug|x86.Build.0 = Debug|Win32
+		{697A5A4E-B441-4F61-8ECE-E872D76C6B92}.Release|x64.ActiveCfg = Release|x64
+		{697A5A4E-B441-4F61-8ECE-E872D76C6B92}.Release|x64.Build.0 = Release|x64
+		{697A5A4E-B441-4F61-8ECE-E872D76C6B92}.Release|x86.ActiveCfg = Release|Win32
+		{697A5A4E-B441-4F61-8ECE-E872D76C6B92}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
