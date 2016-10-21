@@ -146,6 +146,11 @@ Matrix operator+ (Matrix const& lhs, Matrix const&& rhs)
 	return (std::move (rhs) + lhs);
 }
 
+Matrix operator+ (Matrix const&& lhs, Matrix const&& rhs)
+{
+	return (std::move(rhs) + lhs);
+}
+
 std::ostream& operator<<(std::ostream &os, Matrix m)
 {
 	for (size_t i = 0 ; i < m.getH (); i++)
@@ -174,6 +179,8 @@ int main()
 	Matrix sum = m + (copyMtx + m) ;
 
 	std:: cout << sum << std::endl;
+
+	Matrix sum2 = (copyMtx + copyMtx) + (m + m);
 
     return 0;
 }
