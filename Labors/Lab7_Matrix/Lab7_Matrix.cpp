@@ -19,6 +19,28 @@ public:
 		  data_ (nullptr)
 	{}
 
+	Matrix(size_t h, size_t w)
+		: w_(w), h_(h)
+	{
+		data_ = (double*)malloc(sizeof(double) * (w_ * h_));
+		bejar([](double& x) { x = 0; });
+	}
+
+	Matrix(size_t h, size_t w, std::initializer_list<double> l)
+		: w_(w), h_(h)
+	{
+		assert (w_ * h_ == l.size() );
+
+		data_ = (double*)malloc(sizeof(double) * (w_ * h_));
+		
+		auto lIter = l.begin();
+		for (size_t i = 0; i < l.size (); i++)
+		{
+			data_[i] = *lIter;
+			lIter++;
+		}
+	}
+
 	Matrix (Matrix const& rhs)
 	{
 		std::cout << "Copy CTOR" << std::endl;
@@ -75,14 +97,6 @@ public:
 		}
 
 		return *this;
-	}
-
-
-	Matrix (size_t h, size_t w)
-		: w_(w), h_(h)
-	{
-		data_ = (double*) malloc (sizeof (double) * (w_ * h_) );
-		bejar ( [](double& x) { x = 0;});
 	}
 
 	double& operator()(size_t sor, size_t oszlop) // i,j
@@ -176,11 +190,23 @@ int main()
 
 	std::swap(copyMtx, m);
 
+	// operator+(lhs&, rhs&&)
 	Matrix sum = m + (copyMtx + m) ;
 
 	std:: cout << sum << std::endl;
 
+	// operator+(lhs&&, rhs&&)
 	Matrix sum2 = (copyMtx + copyMtx) + (m + m);
+
+
+	//Initialization list
+	Matrix mInitialized{ 3, 3,{
+		9, 0, 0,
+		0, 0, 0,
+		0, 5, 0
+	} };
+
+	std::cout << mInitialized << std::endl;
 
     return 0;
 }
