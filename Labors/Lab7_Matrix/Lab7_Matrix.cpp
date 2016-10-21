@@ -65,9 +65,13 @@ public:
 		std::cout << "Move =" << std::endl;
 		if (this != &rhs)
 		{
+			if (data_ != nullptr)
+				free(data_);
+
 			w_ = rhs.getW();
 			h_ = rhs.getH();
 			data_ = rhs.data_;
+			rhs.data_ = nullptr;
 		}
 
 		return *this;
