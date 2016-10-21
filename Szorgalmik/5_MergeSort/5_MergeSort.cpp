@@ -149,11 +149,11 @@ private:
 		int i = begin, j = mid;
 		for (int c = begin; c < end; ++c) {
 			if (i < mid && (j >= end || in[i] <= in[j])) {
-				out[c] = in[i];
+				out[c] = std::move (in[i]);
 				i++;
 			}
 			else {
-				out[c] = in[j];
+				out[c] = std::move (in[j]);
 				j++;
 			}
 		}
@@ -161,7 +161,7 @@ private:
 
 	void copy(T* in, int begin, int end, T* out) {
 		for (int c = begin; c < end; ++c) {
-			out[c] = in[c];
+			out[c] = std::move (in[c]);
 		}
 	}
 
@@ -182,13 +182,11 @@ public:
 	void sort(T* tomb, int begin, int end)
 	{
 		const size_t size = end - begin;
-		//temp = (T*)malloc(sizeof(T) * size);
 		temp = new T[size];
 
 		merge_sort (tomb, begin, end, temp);
 
 		delete[] temp;
-		//free (temp);
 	}
 };
 
@@ -205,7 +203,7 @@ int main()
 	MergeSorter<int> sorterInt;
 	sorterInt.sort(nums, 0, 7);
 
-	for (auto num : nums)
+	for (auto const& num : nums)
 		std::cout << num << " ";
 	std::cout << std::endl;
 
@@ -213,14 +211,14 @@ int main()
 
 	Noisy noisyes[size] = { 5, 2 , 3, 4, 6, 1, 0 };
 
-	for (auto num : noisyes)
+	for (auto const& num : noisyes)
 		std::cout << num << " ";
 	std::cout << std::endl;
 
 	MergeSorter<Noisy> sorterNoisy;
 	sorterNoisy.sort(noisyes, 0, 7);
 
-	for (auto num : noisyes)
+	for (auto const& num : noisyes)
 		std::cout << num << " ";
 	std::cout << std::endl;
 	
