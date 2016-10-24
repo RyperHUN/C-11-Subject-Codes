@@ -149,11 +149,23 @@ private:
 		int i = begin, j = mid;
 		for (int c = begin; c < end; ++c) {
 			if (i < mid && (j >= end || in[i] <= in[j])) {
-				out[c] = std::move (in[i]);
+				if (copied[c])
+					out[c] = std::move (in[i]);
+				else
+				{
+					new (out + c) T (std::move(in[i]));
+					copied[c] = true;
+				}
 				i++;
 			}
 			else {
-				out[c] = std::move (in[j]);
+				if (copied[c])
+					out[c] = std::move(in[j]);
+				else
+				{
+					new (out + c) T(std::move(in[j]));
+					copied[c] = true;
+				}	
 				j++;
 			}
 		}
@@ -176,17 +188,24 @@ private:
 	}
 
 	T *temp;
+	bool *copied;
 public:
 
 	
 	void sort(T* tomb, int begin, int end)
 	{
 		const size_t size = end - begin;
-		temp = new T[size];
+		copied = new bool[size];
+		temp = (T*) malloc (sizeof(T) * size);
+		for (int i = 0 ; i < size ; i++)
+			copied[i] = false;
 
 		merge_sort (tomb, begin, end, temp);
 
-		delete[] temp;
+		for (int i = 0; i < size; i++)
+			temp[i].~T();
+		free (temp);
+		delete copied;
 	}
 };
 
