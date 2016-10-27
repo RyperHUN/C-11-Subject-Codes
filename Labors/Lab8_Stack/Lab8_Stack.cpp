@@ -14,7 +14,7 @@ class Stack {
 public:
 	explicit Stack(size_t max_size);
 	Stack(Stack const &orig);
-	Stack & operator=(Stack const &orig) = delete;
+	Stack & operator=(Stack orig);
 	~Stack();
 	void push(T const &what);
 	T pop();
@@ -38,8 +38,8 @@ template <typename T>
 Stack<T>::Stack(Stack<T> const &orig) {
 	size_ = orig.size_;
 	max_size_ = orig.max_size_;
-	pData_ = ::operator new(sizeof(T) * max_size_);
-	size_t i = 0
+	pData_ = (T*)::operator new(sizeof(T) * max_size_);
+	size_t i = 0;
 	try {
 		for (i = 0; i != size_; ++i)
 			new (&pData_[i]) T{ orig.pData_[i] };
@@ -76,9 +76,9 @@ void Stack<T>::push(T const &what) {
 /* Pop element from top of the stack. */
 template <typename T>
 T Stack<T>::pop() {
-	size_--;
-	T saved{ pData_[size_] };
+	T saved{ pData_[size_ - 1] };
 	pData_[size_].~T();
+	size_--;
 	return saved;
 }
 
@@ -88,12 +88,25 @@ bool Stack<T>::empty() const {
 	return size_ == 0;
 }
 
+template <typename T>
+Stack<T> & Stack<T>::operator=(Stack orig)
+{
+	std::swap (size_, orig.size_);
+	std::swap (max_size_, orig.max_size_);
+	std::swap (pData_, orig.pData_);
+
+	return *this;
+}
+
 int main() {
 	Stack<char> s{ 100 };
 	char c;
 	while (std::cin.get(c))
 		s.push(c);
+
+	Stack<char> s2{10};
+	s2 = s;
 	while (!s.empty())
-		std::cout << s.pop();
+		std::cout << s2.pop();
 }
 
