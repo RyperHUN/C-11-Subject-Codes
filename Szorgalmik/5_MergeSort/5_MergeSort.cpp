@@ -149,23 +149,24 @@ private:
 		int i = begin, j = mid;
 		for (int c = begin; c < end; ++c) {
 			if (i < mid && (j >= end || in[i] <= in[j])) {
-				if (copied[c])
-					out[c] = std::move (in[i]);
-				else
+				if (end - begin < 3 || !copied[c])
 				{
-					new (out + c) T (std::move(in[i]));
+					new (out + c) T(std::move(in[i]));
 					copied[c] = true;
 				}
+				else
+					out[c] = std::move(in[i]);
 				i++;
 			}
 			else {
-				if (copied[c])
-					out[c] = std::move(in[j]);
-				else
+				if (end - begin < 3 || !copied[c])
 				{
 					new (out + c) T(std::move(in[j]));
 					copied[c] = true;
-				}	
+				}
+				else
+					out[c] = std::move(in[j]);
+				
 				j++;
 			}
 		}
@@ -205,7 +206,7 @@ public:
 		for (int i = 0; i < size; i++)
 			temp[i].~T();
 		free (temp);
-		delete copied;
+		delete[] copied;
 	}
 };
 
@@ -220,7 +221,7 @@ int main()
 	std::cout << std::endl;
 
 	MergeSorter<int> sorterInt;
-	sorterInt.sort(nums, 0, 7);
+	sorterInt.sort(nums, 0, size);
 
 	for (auto const& num : nums)
 		std::cout << num << " ";
@@ -228,7 +229,7 @@ int main()
 
 	std::cout << "----------------------------" << std::endl;
 
-	Noisy noisyes[size] = { 5, 2 , 3, 4, 6, 1, 0 };
+	Noisy noisyes[size] = { 5, 2 , 3, 4, 6, 1, 0};
 
 	for (auto const& num : noisyes)
 		std::cout << num << " ";
