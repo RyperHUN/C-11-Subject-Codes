@@ -24,7 +24,8 @@ template <typename T>
 Stack<T>::Stack(size_t max_size) {
 	size_ = 0;
 	max_size_ = max_size;
-	pData_ = (T*)malloc(sizeof(T) * max_size_);
+	//pData_ = (T*)malloc(sizeof(T) * max_size_); //Not handling bad_alloc
+	pData_ = ::operator new(sizeof(T) * max_size_);
 }
 
 
@@ -32,7 +33,7 @@ template <typename T>
 Stack<T>::Stack(Stack<T> const &orig) {
 	size_ = orig.size_;
 	max_size_ = orig.max_size_;
-	pData_ = (T*)malloc(sizeof(T) * max_size_);
+	pData_ = ::operator new(sizeof(T) * max_size_);
 	for (size_t i = 0; i != size_; ++i)
 		new (&pData_[i]) T{ orig.pData_[i] };
 }
@@ -42,7 +43,7 @@ template <typename T>
 Stack<T>::~Stack() {
 	for (size_t i = 0; i != size_; ++i)
 		pData_[i].~T();
-	free(pData_);
+	::operator delete(pData_);
 }
 
 
