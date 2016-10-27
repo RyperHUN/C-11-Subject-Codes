@@ -40,16 +40,16 @@ Stack<T>::Stack(Stack<T> const &orig) {
 	max_size_ = orig.max_size_;
 	pData_ = ::operator new(sizeof(T) * max_size_);
 	size_t i = 0
-		try {
+	try {
 		for (i = 0; i != size_; ++i)
 			new (&pData_[i]) T{ orig.pData_[i] };
 	}
 	catch (...) {
-		while (i != unsigned(-1))
+		while (i != 0)
 		{
-			i--;
-			pData_[i].~T();
+			pData_[--i].~T(); // If T() Throws exception we undo [0 - i) the constructors
 		}
+		throw;
 	}
 }
 
@@ -65,8 +65,11 @@ Stack<T>::~Stack() {
 /* Push element onto stack. */
 template <typename T>
 void Stack<T>::push(T const &what) {
+	if (size_ == max_size_)
+		throw std::length_error("Stack is full");
+
+	new (&pData_[size_]) T{ what };
 	size_++;
-	new (&pData_[size_ - 1]) T{ what };
 }
 
 
