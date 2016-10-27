@@ -49,6 +49,7 @@ Stack<T>::Stack(Stack<T> const &orig) {
 		{
 			pData_[--i].~T(); // If T() Throws exception we undo [0 - i) the constructors
 		}
+		::operator delete (pData_);
 		throw;
 	}
 }
@@ -76,6 +77,9 @@ void Stack<T>::push(T const &what) {
 /* Pop element from top of the stack. */
 template <typename T>
 T Stack<T>::pop() {
+	if (size_ == 0)
+		throw std::length_error("stack ures");
+
 	T saved{ pData_[size_ - 1] };
 	pData_[size_].~T();
 	size_--;
@@ -106,7 +110,7 @@ int main() {
 
 	Stack<char> s2{10};
 	s2 = s;
-	while (!s.empty())
+	while (!s2.empty())
 		std::cout << s2.pop();
 }
 
