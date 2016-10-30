@@ -9,9 +9,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2_FV_Osztaly", "Projects\2_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3_LiteralSuffixOperator_Dates", "Projects\3_LiteralSuffixOperator_Dates\3_LiteralSuffixOperator_Dates.vcxproj", "{AA6AC3EB-CCDF-4FE6-92E7-CB97F7B98EE2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4_DeclType", "4_DeclType\4_DeclType.vcxproj", "{231A9D9E-0C86-45EB-A2FA-FBA1D977AD4C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4_DeclType", "Projects\4_DeclType\4_DeclType.vcxproj", "{231A9D9E-0C86-45EB-A2FA-FBA1D977AD4C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5_MergeSort", "5_MergeSort\5_MergeSort.vcxproj", "{68EF6D6B-CAA2-4854-BABC-5741A9B5A168}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5_MergeSort", "Projects\5_MergeSort\5_MergeSort.vcxproj", "{68EF6D6B-CAA2-4854-BABC-5741A9B5A168}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
