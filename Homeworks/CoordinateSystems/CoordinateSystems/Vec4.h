@@ -4,6 +4,8 @@
 
 #include <cassert>
 
+namespace Math {
+
 class Vec4 {
 public:
 	float v[4];
@@ -148,3 +150,5 @@ Vec4 Mat4::operator*(const Vec4& right) const
 	return result;
 }
 
+
+} //namespace Math

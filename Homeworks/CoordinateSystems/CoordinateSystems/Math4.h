@@ -8,6 +8,9 @@
 
 class Vec4;
 
+namespace Math{
+///TODO Maybe generic Matrix class with initializer list;
+
 struct Mat4 {
 private:
 
@@ -352,3 +355,5 @@ public:
 
 
 };
+
+} //namespace Math
