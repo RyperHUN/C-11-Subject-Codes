@@ -34,8 +34,8 @@ private:
 
 	void AllocateCounter();
 
-	unsigned int* refCount; //it is a pointer, so it can be shared between smartPointers
 	char*         ptr;
+	unsigned int* refCount; //it is a pointer, so it can be shared between smartPointers
 };
 
 class CharacterProxy {
@@ -54,9 +54,9 @@ public:
 
 class String
 {
+	SmartPointer ptr;
 	size_t size;   //str len + 1 ('\0')
 				   //SmartPointer<char> ptr;
-	SmartPointer ptr;
 public:
 	String(const char *str = "");
 
