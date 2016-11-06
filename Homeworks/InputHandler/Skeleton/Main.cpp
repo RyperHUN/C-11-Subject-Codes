@@ -16,7 +16,6 @@
 
 const unsigned int windowWidth = 600, windowHeight = 600;
 
-//Verziokezelés tesztü
 // OpenGL major and minor versions
 int majorVersion = 3, minorVersion = 0;
 
@@ -58,9 +57,6 @@ void onInitialization() {
 
 }
 
-
-
-
 //=============================== ====================================EVENTS===================================================================================/
 void onExit() {
 	printf("exit");
@@ -76,31 +72,15 @@ void onDisplay() {
 
 
 // Key  ASCII code pressed
-// WASD- Kamera mozgatasa
-// RF - Kamera zoom
-// Space - Csillag focus ON/OFF
 void onKeyboard(unsigned char key, int pX, int pY) {
 	if (key == 'd')
-		printf("d pressed");
-	//if (key == 'd')
-	//	camera.wCx += cameraSpeed;
-	//else if (key == 'a')
-	//	camera.wCx -= cameraSpeed;
-	//else if (key == 'w')
-	//	camera.wCy += cameraSpeed;
-	//else if (key == 's')
-	//	camera.wCy -= cameraSpeed;
-	//else if (key == 'f')
-	//	camera.increaseScale(0.1f, 0.1f);
-	//else if (key == 'r')
-	//	camera.increaseScale(-0.1f, -0.1f);
-	//else if (key == ' ')
-	//	camera.toggleFollow();
+		printf("(d PRESS) \t");
 }
 
 // Key of ASCII code released
 void onKeyboardUp(unsigned char key, int pX, int pY) {
-
+	if (key == 'd')
+		printf("(d RELASE) \t");
 }
 
 // Mouse click event
@@ -119,9 +99,6 @@ void onIdle() {
 	
 	glutPostRedisplay();					// redraw the scene
 }
-
-// Idaig modosithatod...
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 int main(int argc, char * argv[]) {
 	glutInit(&argc, argv);
@@ -148,6 +125,7 @@ int main(int argc, char * argv[]) {
 	glutMouseFunc(onMouse);
 	glutIdleFunc(onIdle);
 	glutKeyboardFunc(onKeyboard);
+	glutSetKeyRepeat (GLUT_KEY_REPEAT_OFF); 
 	glutKeyboardUpFunc(onKeyboardUp);
 	glutMotionFunc(onMouseMotion);
 
