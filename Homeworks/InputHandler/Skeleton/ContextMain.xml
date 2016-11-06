@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Ranges>
+	</Ranges>
+	<Conversions/>
+	<States>
+		<State raw="RAW_INPUT_BUTTON_ONE">STATE_ONE</State>
+	</States>
+	<Actions>
+	</Actions>
+<Context>
