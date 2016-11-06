@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "ThirdParty/pugixml.hpp"
+#include <iostream>
+
 #if defined(__APPLE__)
 #include <OpenGL/glew.h>
 #include <OpenGL/freeglut.h>
@@ -13,6 +16,8 @@
 #include <GL/glew.h>		// must be downloaded 
 #include <GL/freeglut.h>	// must be downloaded unless you have an Apple
 #endif
+
+
 
 const unsigned int windowWidth = 600, windowHeight = 600;
 
@@ -27,7 +32,7 @@ void getErrorInfo(unsigned int handle) {
 		int written;
 		glGetShaderInfoLog(handle, logLen, &written, log);
 		printf("Shader log:\n%s", log);
-		delete log;
+		delete[] log;
 	}
 }
 
@@ -51,11 +56,42 @@ void checkLinking(unsigned int program) {
 	}
 }
 
+void pugXmlTest()
+{
+	pugi::xml_document doc;
+
+	pugi::xml_parse_result result = doc.load_file("cd_catalog.xml");
+
+	std::cout << "Load result: " << result.description() << std::endl;
+
+	for (auto catalog : doc.children("CATALOG"))
+	{
+		for (auto cd : catalog.children("CD"))
+		{
+			std::cout << "CD - " ;
+
+			for (auto attr : cd.attributes ())
+			{
+				std::cout << " " << attr.name() << "=" << attr.value();
+			}
+
+			for (pugi::xml_node child : cd.children())
+			{
+				std::cout << ", child " << child.name() << "val=" << child.first_child().value();
+			}
+			std::cout << std::endl;
+		}
+	}
+}
+
 // Initialization, create an OpenGL context
 void onInitialization() {
 	glViewport(0, 0, windowWidth, windowHeight);
 
+	pugXmlTest ();
 }
+
+
 
 //=============================== ====================================EVENTS===================================================================================/
 void onExit() {
