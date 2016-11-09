@@ -29,9 +29,10 @@ void hanoi (int n, char honnan, char seged, char hova, T fv)
 
 int main (void)
 {
+	int counter = 0;
 	hanoi (4, 'A', 'B', 'C', 
-			[] (char a, char b) {
-				std::cout << "Rakd a korongot " << a << " oszloprol " << b << " oszlopra\n";
+		   [&counter] (char a, char b) {
+				std::cout << "Lepes:" << counter++ << " Rakd a korongot " << a << " oszloprol " << b << " oszlopra\n";
 	});
 	return 0;
 }
