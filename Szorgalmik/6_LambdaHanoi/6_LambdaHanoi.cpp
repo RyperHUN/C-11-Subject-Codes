@@ -29,7 +29,7 @@ void hanoi (int n, char honnan, char seged, char hova,T fv)
 }
 
 
-void hanoi2 (int n, char honnan, char seged, char hova, std::function<void (char, char)> fv)
+void hanoi2 (int n, char honnan, char seged, char hova, std::function<void (char, char)>const& fv)
 {
 	if (n == 0)
 		return;
