@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab8_Stack", "Lab8_Stack\La
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab10_Transform", "Lab10_Transform\Lab10_Transform.vcxproj", "{84B965AE-1FAD-4911-92D5-D8FC485E2197}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab10_FVDrawer", "Lab10_FVDrawer\Lab10_FVDrawer.vcxproj", "{B2BD735E-DEB9-4645-A1EE-429E0BC05977}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -139,6 +141,14 @@ Global
 		{84B965AE-1FAD-4911-92D5-D8FC485E2197}.Release|x64.Build.0 = Release|x64
 		{84B965AE-1FAD-4911-92D5-D8FC485E2197}.Release|x86.ActiveCfg = Release|Win32
 		{84B965AE-1FAD-4911-92D5-D8FC485E2197}.Release|x86.Build.0 = Release|Win32
+		{B2BD735E-DEB9-4645-A1EE-429E0BC05977}.Debug|x64.ActiveCfg = Debug|x64
+		{B2BD735E-DEB9-4645-A1EE-429E0BC05977}.Debug|x64.Build.0 = Debug|x64
+		{B2BD735E-DEB9-4645-A1EE-429E0BC05977}.Debug|x86.ActiveCfg = Debug|Win32
+		{B2BD735E-DEB9-4645-A1EE-429E0BC05977}.Debug|x86.Build.0 = Debug|Win32
+		{B2BD735E-DEB9-4645-A1EE-429E0BC05977}.Release|x64.ActiveCfg = Release|x64
+		{B2BD735E-DEB9-4645-A1EE-429E0BC05977}.Release|x64.Build.0 = Release|x64
+		{B2BD735E-DEB9-4645-A1EE-429E0BC05977}.Release|x86.ActiveCfg = Release|Win32
+		{B2BD735E-DEB9-4645-A1EE-429E0BC05977}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
