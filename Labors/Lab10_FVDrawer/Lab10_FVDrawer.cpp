@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <functional>
 
 class Page {
 public:
@@ -44,8 +45,8 @@ private:
 	std::vector<char> page_;
 };
 
-
-void plot(Page &p, char c, double(*f)(double)) {
+///Faster compile
+void plot(Page &p, char c, std::function<double(double)> f) {
 	for (int x = 0; x < p.get_width(); ++x) {
 		double fx = (x - p.get_width() / 2.0) / 4.0;
 		double fy = f(fx);
@@ -53,13 +54,25 @@ void plot(Page &p, char c, double(*f)(double)) {
 		p.setchar(x, y, c);
 	}
 }
-
+///Faster Run Time
+//template <typename T>
+//void plot(Page &p, char c, T f) {
+//	for (int x = 0; x < p.get_width(); ++x) {
+//		double fx = (x - p.get_width() / 2.0) / 4.0;
+//		double fy = f(fx);
+//		int y = -(fy * 4.0) + p.get_height() / 2;
+//		p.setchar(x, y, c);
+//	}
+//}
 
 int main() {
 	Page p(75, 20);
 
-	plot(p, '#', std::sin);
-	plot(p, 'x', std::cos);
+	plot(p, '#', static_cast<double(*)(double)>(std::sin)); //sin X
+	//plot(p, 'x', static_cast<double(*)(double)>(std::cos)); //cos X
+
+	int n = 2;
+	plot(p, '$', [n](double x){ return std::sin(x * n);} ); //sin n*x
 	p.print();
 }
 
