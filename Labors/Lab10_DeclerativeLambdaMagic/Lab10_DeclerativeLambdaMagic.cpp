@@ -102,37 +102,70 @@ class Tester {
 int main() {
 	//Pitagoras numbers
 	{
+		//std::vector<int> numbers(100);
+		//auto fill_with_num = std::iota<std::vector<int>::iterator,int>;
+		//fill_with_num(numbers.begin(), numbers.end(), 1);
+		////for (auto i : numbers)
+		////	std::cout << i << ' ';
+		//Tester<int> tester;
+
+		//auto a = tester.add_variable (numbers);
+		//auto b = tester.add_variable (numbers);
+		//auto c = tester.add_variable(numbers);
+  //  
+		//// a < b 
+		//tester.add_constraint([=] {
+		//	return a() < b();
+		//});
+		//// b < c
+		//tester.add_constraint([=] {
+		//	return b() < c();
+		//});
+		//// a^2 + b^2 = c^2;
+		//tester.add_constraint([=] {
+		//	return (a() * a() + b() * b()) == (c() * c()); 
+		//});
+
+		//auto print_nums = [=] {
+		//	std::cout << a() << "+" << b() << "==" << c() << std::endl;
+		//};
+		//int counter = 0;
+		//auto count_nums = [&counter] { counter++; };
+		//tester.solve(count_nums);
+		//std::cout << "0-100 Pitagorean nums =" << counter << std::endl;
+	}
+
+	//
+	{
 		std::vector<int> numbers(100);
-		auto fill_with_num = std::iota<std::vector<int>::iterator,int>;
-		fill_with_num(numbers.begin(), numbers.end(), 1);
-		//for (auto i : numbers)
-		//	std::cout << i << ' ';
+		auto fill_with_num = std::iota<std::vector<int>::iterator, int>;
+		fill_with_num(numbers.begin(), numbers.end(), 0);
+
 		Tester<int> tester;
+		auto pigs = tester.add_variable (numbers);
+		auto goats = tester.add_variable(numbers);
+		auto sheeps = tester.add_variable(numbers);
 
-		auto a = tester.add_variable (numbers);
-		auto b = tester.add_variable (numbers);
-		auto c = tester.add_variable(numbers);
-    
-		// a < b 
-		tester.add_constraint([=] {
-			return a() < b();
+		const int PigPrice   = 21;
+		const int GoatPrice  = 8;
+		const int SheepPrice = 3;
+
+		const int Money = 600;
+		const int SumAnimals = 100;
+
+		//Spent all of his money
+		tester.add_constraint ([=]{
+			return (pigs() * PigPrice + goats() * GoatPrice + sheeps() * SheepPrice) == Money;
 		});
-		// b < c
+		//SumAnimals animals bought
 		tester.add_constraint([=] {
-			return b() < c();
-		});
-		// a^2 + b^2 = c^2;
-		tester.add_constraint([=] {
-			return (a() * a() + b() * b()) == (c() * c()); 
+			return (pigs() + goats() + sheeps()) == SumAnimals;
 		});
 
-		auto print_nums = [=] {
-			std::cout << a() << "+" << b() << "==" << c() << std::endl;
-		};
 		int counter = 0;
-		auto count_nums = [&counter] { counter++; };
-		tester.solve(count_nums);
-		std::cout << "0-100 Pitagorean nums =" << counter << std::endl;
+		tester.solve ([=, &counter]{
+			std::cout << "Pig:" << pigs() << " Goat:" << goats() << " Sheep:" << sheeps() << std::endl;
+		});
 	}
 }
 
