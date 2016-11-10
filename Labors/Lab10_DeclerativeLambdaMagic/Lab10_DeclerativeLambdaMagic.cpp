@@ -135,36 +135,66 @@ int main() {
 		//std::cout << "0-100 Pitagorean nums =" << counter << std::endl;
 	}
 
-	//
+	//Euler task
 	{
-		std::vector<int> numbers(100);
+		//std::vector<int> numbers(100);
+		//auto fill_with_num = std::iota<std::vector<int>::iterator, int>;
+		//fill_with_num(numbers.begin(), numbers.end(), 0);
+
+		//Tester<int> tester;
+		//auto pigs = tester.add_variable (numbers);
+		//auto goats = tester.add_variable(numbers);
+		//auto sheeps = tester.add_variable(numbers);
+
+		//const int PigPrice   = 21;
+		//const int GoatPrice  = 8;
+		//const int SheepPrice = 3;
+
+		//const int Money = 600;
+		//const int SumAnimals = 100;
+
+		////Spent all of his money
+		//tester.add_constraint ([=]{
+		//	return (pigs() * PigPrice + goats() * GoatPrice + sheeps() * SheepPrice) == Money;
+		//});
+		////SumAnimals animals bought
+		//tester.add_constraint([=] {
+		//	return (pigs() + goats() + sheeps()) == SumAnimals;
+		//});
+
+		//int counter = 0;
+		//tester.solve ([=, &counter]{
+		//	std::cout << "Pig:" << pigs() << " Goat:" << goats() << " Sheep:" << sheeps() << std::endl;
+		//});
+	}
+	//Send + more = Money
+	{
+		std::vector<int> numbers(10);
 		auto fill_with_num = std::iota<std::vector<int>::iterator, int>;
 		fill_with_num(numbers.begin(), numbers.end(), 0);
-
+		
 		Tester<int> tester;
-		auto pigs = tester.add_variable (numbers);
-		auto goats = tester.add_variable(numbers);
-		auto sheeps = tester.add_variable(numbers);
+		auto s = tester.add_variable (numbers);
+		auto e = tester.add_variable(numbers);
+		auto n = tester.add_variable(numbers);
+		auto d = tester.add_variable(numbers);
+		auto m = tester.add_variable(numbers);
+		auto o = tester.add_variable(numbers);
+		auto r = tester.add_variable(numbers);
+		auto y = tester.add_variable(numbers);
 
-		const int PigPrice   = 21;
-		const int GoatPrice  = 8;
-		const int SheepPrice = 3;
-
-		const int Money = 600;
-		const int SumAnimals = 100;
-
-		//Spent all of his money
-		tester.add_constraint ([=]{
-			return (pigs() * PigPrice + goats() * GoatPrice + sheeps() * SheepPrice) == Money;
-		});
-		//SumAnimals animals bought
-		tester.add_constraint([=] {
-			return (pigs() + goats() + sheeps()) == SumAnimals;
-		});
+		//Semelyik betu nem egyezhet
+		tester.add_constraint ([=]{return d() + e() == y(); });
+		tester.add_constraint ([=] {return n() + r() == e(); });
+		tester.add_constraint([=] {return e() + o() == n(); });
+		tester.add_constraint([=] {return s() + o() == o(); });
+		tester.add_constraint([=] {return ((n() + r())/10) >= 1;});
 
 		int counter = 0;
 		tester.solve ([=, &counter]{
-			std::cout << "Pig:" << pigs() << " Goat:" << goats() << " Sheep:" << sheeps() << std::endl;
+			std::cout << s() << e() << n() << d() << std::endl;
+			std::cout << m() << o() << r() << e() << std::endl;
+			std::cout << m() << o() << n() << e() << y() << std::endl;
 		});
 	}
 }
