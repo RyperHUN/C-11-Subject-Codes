@@ -151,7 +151,7 @@ int main()
 
 	RawGamePadInput.AddEnumString("DPad_Up"); // = 4
 	RawGamePadInput.AddEnumString("DPad_Down"); // = 5
-	RawGamePadInput.AddEnumString("DPad_Left");
+	RawGamePadInput.AddEnumString("DPad_Left"); // = 6
 	RawGamePadInput.AddEnumString("DPad_Right"); // = 7
 
 	RawGamePadInput.AddEnumString("L_Shoulder"); // = 8

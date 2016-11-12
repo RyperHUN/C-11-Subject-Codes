@@ -65,5 +65,14 @@
     <ClInclude Include="InputHandler.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="Input\InputMappingSerializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputMapper.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputContext.h">
+      <Filter>Input</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
