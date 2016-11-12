@@ -47,6 +47,7 @@ Gamepad::Gamepad(int controllerIndex)
 		bPrev_ButtonStates[i] = false;
 		bButtonStates[i] = false;
 		bGamepad_ButtonsDown[i] = false;
+		bGamepad_ButtonsRelease[i] = false;
 	}
 }
 
@@ -88,6 +89,7 @@ void Gamepad::RefreshState()
 
 		// Set 'DOWN' state for current frame
 		bGamepad_ButtonsDown[i] = !bPrev_ButtonStates[i] && bButtonStates[i];
+		bGamepad_ButtonsRelease[i] = bPrev_ButtonStates[i] && !bButtonStates[i];
 	}
 	memcpy(bPrev_ButtonStates, bButtonStates,
 		sizeof(bPrev_ButtonStates));

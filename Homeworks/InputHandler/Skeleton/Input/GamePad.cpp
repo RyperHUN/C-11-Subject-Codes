@@ -44,9 +44,10 @@ Gamepad::Gamepad(int controllerIndex)
 	// Iterate through all gamepad buttons
 	for (int i = 0; i < ButtonCount; i++)
 	{
-		bPrev_ButtonStates[i] = false;
-		bButtonStates[i] = false;
-		bGamepad_ButtonsDown[i] = false;
+		bPrev_ButtonStates[i]       = false;
+		bButtonStates[i]            = false;
+		bGamepad_ButtonsDown[i]     = false;
+		bGamepad_ButtonsReleased[i] = false;
 	}
 }
 
@@ -88,6 +89,7 @@ void Gamepad::RefreshState()
 
 		// Set 'DOWN' state for current frame
 		bGamepad_ButtonsDown[i] = !bPrev_ButtonStates[i] && bButtonStates[i];
+		bGamepad_ButtonsReleased[i] = bPrev_ButtonStates[i] && !bButtonStates[i];
 	}
 	memcpy(bPrev_ButtonStates, bButtonStates,
 		sizeof(bPrev_ButtonStates));

@@ -121,7 +121,7 @@ public:
 	void forgatZ(float szogFok)
 	{
 		//Valamiért kell egy minusz különben az óramutatóval ellentétesen forgat
-		float radian = -szogFok / 180 * M_PI;
+		float radian = (float) (-szogFok / 180.0f * M_PI);
 		m[0][0] = cosf(radian);
 		m[1][0] = sinf(radian);  
 		m[0][1] = -sinf(radian);

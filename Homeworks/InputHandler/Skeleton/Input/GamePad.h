@@ -106,8 +106,9 @@ private:
 	bool bPrev_ButtonStates[ButtonCount]; // Previous frame button states
 	bool bButtonStates[ButtonCount];      // Current frame button states
 
-										  // Buttons pressed on current frame
-	bool bGamepad_ButtonsDown[ButtonCount];
+										  
+	bool bGamepad_ButtonsReleased[ButtonCount];    //Actual frame button released
+	bool bGamepad_ButtonsDown[ButtonCount];    //Actual frame button pressed
 };
 
 #endif // GAMEPAD_H
