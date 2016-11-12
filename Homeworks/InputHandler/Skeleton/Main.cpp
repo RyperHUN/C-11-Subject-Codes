@@ -26,7 +26,9 @@ const unsigned int windowWidth = 600, windowHeight = 600;
 // OpenGL major and minor versions
 int majorVersion = 3, minorVersion = 0;
 
+#include "Input/GamePad.h"
 
+Gamepad * player1Controller;
 
 void pugXmlTest()
 {
@@ -59,6 +61,8 @@ GameObject::Rectangle rect;
 // Initialization, create an OpenGL context
 void onInitialization() {
 	glViewport(0, 0, windowWidth, windowHeight);
+
+	player1Controller = new Gamepad (1);
 
 	Shader * shader = new Shader ();
 	shader->createShader ();
@@ -114,6 +118,11 @@ void onIdle() {
 	long time = glutGet(GLUT_ELAPSED_TIME); // elapsed time since the start of the program
 	float sec = time / 1000.0f;
 	
+	if (player1Controller->Connected ())
+	{
+		rect.posAdd (player1Controller->LeftStick_X () * 0.001f, player1Controller->LeftStick_Y () * 0.001f);
+	}
+
 	glutPostRedisplay();					// redraw the scene
 }
 

@@ -19,6 +19,9 @@
     <Filter Include="Objects">
       <UniqueIdentifier>{84c6c877-a274-483b-8254-de1998fa7e1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{4168c68b-5aeb-4e02-879c-e326e23ce43d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -36,11 +39,11 @@
     <ClCompile Include="ThirdParty\pugixml.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Input\GamePad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Rectangle.h">
       <Filter>Objects</Filter>
     </ClInclude>
@@ -55,6 +58,12 @@
     </ClInclude>
     <ClInclude Include="RenderState.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\GamePad.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

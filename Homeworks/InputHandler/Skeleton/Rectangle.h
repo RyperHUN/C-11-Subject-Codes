@@ -31,7 +31,7 @@ namespace GameObject {
 		void Draw ()
 		{
 			RenderState state;
-			state.M = Translate (pos.x, pos.y, pos.z);
+			state.M = Scale (0.04f, 0.04f, 0.04f) * Translate (pos.x, pos.y, pos.z);
 			shader->Bind (state);
 			// 1rst attribute buffer : vertices
 			glEnableVertexAttribArray(0);
@@ -45,7 +45,7 @@ namespace GameObject {
 				(void*)0            // array buffer offset
 			);
 			// Draw the triangle !
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // Starting from vertex 0; 3 vertices total -> 1 triangle
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // Starting from vertex 0; 4 vertices total -> 2 triangle
 			glDisableVertexAttribArray(0);
 		}
 

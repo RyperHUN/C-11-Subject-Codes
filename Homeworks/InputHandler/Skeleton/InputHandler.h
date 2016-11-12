@@ -4,7 +4,7 @@
 #include <memory>
 #include <Xinput.h>
 
-#include "../XBOXControllerInputTest/GamePad.h"
+#include "Input/GamePad.h"
 
 class Actor
 {
