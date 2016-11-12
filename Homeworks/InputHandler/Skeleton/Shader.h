@@ -2,6 +2,7 @@
 
 #include <GL/glew.h>		// must be downloaded 
 #include "ErrorHandler.h"
+#include "RenderState.h"
 
 #include <cstdio>
 #include <string>
@@ -71,35 +72,12 @@ public:
 	}
 
 	///TODO
-	virtual void Bind ()
-	{
-
+	virtual void Bind(RenderState& state) {
+		///TODO
+		glUseProgram(shaderProgram);
+		mat4 MVP = state.M;
+		MVP.SetUniform(shaderProgram, "MVP");
 	}
-private:
-	static std::string loadShader(std::string fileName)
-	{
-		std::string shaderCode;
-		std::ifstream VertexShaderStream(fileName, std::ios::in);
-		if (VertexShaderStream.is_open()) {
-			std::string Line = "";
-			while (getline(VertexShaderStream, Line))
-				shaderCode += "\n" + Line;
-			VertexShaderStream.close();
-		}
-		else {
-			printf("Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !\n", fileName);
-			getchar();
-			return 0;
-		}
-		return shaderCode;
-	}
-
-	//virtual void Bind(RenderState& state) {
-	//	///TODO
-	//	glUseProgram(shaderProgram);
-	//	mat4 MVP = state.M * state.V * state.P;
-	//	MVP.SetUniform(shaderProgram, "MVP");
-	//}
 	//void Bind(RenderState& state) {
 	//	//====================== VERTEX SHADER TOLTES ================================//
 	//	glUseProgram(shaderProgram);
@@ -128,6 +106,24 @@ private:
 	//	if (state.texture != nullptr)
 	//		glBindTexture(GL_TEXTURE_2D, state.texture->textureId);
 	//}
+private:
+	static std::string loadShader(std::string fileName)
+	{
+		std::string shaderCode;
+		std::ifstream VertexShaderStream(fileName, std::ios::in);
+		if (VertexShaderStream.is_open()) {
+			std::string Line = "";
+			while (getline(VertexShaderStream, Line))
+				shaderCode += "\n" + Line;
+			VertexShaderStream.close();
+		}
+		else {
+			printf("Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !\n", fileName);
+			getchar();
+			return 0;
+		}
+		return shaderCode;
+	}
 };
 
 //class ShaderTextureLoaded : public Shader

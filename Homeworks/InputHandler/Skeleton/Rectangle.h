@@ -1,13 +1,17 @@
 #pragma once
 
 #include <GL/glew.h>		// must be downloaded 
+#include "vectormath.h"
+#include "Shader.h"
 
 namespace GameObject {
 	class Rectangle{
 	public:
-		Rectangle () 
+		Rectangle ()
+			: pos (0, 0, 0)
 		{
 		}
+		void setShader (Shader * shader) { this->shader = shader; }
 		void loadToGpu ()
 		{
 			GLfloat vertices[] = {
@@ -26,6 +30,9 @@ namespace GameObject {
 
 		void Draw ()
 		{
+			RenderState state;
+			state.M = Translate (pos.x, pos.y, pos.z);
+			shader->Bind (state);
 			// 1rst attribute buffer : vertices
 			glEnableVertexAttribArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
@@ -41,7 +48,20 @@ namespace GameObject {
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // Starting from vertex 0; 3 vertices total -> 1 triangle
 			glDisableVertexAttribArray(0);
 		}
+
+		void posAdd (float x, float y)
+		{
+			pos.x += x;
+			pos.y += y;
+		}
 	private:
+		Shader * shader;
 		GLuint vertexBufferObject;
+		vec3 pos;
+		vec3 MaxAcceleration;
+		vec3 MaxVelocity;
+
+		vec3 acceleration;
+		vec3 velocity;
 	};
 } //NS GameObject

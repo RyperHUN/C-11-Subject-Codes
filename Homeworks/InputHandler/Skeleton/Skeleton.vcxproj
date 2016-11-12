@@ -88,7 +88,9 @@
     <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="RenderState.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="vectormath.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

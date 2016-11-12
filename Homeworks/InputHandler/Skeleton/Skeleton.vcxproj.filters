@@ -50,5 +50,11 @@
     <ClInclude Include="ErrorHandler.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="vectormath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

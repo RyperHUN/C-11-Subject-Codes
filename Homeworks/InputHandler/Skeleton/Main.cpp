@@ -63,10 +63,11 @@ void onInitialization() {
 	Shader * shader = new Shader ();
 	shader->createShader ();
 
+	rect.setShader (shader);
 	rect.loadToGpu ();
 
 	//pugXmlTest ();
-	InputHandler inputHand (new Actor);
+	InputHandler inputHand (new Actor); ///TODO LEAK
 }
 
 
@@ -90,7 +91,7 @@ void onDisplay() {
 // Key  ASCII code pressed
 void onKeyboard(unsigned char key, int pX, int pY) {
 	if (key == 'd')
-		printf("(d PRESS) \t");
+		rect.posAdd (0.01, 0);
 }
 
 // Key of ASCII code released
