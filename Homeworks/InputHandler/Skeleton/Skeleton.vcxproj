@@ -81,9 +81,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="SimpleFragmentShader.glsl" />
+    <None Include="SimpleVertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
