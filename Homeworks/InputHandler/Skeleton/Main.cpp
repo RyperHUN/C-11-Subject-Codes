@@ -17,7 +17,7 @@
 #include <GL/freeglut.h>	// must be downloaded unless you have an Apple
 #endif
 
-
+#include "InputHandler.h"
 
 const unsigned int windowWidth = 600, windowHeight = 600;
 
@@ -88,7 +88,8 @@ void pugXmlTest()
 void onInitialization() {
 	glViewport(0, 0, windowWidth, windowHeight);
 
-	pugXmlTest ();
+	//pugXmlTest ();
+	InputHandler inputHand (new Actor);
 }
 
 
