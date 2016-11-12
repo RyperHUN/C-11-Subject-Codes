@@ -5,6 +5,8 @@
 #include <Xinput.h>
 
 #include "Input/GamePad.h"
+#include "Input/HighLevelInputConstants.h"
+#include "Input/RawInputConstants.h"
 
 class Actor
 {
