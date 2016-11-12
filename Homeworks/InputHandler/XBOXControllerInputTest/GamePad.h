@@ -1,5 +1,7 @@
 #pragma once
 
+//Source = https://lcmccauley.wordpress.com/2014/01/05/gamepad-input-tutorial/
+
 #ifndef GAMEPAD_H
 #define GAMEPAD_H
 
