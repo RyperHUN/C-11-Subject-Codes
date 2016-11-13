@@ -8,6 +8,8 @@
 #include <windows.h>
 #include <Xinput.h>
 
+namespace InputMapping {
+
 // XInput Button values
 static const WORD XINPUT_Buttons[] = {
 	XINPUT_GAMEPAD_A,
@@ -54,6 +56,7 @@ struct XButtonIDs
 
 class Gamepad
 {
+	friend class InputHandler;
 public:
 	// Function prototypes
 	//---------------------//
@@ -115,3 +118,5 @@ private:
 
 // Externally define the 'XButtonIDs' struct as 'XButtons'
 extern XButtonIDs XButtons;
+
+} //NS Input Mapping

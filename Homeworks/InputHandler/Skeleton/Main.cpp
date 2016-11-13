@@ -28,7 +28,7 @@ int majorVersion = 3, minorVersion = 0;
 
 #include "Input/GamePad.h"
 
-Gamepad * player1Controller;
+InputMapping::Gamepad * player1Controller;
 InputMapping::InputHandler* inputHandler;
 
 void pugXmlTest()
@@ -63,7 +63,7 @@ GameObject::Rectangle rect;
 void onInitialization() {
 	glViewport(0, 0, windowWidth, windowHeight);
 
-	player1Controller = new Gamepad (1); ///TODO Leak
+	player1Controller = new InputMapping::Gamepad (1); ///TODO Leak
 
 	Shader * shader = new Shader ();
 	shader->createShader ();
@@ -96,8 +96,8 @@ void onDisplay() {
 
 // Key  ASCII code pressed
 void onKeyboard(unsigned char key, int pX, int pY) {
-	if (key == 'd')
-		;
+	//if (key == 'd')
+	//	;
 }
 
 // Key of ASCII code released

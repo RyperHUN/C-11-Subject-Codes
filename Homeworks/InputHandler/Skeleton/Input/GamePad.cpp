@@ -7,6 +7,7 @@
 #pragma comment(lib,"Xinput9_1_0.lib")
 //#endif
 
+namespace InputMapping {
 // Define the 'XButtonIDs' struct as 'XButtons'
 XButtonIDs XButtons;
 
@@ -126,21 +127,29 @@ float Gamepad::LeftStick_Y()
 // Return X axis of right stick
 float Gamepad::RightStick_X()
 {
-	// Obtain X axis of right stick
-	short sX = m_State.Gamepad.sThumbRX;
+	if (!RStick_InDeadzone())
+	{
+		// Obtain X axis of right stick
+		short sX = m_State.Gamepad.sThumbRX;
 
-	// Return axis value, converted to a float
-	return (static_cast<float>(sX) / 32768.0f);
+		// Return axis value, converted to a float
+		return (static_cast<float>(sX) / 32768.0f);
+	}
+	return 0.0f;
 }
 
 // Return Y axis of right stick
 float Gamepad::RightStick_Y()
 {
-	// Obtain the Y axis of the left stick
-	short sY = m_State.Gamepad.sThumbRY;
+	if (!RStick_InDeadzone())
+	{
+		// Obtain the Y axis of the left stick
+		short sY = m_State.Gamepad.sThumbRY;
 
-	// Return axis value, converted to a float
-	return (static_cast<float>(sY) / 32768.0f);
+		// Return axis value, converted to a float
+		return (static_cast<float>(sY) / 32768.0f);
+	}
+	return 0.0f;
 }
 
 // Return value of left trigger
@@ -260,3 +269,5 @@ bool Gamepad::RStick_InDeadzone()
 	// One (or both axes) axis is inside of deadzone
 	return true;
 }
+
+} // NS InputMapping

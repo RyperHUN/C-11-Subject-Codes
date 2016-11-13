@@ -21,6 +21,7 @@ void ContextCreator(std::string fileName,
 	mapWriter(states, file);
 	mapWriter(actions, file);
 
+	///TODO Sensitivity + Conversions
 	file << 0 << std::endl; // Sensitivity
 	file << 0 << std::endl; // COnversions
 }
@@ -34,4 +35,4 @@ static void mapWriter(std::map<InputType, ActionType> map, std::ofstream& file)
 	}
 }
 
-} //NS InputMapping
+} //NS InputMapp
