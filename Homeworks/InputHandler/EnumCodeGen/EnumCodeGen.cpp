@@ -168,14 +168,14 @@ int main()
 
 	creatorRaw.createFile ("../Skeleton/Input/RawInputConstants.h");
 
-	EnumCreator::EnumType Actions("Actions");
+	EnumCreator::EnumType Actions("Action");
 	Actions.AddEnumString ("Teleport");
 
-	EnumCreator::EnumType Axises("Axises");
+	EnumCreator::EnumType Axises("Range");
 	Axises.AddEnumString ("MoveX");
 	Axises.AddEnumString ("MoveY");
 
-	EnumCreator::EnumType States("States");
+	EnumCreator::EnumType States("State");
 	States.AddEnumString ("Sprint");
 
 	EnumCreator creatorHighLevel {Actions, Axises, States};

@@ -4,74 +4,74 @@
 namespace InputMapping
 {
 
-	enum Actions
+	enum Action
 	{
 		Teleport,
 	};
 
-	enum Axises
+	enum Range
 	{
 		MoveX,
 		MoveY,
 	};
 
-	enum States
+	enum State
 	{
 		Sprint,
 	};
 
-	struct StringToActions : public std::map<std::string, Actions>
+	struct StringToActions : public std::map<std::string, Action>
 	{
 		StringToActions ()
 		{
-			this->operator[]("Teleport") = Actions::Teleport;
+			this->operator[]("Teleport") = Action::Teleport;
 		}
 		~StringToActions() {}
 	};
 
-	struct StringToAxises : public std::map<std::string, Axises>
+	struct StringToAxises : public std::map<std::string, Range>
 	{
 		StringToAxises ()
 		{
-			this->operator[]("MoveX") = Axises::MoveX;
-			this->operator[]("MoveY") = Axises::MoveY;
+			this->operator[]("MoveX") = Range::MoveX;
+			this->operator[]("MoveY") = Range::MoveY;
 		}
 		~StringToAxises() {}
 	};
 
-	struct StringToStates : public std::map<std::string, States>
+	struct StringToStates : public std::map<std::string, State>
 	{
 		StringToStates ()
 		{
-			this->operator[]("Sprint") = States::Sprint;
+			this->operator[]("Sprint") = State::Sprint;
 		}
 		~StringToStates() {}
 	};
 
-	struct ActionsToString : public std::map<Actions, std::string> 
+	struct ActionsToString : public std::map<Action, std::string> 
 	{
 		ActionsToString ()
 		{
-			this->operator[](Actions::Teleport) = "Teleport";
+			this->operator[](Action::Teleport) = "Teleport";
 		}
 		~ActionsToString() {}
 	};
 
-	struct AxisesToString : public std::map<Axises, std::string> 
+	struct AxisesToString : public std::map<Range, std::string> 
 	{
 		AxisesToString ()
 		{
-			this->operator[](Axises::MoveX) = "MoveX";
-			this->operator[](Axises::MoveY) = "MoveY";
+			this->operator[](Range::MoveX) = "MoveX";
+			this->operator[](Range::MoveY) = "MoveY";
 		}
 		~AxisesToString() {}
 	};
 
-	struct StatesToString : public std::map<States, std::string> 
+	struct StatesToString : public std::map<State, std::string> 
 	{
 		StatesToString ()
 		{
-			this->operator[](States::Sprint) = "Sprint";
+			this->operator[](State::Sprint) = "Sprint";
 		}
 		~StatesToString() {}
 	};

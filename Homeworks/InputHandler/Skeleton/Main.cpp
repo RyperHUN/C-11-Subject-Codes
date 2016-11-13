@@ -29,6 +29,7 @@ int majorVersion = 3, minorVersion = 0;
 #include "Input/GamePad.h"
 
 Gamepad * player1Controller;
+InputMapping::InputHandler* inputHandler;
 
 void pugXmlTest()
 {
@@ -71,7 +72,7 @@ void onInitialization() {
 	rect.loadToGpu ();
 
 	//pugXmlTest ();
-	InputHandler inputHand (new Actor); ///TODO LEAK
+	inputHandler = new InputMapping::InputHandler (); ///TODO LEAK
 }
 
 

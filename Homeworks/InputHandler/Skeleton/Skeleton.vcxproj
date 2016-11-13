@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Input\GamePad.cpp" />
+    <ClCompile Include="Input\InputMapper.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ThirdParty\pugixml.cpp" />
   </ItemGroup>
@@ -87,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ErrorHandler.h" />
+    <ClInclude Include="FileIO.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Input\GamePad.h" />
     <ClInclude Include="Input\InputContext.h" />

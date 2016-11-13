@@ -2,8 +2,9 @@
 
 
 // Dependencies
-#include "Input/RawInputConstants.h"
-#include "Input/HighLevelInputConstants.h"
+#include "RawInputConstants.h"
+#include "HighLevelInputConstants.h"
+#include "../FileIo.h"
 
 #include <map>
 #include <set>
@@ -22,14 +23,14 @@ namespace InputMapping
 	// Helper structure
 	struct MappedInput
 	{
-		std::set<Actions> Actions;
-		std::set<States> States;
-		std::map<Axises, double> Ranges;
+		std::set<Action> Action;
+		std::set<State> State;
+		std::map<Range, double> Ranges;
 
 		// Consumption helpers
-		void EatAction(InputMapping::Actions action) { Actions.erase(action); }
-		void EatState(InputMapping::States state) { States.erase(state); }
-		void EatRange(Axises /*range*/) {;}
+		void EatAction(InputMapping::Action action) { Action.erase(action); }
+		void EatState(InputMapping::State state) { State.erase(state); }
+		void EatRange(Range /*range*/) {;}
 		//{
 		//	std::map<Range, double>::iterator iter = Ranges.find(range);
 		//	if (iter != Ranges.end())
@@ -46,12 +47,15 @@ namespace InputMapping
 		friend class InputMapperSerializer;
 		// Construction and destruction
 	public:
-		InputMapper();
-		~InputMapper();
+		InputMapper(std::string contextsFile);
+		~InputMapper() {}
 
 		// Raw input interface
 	public:
-		void Clear();
+		void Clear() 
+		{
+			
+		}
 		//void SetRawButtonState(RawInputButton button, bool pressed, bool previouslypressed);
 		//void SetRawAxisValue(RawInputAxis axis, double value);
 
@@ -70,10 +74,10 @@ namespace InputMapping
 
 		// Internal tracking
 	private:
-		std::map<std::wstring, InputContext*> InputContexts;
+		std::map<std::string, InputContext*> InputContexts;
 		std::stack<InputContext*> ActiveContexts;
 
-		std::multimap<int, InputCallback> CallbackTable;
+		std::multimap<int, InputCallback> CallbackTable; //If contexts are same => we can register more callbacks
 
 		MappedInput CurrentMappedInput;
 	};

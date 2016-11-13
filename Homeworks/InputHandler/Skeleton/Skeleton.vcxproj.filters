@@ -42,6 +42,9 @@
     <ClCompile Include="Input\GamePad.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="Input\InputMapper.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rectangle.h">
@@ -73,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="Input\InputContext.h">
       <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="FileIO.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
