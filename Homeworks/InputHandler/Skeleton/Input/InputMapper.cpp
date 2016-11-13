@@ -21,7 +21,7 @@ InputMapper::InputMapper(std::string contextsFile)
 	}
 }
 
-void InputMapper::PressRawButton(RawInputButton button)
+void InputMapper::PressRawButton(RawInputComputer button)
 {
 	Action action;
 	State state;
@@ -40,7 +40,7 @@ void InputMapper::PressRawButton(RawInputButton button)
 	}
 }
 
-void InputMapper::ReleaseRawButton(RawInputButton button)
+void InputMapper::ReleaseRawButton(RawInputComputer button)
 {
 	Action action;
 	State state;
@@ -59,7 +59,7 @@ void InputMapper::ReleaseRawButton(RawInputButton button)
 	}
 }
 
-void InputMapper::SetRawAxisValue(unsigned axis, double value)
+void InputMapper::SetRawAxisValue(RawInputComputer axis, double value)
 {
 	Range range;
 	for (InputContext* context : ActiveContexts) {

@@ -9,7 +9,7 @@ InputContext::InputContext(const std::string& contextfilename)
 	unsigned rangecount = AttemptRead<unsigned>(infile);
 	for (unsigned i = 0; i < rangecount; ++i)
 	{
-		RawInputAxis axis = static_cast<RawInputAxis>(AttemptRead<unsigned>(infile));
+		RawInputComputer axis = static_cast<RawInputComputer>(AttemptRead<unsigned>(infile));
 		Range range = static_cast<Range>(AttemptRead<unsigned>(infile));
 		RangeMap[axis] = range;
 	}
@@ -17,7 +17,7 @@ InputContext::InputContext(const std::string& contextfilename)
 	unsigned statecount = AttemptRead<unsigned>(infile);
 	for (unsigned i = 0; i < statecount; ++i)
 	{
-		RawInputButton button = static_cast<RawInputButton>(AttemptRead<unsigned>(infile));
+		RawInputComputer button = static_cast<RawInputComputer>(AttemptRead<unsigned>(infile));
 		State state = static_cast<State>(AttemptRead<unsigned>(infile));
 		StateMap[button] = state;
 	}
@@ -25,7 +25,7 @@ InputContext::InputContext(const std::string& contextfilename)
 	unsigned actioncount = AttemptRead<unsigned>(infile);
 	for (unsigned i = 0; i < actioncount; ++i)
 	{
-		RawInputButton button = static_cast<RawInputButton>(AttemptRead<unsigned>(infile));
+		RawInputComputer button = static_cast<RawInputComputer>(AttemptRead<unsigned>(infile));
 		Action action = static_cast<Action>(AttemptRead<unsigned>(infile));
 		ActionMap[button] = action;
 	}

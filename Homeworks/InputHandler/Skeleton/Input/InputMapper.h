@@ -58,9 +58,9 @@ namespace InputMapping
 			CurrentMappedInput.Action.clear ();
 			CurrentMappedInput.Ranges.clear ();
 		}
-		void PressRawButton (RawInputButton button);
-		void ReleaseRawButton (RawInputButton button);
-		void SetRawAxisValue (unsigned axis, double value);
+		void PressRawButton (RawInputComputer button);
+		void ReleaseRawButton (RawInputComputer button);
+		void SetRawAxisValue (RawInputComputer axis, double value);
 
 		// Input dispatching interface
 	public:

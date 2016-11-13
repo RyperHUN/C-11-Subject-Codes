@@ -27,27 +27,27 @@ namespace InputMapping
 
 		// Mapping interface
 	public:
-		bool MapButtonToAction(RawInputButton button, Action& out) const
+		bool MapButtonToAction(RawInputComputer button, Action& out) const
 		{
-			std::map<RawInputButton, Action>::const_iterator iter = ActionMap.find(button);
+			std::map<RawInputComputer, Action>::const_iterator iter = ActionMap.find(button);
 			if (iter == ActionMap.end())
 				return false;
 
 			out = iter->second;
 			return true;
 		}
-		bool MapButtonToState(RawInputButton button, State& out) const
+		bool MapButtonToState(RawInputComputer button, State& out) const
 		{
-			std::map<RawInputButton, State>::const_iterator iter = StateMap.find(button);
+			std::map<RawInputComputer, State>::const_iterator iter = StateMap.find(button);
 			if (iter == StateMap.end())
 				return false;
 
 			out = iter->second;
 			return true;
 		}
-		bool MapAxisToRange(RawInputAxis axis, Range& out) const
+		bool MapAxisToRange(RawInputComputer axis, Range& out) const
 		{
-			std::map<RawInputAxis, Range>::const_iterator iter = RangeMap.find(axis);
+			std::map<RawInputComputer, Range>::const_iterator iter = RangeMap.find(axis);
 			if (iter == RangeMap.end())
 				return false;
 
@@ -64,9 +64,9 @@ namespace InputMapping
 
 		// Internal tracking
 	private:
-		std::map<RawInputButton, Action> ActionMap;
-		std::map<RawInputButton, State> StateMap;
-		std::map<RawInputAxis, Range> RangeMap;
+		std::map<RawInputComputer, Action> ActionMap;
+		std::map<RawInputComputer, State> StateMap;
+		std::map<RawInputComputer, Range> RangeMap;
 
 		std::map<Range, double> SensitivityMap; //Key is Range
 		//RangeConverter* Conversions;
