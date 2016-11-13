@@ -73,6 +73,7 @@ void onInitialization() {
 
 	//pugXmlTest ();
 	inputHandler = new InputMapping::InputHandler (); ///TODO LEAK
+	inputHandler->handleGamepad (*player1Controller);
 }
 
 

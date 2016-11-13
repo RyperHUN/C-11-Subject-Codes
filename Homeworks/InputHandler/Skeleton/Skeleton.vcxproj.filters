@@ -45,6 +45,9 @@
     <ClCompile Include="Input\InputMapper.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="Input\InputContext.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rectangle.h">

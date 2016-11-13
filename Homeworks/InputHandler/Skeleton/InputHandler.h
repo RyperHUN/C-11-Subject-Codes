@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <cassert>
+#include <iostream>
 
 #include "Input/GamePad.h"
 #include "Input/HighLevelInputConstants.h"
@@ -20,13 +21,17 @@ public:
 	InputHandler () 
 	{
 		keyboardHandlers.push_back (new InputMapper ("KeyboardContexts.txt"));
+
+		gamepadHandlers.push_back(new InputMapper("KeyboardContexts.txt"));
 	}
 	void handleGamepad (Gamepad& gamepad)
 	{
 		assert (gamepad.GetIndex () < gamepadHandlers.size ());
 
 		InputMapper * mapper = gamepadHandlers[gamepad.GetIndex ()];
-		
+
+		mapper->AddCallback ([](MappedInput &) { std::cout << "FIRE - "; } , 0);
+		mapper->FireCallbacks ();
 	}
 	void handleKeyboard (Keyboard& keyboard)
 	{

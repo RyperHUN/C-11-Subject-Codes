@@ -8,7 +8,7 @@
 
 #include <map>
 #include <set>
-#include <stack>
+#include <vector>
 #include <string>
 
 
@@ -54,18 +54,27 @@ namespace InputMapping
 	public:
 		void Clear() 
 		{
-			
+			CurrentMappedInput.Action.clear ();
+			CurrentMappedInput.Ranges.clear ();
 		}
 		//void SetRawButtonState(RawInputButton button, bool pressed, bool previouslypressed);
 		//void SetRawAxisValue(RawInputAxis axis, double value);
 
 		// Input dispatching interface
 	public:
-		//void FireCallbacks() const;
+		void FireCallbacks() const
+		{
+			MappedInput input = CurrentMappedInput;
+			for (std::multimap<int, InputCallback>::const_iterator iter = CallbackTable.begin(); iter != CallbackTable.end(); ++iter)
+				(iter->second)(input);
+		}
 
 		// Input callback registration interface
 	public:
-		//void AddCallback(InputCallback callback, int priority);
+		void AddCallback(InputCallback callback, int priority)
+		{
+			CallbackTable.insert(std::make_pair(priority, callback));
+		}
 
 		// Context management interface
 	public:
@@ -75,7 +84,7 @@ namespace InputMapping
 		// Internal tracking
 	private:
 		std::map<std::string, InputContext*> InputContexts;
-		std::stack<InputContext*> ActiveContexts;
+		std::vector<InputContext*> ActiveContexts;
 
 		std::multimap<int, InputCallback> CallbackTable; //If contexts are same => we can register more callbacks
 
