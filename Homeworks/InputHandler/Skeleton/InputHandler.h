@@ -72,6 +72,11 @@ public:
 	{
 
 	}
+	void AddCallback (std::function<void(MappedInput&)> callback)
+	{
+		auto mapper = *gamepadHandlers.begin ();
+		mapper->AddCallback (callback, 0);
+	}
 private:
 	std::vector<InputMapper<RawGamePadInput>*> gamepadHandlers;
 	std::vector<InputMapper<RawInputComputer>*> keyboardHandlers;

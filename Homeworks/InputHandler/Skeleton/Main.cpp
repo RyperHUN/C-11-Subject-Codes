@@ -74,6 +74,8 @@ void onInitialization() {
 	//pugXmlTest ();
 	inputHandler = new InputMapping::InputHandler (); ///TODO LEAK
 	inputHandler->handleGamepad (*player1Controller);
+	auto bindedFv = std::bind(&GameObject::Rectangle::HandleInput, &rect, std::placeholders::_1);
+	inputHandler->AddCallback (bindedFv);
 }
 
 

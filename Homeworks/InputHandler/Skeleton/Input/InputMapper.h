@@ -12,6 +12,7 @@
 #include <vector>
 #include <list>
 #include <string>
+#include <functional>
 
 
 namespace InputMapping
@@ -42,7 +43,8 @@ namespace InputMapping
 
 
 	// Handy type shortcuts
-	using InputCallback = void(*)(MappedInput& inputs);
+	/*using InputCallback = void(*)(MappedInput& inputs);*/
+	using InputCallback = std::function<void(MappedInput&)>;
 
 	template <typename InputType>
 	class InputMapper
