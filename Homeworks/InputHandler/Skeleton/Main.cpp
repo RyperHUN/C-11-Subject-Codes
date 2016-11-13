@@ -63,7 +63,7 @@ GameObject::Rectangle rect;
 void onInitialization() {
 	glViewport(0, 0, windowWidth, windowHeight);
 
-	player1Controller = new Gamepad (1);
+	player1Controller = new Gamepad (1); ///TODO Leak
 
 	Shader * shader = new Shader ();
 	shader->createShader ();

@@ -29,15 +29,30 @@ namespace InputMapping
 	public:
 		bool MapButtonToAction(RawInputButton button, Action& out) const
 		{
+			std::map<RawInputButton, Action>::const_iterator iter = ActionMap.find(button);
+			if (iter == ActionMap.end())
+				return false;
+
+			out = iter->second;
 			return true;
 		}
 		bool MapButtonToState(RawInputButton button, State& out) const
 		{
+			std::map<RawInputButton, State>::const_iterator iter = StateMap.find(button);
+			if (iter == StateMap.end())
+				return false;
+
+			out = iter->second;
 			return true;
 		}
 		bool MapAxisToRange(RawInputAxis axis, Range& out) const
 		{
-			return false;
+			std::map<RawInputAxis, Range>::const_iterator iter = RangeMap.find(axis);
+			if (iter == RangeMap.end())
+				return false;
+
+			out = iter->second;
+			return true;
 		}
 
 		//double GetSensitivity(Range range) const;

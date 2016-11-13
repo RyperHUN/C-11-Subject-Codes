@@ -9,6 +9,7 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <list>
 #include <string>
 
 
@@ -57,8 +58,9 @@ namespace InputMapping
 			CurrentMappedInput.Action.clear ();
 			CurrentMappedInput.Ranges.clear ();
 		}
-		//void SetRawButtonState(RawInputButton button, bool pressed, bool previouslypressed);
-		//void SetRawAxisValue(RawInputAxis axis, double value);
+		void PressRawButton (RawInputButton button);
+		void ReleaseRawButton (RawInputButton button);
+		void SetRawAxisValue (RawInputAxis axis, double value);
 
 		// Input dispatching interface
 	public:
@@ -66,7 +68,7 @@ namespace InputMapping
 		{
 			MappedInput input = CurrentMappedInput;
 			for (std::multimap<int, InputCallback>::const_iterator iter = CallbackTable.begin(); iter != CallbackTable.end(); ++iter)
-				(iter->second)(input);
+				iter->second(input);
 		}
 
 		// Input callback registration interface
@@ -78,13 +80,14 @@ namespace InputMapping
 
 		// Context management interface
 	public:
-		void PushContext(const std::wstring& name);
+		void PushContext(const std::string& name);
 		void PopContext();
 
 		// Internal tracking
 	private:
 		std::map<std::string, InputContext*> InputContexts;
-		std::vector<InputContext*> ActiveContexts;
+		std::list<InputContext*> ActiveContexts;
+		//std::vector<InputContext*> ActiveContexts; ///TODO REVERSE ITERATOR VECTOR, and then we don't need to insert do push_front
 
 		std::multimap<int, InputCallback> CallbackTable; //If contexts are same => we can register more callbacks
 
