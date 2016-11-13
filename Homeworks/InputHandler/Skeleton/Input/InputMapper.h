@@ -60,7 +60,7 @@ namespace InputMapping
 		}
 		void PressRawButton (RawInputButton button);
 		void ReleaseRawButton (RawInputButton button);
-		void SetRawAxisValue (RawInputAxis axis, double value);
+		void SetRawAxisValue (unsigned axis, double value);
 
 		// Input dispatching interface
 	public:

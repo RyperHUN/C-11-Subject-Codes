@@ -130,17 +130,19 @@ private:
 
 int main()
 {
-	EnumCreator::EnumType RawInputButton ("RawInputButton");
+	EnumCreator::EnumType RawInputButton ("RawInputComputer");
 	RawInputButton.AddEnumString ("RAW_INPUT_BUTTON_W");
 	RawInputButton.AddEnumString ("RAW_INPUT_BUTTON_A");
 	RawInputButton.AddEnumString ("RAW_INPUT_BUTTON_S");
 	RawInputButton.AddEnumString ("RAW_INPUT_BUTTON_D");
 	RawInputButton.AddEnumString ("RAW_INPUT_BUTTON_K");
 	RawInputButton.AddEnumString ("RAW_INPUT_BUTTON_L");
+	RawInputButton.AddEnumString ("RAW_INPUT_AXIS_MOUSE_X");
+	RawInputButton.AddEnumString ("RAW_INPUT_AXIS_MOUSE_Y");
 
-	EnumCreator::EnumType RawInputAxis ("RawInputAxis");
-	RawInputAxis.AddEnumString ("RAW_INPUT_AXIS_MOUSE_X");
-	RawInputAxis.AddEnumString ("RAW_INPUT_AXIS_MOUSE_Y");
+	//EnumCreator::EnumType RawInputAxis ("RawInputAxis");
+	//RawInputAxis.AddEnumString ("RAW_INPUT_AXIS_MOUSE_X");
+	//RawInputAxis.AddEnumString ("RAW_INPUT_AXIS_MOUSE_Y");
 	
 	//THis can be used to index array
 	EnumCreator::EnumType RawGamePadInput ("RawGamePadInput");
@@ -163,7 +165,15 @@ int main()
 	RawGamePadInput.AddEnumString("Start"); // = 12
 	RawGamePadInput.AddEnumString("Back"); // = 13
 
-	EnumCreator creatorRaw {RawInputButton, RawInputAxis, RawGamePadInput};
+	RawGamePadInput.AddEnumString("L_ThumbAxisX");
+	RawGamePadInput.AddEnumString("L_ThumbAxisY");
+	RawGamePadInput.AddEnumString("R_ThumbAxisX");
+	RawGamePadInput.AddEnumString("R_ThumbAxisY");
+
+	RawGamePadInput.AddEnumString("L_TriggerAxis");
+	RawGamePadInput.AddEnumString("R_TriggerAxis");
+
+	EnumCreator creatorRaw {RawInputButton, RawGamePadInput};
 	//Or creator.AddEnumType ()
 
 	creatorRaw.createFile ("../Skeleton/Input/RawInputConstants.h");

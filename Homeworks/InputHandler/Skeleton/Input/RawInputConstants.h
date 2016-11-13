@@ -4,7 +4,7 @@
 namespace InputMapping
 {
 
-	enum RawInputButton
+	enum RawInputComputer
 	{
 		RAW_INPUT_BUTTON_W,
 		RAW_INPUT_BUTTON_A,
@@ -12,10 +12,6 @@ namespace InputMapping
 		RAW_INPUT_BUTTON_D,
 		RAW_INPUT_BUTTON_K,
 		RAW_INPUT_BUTTON_L,
-	};
-
-	enum RawInputAxis
-	{
 		RAW_INPUT_AXIS_MOUSE_X,
 		RAW_INPUT_AXIS_MOUSE_Y,
 	};
@@ -36,30 +32,28 @@ namespace InputMapping
 		R_Thumbstick,
 		Start,
 		Back,
+		L_ThumbAxisX,
+		L_ThumbAxisY,
+		R_ThumbAxisX,
+		R_ThumbAxisY,
+		L_TriggerAxis,
+		R_TriggerAxis,
 	};
 
-	struct StringToRawInputButton : public std::map<std::string, RawInputButton>
+	struct StringToRawInputComputer : public std::map<std::string, RawInputComputer>
 	{
-		StringToRawInputButton ()
+		StringToRawInputComputer ()
 		{
-			this->operator[]("RAW_INPUT_BUTTON_W") = RawInputButton::RAW_INPUT_BUTTON_W;
-			this->operator[]("RAW_INPUT_BUTTON_A") = RawInputButton::RAW_INPUT_BUTTON_A;
-			this->operator[]("RAW_INPUT_BUTTON_S") = RawInputButton::RAW_INPUT_BUTTON_S;
-			this->operator[]("RAW_INPUT_BUTTON_D") = RawInputButton::RAW_INPUT_BUTTON_D;
-			this->operator[]("RAW_INPUT_BUTTON_K") = RawInputButton::RAW_INPUT_BUTTON_K;
-			this->operator[]("RAW_INPUT_BUTTON_L") = RawInputButton::RAW_INPUT_BUTTON_L;
+			this->operator[]("RAW_INPUT_BUTTON_W") = RawInputComputer::RAW_INPUT_BUTTON_W;
+			this->operator[]("RAW_INPUT_BUTTON_A") = RawInputComputer::RAW_INPUT_BUTTON_A;
+			this->operator[]("RAW_INPUT_BUTTON_S") = RawInputComputer::RAW_INPUT_BUTTON_S;
+			this->operator[]("RAW_INPUT_BUTTON_D") = RawInputComputer::RAW_INPUT_BUTTON_D;
+			this->operator[]("RAW_INPUT_BUTTON_K") = RawInputComputer::RAW_INPUT_BUTTON_K;
+			this->operator[]("RAW_INPUT_BUTTON_L") = RawInputComputer::RAW_INPUT_BUTTON_L;
+			this->operator[]("RAW_INPUT_AXIS_MOUSE_X") = RawInputComputer::RAW_INPUT_AXIS_MOUSE_X;
+			this->operator[]("RAW_INPUT_AXIS_MOUSE_Y") = RawInputComputer::RAW_INPUT_AXIS_MOUSE_Y;
 		}
-		~StringToRawInputButton() {}
-	};
-
-	struct StringToRawInputAxis : public std::map<std::string, RawInputAxis>
-	{
-		StringToRawInputAxis ()
-		{
-			this->operator[]("RAW_INPUT_AXIS_MOUSE_X") = RawInputAxis::RAW_INPUT_AXIS_MOUSE_X;
-			this->operator[]("RAW_INPUT_AXIS_MOUSE_Y") = RawInputAxis::RAW_INPUT_AXIS_MOUSE_Y;
-		}
-		~StringToRawInputAxis() {}
+		~StringToRawInputComputer() {}
 	};
 
 	struct StringToRawGamePadInput : public std::map<std::string, RawGamePadInput>
@@ -80,32 +74,30 @@ namespace InputMapping
 			this->operator[]("R_Thumbstick") = RawGamePadInput::R_Thumbstick;
 			this->operator[]("Start") = RawGamePadInput::Start;
 			this->operator[]("Back") = RawGamePadInput::Back;
+			this->operator[]("L_ThumbAxisX") = RawGamePadInput::L_ThumbAxisX;
+			this->operator[]("L_ThumbAxisY") = RawGamePadInput::L_ThumbAxisY;
+			this->operator[]("R_ThumbAxisX") = RawGamePadInput::R_ThumbAxisX;
+			this->operator[]("R_ThumbAxisY") = RawGamePadInput::R_ThumbAxisY;
+			this->operator[]("L_TriggerAxis") = RawGamePadInput::L_TriggerAxis;
+			this->operator[]("R_TriggerAxis") = RawGamePadInput::R_TriggerAxis;
 		}
 		~StringToRawGamePadInput() {}
 	};
 
-	struct RawInputButtonToString : public std::map<RawInputButton, std::string> 
+	struct RawInputComputerToString : public std::map<RawInputComputer, std::string> 
 	{
-		RawInputButtonToString ()
+		RawInputComputerToString ()
 		{
-			this->operator[](RawInputButton::RAW_INPUT_BUTTON_W) = "RAW_INPUT_BUTTON_W";
-			this->operator[](RawInputButton::RAW_INPUT_BUTTON_A) = "RAW_INPUT_BUTTON_A";
-			this->operator[](RawInputButton::RAW_INPUT_BUTTON_S) = "RAW_INPUT_BUTTON_S";
-			this->operator[](RawInputButton::RAW_INPUT_BUTTON_D) = "RAW_INPUT_BUTTON_D";
-			this->operator[](RawInputButton::RAW_INPUT_BUTTON_K) = "RAW_INPUT_BUTTON_K";
-			this->operator[](RawInputButton::RAW_INPUT_BUTTON_L) = "RAW_INPUT_BUTTON_L";
+			this->operator[](RawInputComputer::RAW_INPUT_BUTTON_W) = "RAW_INPUT_BUTTON_W";
+			this->operator[](RawInputComputer::RAW_INPUT_BUTTON_A) = "RAW_INPUT_BUTTON_A";
+			this->operator[](RawInputComputer::RAW_INPUT_BUTTON_S) = "RAW_INPUT_BUTTON_S";
+			this->operator[](RawInputComputer::RAW_INPUT_BUTTON_D) = "RAW_INPUT_BUTTON_D";
+			this->operator[](RawInputComputer::RAW_INPUT_BUTTON_K) = "RAW_INPUT_BUTTON_K";
+			this->operator[](RawInputComputer::RAW_INPUT_BUTTON_L) = "RAW_INPUT_BUTTON_L";
+			this->operator[](RawInputComputer::RAW_INPUT_AXIS_MOUSE_X) = "RAW_INPUT_AXIS_MOUSE_X";
+			this->operator[](RawInputComputer::RAW_INPUT_AXIS_MOUSE_Y) = "RAW_INPUT_AXIS_MOUSE_Y";
 		}
-		~RawInputButtonToString() {}
-	};
-
-	struct RawInputAxisToString : public std::map<RawInputAxis, std::string> 
-	{
-		RawInputAxisToString ()
-		{
-			this->operator[](RawInputAxis::RAW_INPUT_AXIS_MOUSE_X) = "RAW_INPUT_AXIS_MOUSE_X";
-			this->operator[](RawInputAxis::RAW_INPUT_AXIS_MOUSE_Y) = "RAW_INPUT_AXIS_MOUSE_Y";
-		}
-		~RawInputAxisToString() {}
+		~RawInputComputerToString() {}
 	};
 
 	struct RawGamePadInputToString : public std::map<RawGamePadInput, std::string> 
@@ -126,6 +118,12 @@ namespace InputMapping
 			this->operator[](RawGamePadInput::R_Thumbstick) = "R_Thumbstick";
 			this->operator[](RawGamePadInput::Start) = "Start";
 			this->operator[](RawGamePadInput::Back) = "Back";
+			this->operator[](RawGamePadInput::L_ThumbAxisX) = "L_ThumbAxisX";
+			this->operator[](RawGamePadInput::L_ThumbAxisY) = "L_ThumbAxisY";
+			this->operator[](RawGamePadInput::R_ThumbAxisX) = "R_ThumbAxisX";
+			this->operator[](RawGamePadInput::R_ThumbAxisY) = "R_ThumbAxisY";
+			this->operator[](RawGamePadInput::L_TriggerAxis) = "L_TriggerAxis";
+			this->operator[](RawGamePadInput::R_TriggerAxis) = "R_TriggerAxis";
 		}
 		~RawGamePadInputToString() {}
 	};

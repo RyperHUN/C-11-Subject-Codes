@@ -97,7 +97,7 @@ void onDisplay() {
 // Key  ASCII code pressed
 void onKeyboard(unsigned char key, int pX, int pY) {
 	if (key == 'd')
-		rect.posAdd (0.01, 0);
+		;
 }
 
 // Key of ASCII code released
@@ -120,10 +120,6 @@ void onIdle() {
 	long time = glutGet(GLUT_ELAPSED_TIME); // elapsed time since the start of the program
 	float sec = time / 1000.0f;
 	
-	if (player1Controller->Connected ())
-	{
-		rect.posAdd (player1Controller->LeftStick_X () * 0.001f, player1Controller->LeftStick_Y () * 0.001f);
-	}
 
 	glutPostRedisplay();					// redraw the scene
 }

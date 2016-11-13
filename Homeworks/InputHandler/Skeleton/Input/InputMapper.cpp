@@ -59,7 +59,7 @@ void InputMapper::ReleaseRawButton(RawInputButton button)
 	}
 }
 
-void InputMapper::SetRawAxisValue(RawInputAxis axis, double value)
+void InputMapper::SetRawAxisValue(unsigned axis, double value)
 {
 	Range range;
 	for (InputContext* context : ActiveContexts) {

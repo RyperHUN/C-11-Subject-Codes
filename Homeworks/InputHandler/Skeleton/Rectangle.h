@@ -3,12 +3,13 @@
 #include <GL/glew.h>		// must be downloaded 
 #include "vectormath.h"
 #include "Shader.h"
+#include "Input/InputMapper.h"
 
 namespace GameObject {
 	class Rectangle{
 	public:
 		Rectangle ()
-			: pos (0, 0, 0)
+			: pos (0, 0, 0), sprint (false)
 		{
 		}
 		void setShader (Shader * shader) { this->shader = shader; }
@@ -49,14 +50,22 @@ namespace GameObject {
 			glDisableVertexAttribArray(0);
 		}
 
-		void posAdd (float x, float y)
+		void HandleInput (InputMapping::MappedInput& input)
 		{
-			pos.x += x;
-			pos.y += y;
+			float MoveX = input.Ranges[InputMapping::Range::MoveX];
+			float MoveY = input.Ranges[InputMapping::Range::MoveY];
+
+			if (input.Action.find (InputMapping::Action::Teleport) != input.Action.end ())
+				; //TODO teleport
+
+			sprint = input.State.find (InputMapping::State::Sprint) != input.State.end ();
+
+			///TODO Refresh acceleration
 		}
 	private:
 		Shader * shader;
 		GLuint vertexBufferObject;
+		bool sprint;
 		vec3 pos;
 		vec3 MaxAcceleration;
 		vec3 MaxVelocity;

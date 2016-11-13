@@ -20,60 +20,60 @@ namespace InputMapping
 		Sprint,
 	};
 
-	struct StringToActions : public std::map<std::string, Action>
+	struct StringToAction : public std::map<std::string, Action>
 	{
-		StringToActions ()
+		StringToAction ()
 		{
 			this->operator[]("Teleport") = Action::Teleport;
 		}
-		~StringToActions() {}
+		~StringToAction() {}
 	};
 
-	struct StringToAxises : public std::map<std::string, Range>
+	struct StringToRange : public std::map<std::string, Range>
 	{
-		StringToAxises ()
+		StringToRange ()
 		{
 			this->operator[]("MoveX") = Range::MoveX;
 			this->operator[]("MoveY") = Range::MoveY;
 		}
-		~StringToAxises() {}
+		~StringToRange() {}
 	};
 
-	struct StringToStates : public std::map<std::string, State>
+	struct StringToState : public std::map<std::string, State>
 	{
-		StringToStates ()
+		StringToState ()
 		{
 			this->operator[]("Sprint") = State::Sprint;
 		}
-		~StringToStates() {}
+		~StringToState() {}
 	};
 
-	struct ActionsToString : public std::map<Action, std::string> 
+	struct ActionToString : public std::map<Action, std::string> 
 	{
-		ActionsToString ()
+		ActionToString ()
 		{
 			this->operator[](Action::Teleport) = "Teleport";
 		}
-		~ActionsToString() {}
+		~ActionToString() {}
 	};
 
-	struct AxisesToString : public std::map<Range, std::string> 
+	struct RangeToString : public std::map<Range, std::string> 
 	{
-		AxisesToString ()
+		RangeToString ()
 		{
 			this->operator[](Range::MoveX) = "MoveX";
 			this->operator[](Range::MoveY) = "MoveY";
 		}
-		~AxisesToString() {}
+		~RangeToString() {}
 	};
 
-	struct StatesToString : public std::map<State, std::string> 
+	struct StateToString : public std::map<State, std::string> 
 	{
-		StatesToString ()
+		StateToString ()
 		{
 			this->operator[](State::Sprint) = "Sprint";
 		}
-		~StatesToString() {}
+		~StateToString() {}
 	};
 
 }

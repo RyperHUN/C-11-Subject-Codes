@@ -30,8 +30,13 @@ public:
 
 		InputMapper * mapper = gamepadHandlers[gamepad.GetIndex ()];
 
+		///TODO Assign pushed and relased buttons
+		mapper->SetRawAxisValue (InputMapping::RawGamePadInput::L_ThumbAxisX, gamepad.LeftStick_X ());
+
 		mapper->AddCallback ([](MappedInput &) { std::cout << "FIRE - "; } , 0);
 		mapper->FireCallbacks ();
+
+		mapper->Clear ();
 	}
 	void handleKeyboard (Keyboard& keyboard)
 	{
