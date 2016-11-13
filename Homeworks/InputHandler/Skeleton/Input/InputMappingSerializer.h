@@ -54,10 +54,9 @@ void contextCreator (std::string fileName,
 	mapWriter (ranges, file);
 	mapWriter (states, file);
 	mapWriter (actions, file);
-	/*file << ranges.size() << std::endl;
-	for (range : ranges) {
-		file << range.first << " " << range.second << std::endl;
-	}*/
+
+	file << 0 << std::endl; // Sensitivity
+	file << 0 << std::endl; // COnversions
 }
 template <typename InputType, typename ActionType>
 static void mapWriter (std::map<InputType,ActionType> map, std::ofstream& file)

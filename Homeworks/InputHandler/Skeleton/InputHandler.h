@@ -4,14 +4,31 @@
 #include <memory>
 #include <cassert>
 #include <iostream>
+#include <map>
 
 #include "Input/GamePad.h"
 #include "Input/HighLevelInputConstants.h"
 #include "Input/RawInputConstants.h"
 #include "Input/InputMapper.h"
 #include "Input/InputContext.h"
+#include "Input/InputMappingSerializer.h"
 
 namespace InputMapping {
+
+static void createContextFromCode() {
+	contextCreator<RawGamePadInput>
+		("ContextMainGamepad.txt",
+		{ // Ranges
+			std::make_pair(RawGamePadInput::L_ThumbAxisX, Range::MoveX),
+			std::make_pair(RawGamePadInput::L_ThumbAxisY, Range::MoveY)
+		},
+		{ // Ranges
+			std::make_pair(RawGamePadInput::R_Shoulder, State::Sprint)
+		},
+		{ // Ranges
+			std::make_pair(RawGamePadInput::X, Action::Teleport)
+		});
+}
 
 	class Keyboard; ///TODO
 
@@ -21,8 +38,8 @@ public:
 	InputHandler () 
 	{
 		keyboardHandlers.push_back (new InputMapper<RawInputComputer> ("KeyboardContexts.txt"));
-
-		gamepadHandlers.push_back(new InputMapper<RawGamePadInput>("KeyboardContexts.txt"));
+		createContextFromCode ();
+		gamepadHandlers.push_back(new InputMapper<RawGamePadInput>("ContextGamepad.txt"));
 	}
 	void handleGamepad (Gamepad& gamepad)
 	{
@@ -46,6 +63,7 @@ private:
 	std::vector<InputMapper<RawGamePadInput>*> gamepadHandlers;
 	std::vector<InputMapper<RawInputComputer>*> keyboardHandlers;
 };
+
 
 
 } // NS InputMapper
