@@ -60,9 +60,10 @@ void pugXmlTest()
 }
 GameObject::Rectangle rect;
 // Initialization, create an OpenGL context
+long oldTimeSinceStart;
 void onInitialization() {
 	glViewport(0, 0, windowWidth, windowHeight);
-
+	oldTimeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 	player1Controller = new InputMapping::Gamepad (1); ///TODO Leak
 
 	Shader * shader = new Shader ();
@@ -73,7 +74,7 @@ void onInitialization() {
 
 	//pugXmlTest ();
 	inputHandler = new InputMapping::InputHandler (); ///TODO LEAK
-	inputHandler->handleGamepad (*player1Controller);
+	
 	auto bindedFv = std::bind(&GameObject::Rectangle::HandleInput, &rect, std::placeholders::_1);
 	inputHandler->AddCallback (bindedFv);
 }
@@ -119,10 +120,14 @@ void onMouseMotion(int pX, int pY) {
 
 // Idle event indicating that some time elapsed: do animation here
 void onIdle() {
-	long time = glutGet(GLUT_ELAPSED_TIME); // elapsed time since the start of the program
-	float sec = time / 1000.0f;
-	
+	//float sec = time / 1000.0f;
+	long timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
+	long deltaTime = timeSinceStart - oldTimeSinceStart;
+	float deltaSec = deltaTime / 1000.0f;
+	oldTimeSinceStart = timeSinceStart;
 
+	inputHandler->handleGamepad(*player1Controller);
+	rect.update (deltaSec);
 	glutPostRedisplay();					// redraw the scene
 }
 

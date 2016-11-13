@@ -6,13 +6,25 @@
 #include "Input/InputMapper.h"
 
 namespace GameObject {
-	class Rectangle{
+	class Gameobject {
+	public:
+		virtual void update (float dx) = 0;
+	};
+
+	class Rectangle : Gameobject{
 	public:
 		Rectangle ()
 			: pos (0, 0, 0), sprint (false)
 		{
 		}
 		void setShader (Shader * shader) { this->shader = shader; }
+		void update (float dx)
+		{
+			if (sprint)
+				pos = pos + velocity * dx * 3;
+			else
+				pos = pos + velocity * dx;
+		}
 		void loadToGpu ()
 		{
 			GLfloat vertices[] = {
@@ -54,9 +66,10 @@ namespace GameObject {
 		{
 			float MoveX = input.Ranges[InputMapping::Range::MoveX];
 			float MoveY = input.Ranges[InputMapping::Range::MoveY];
+			velocity = vec3 (MoveX, MoveY, 0) * 0.1;
 
 			if (input.Action.find (InputMapping::Action::Teleport) != input.Action.end ())
-				; //TODO teleport
+				pos = pos + velocity * 4; //TODO teleport
 
 			sprint = input.State.find (InputMapping::State::Sprint) != input.State.end ();
 
