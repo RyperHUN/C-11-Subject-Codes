@@ -5,6 +5,7 @@
 #include "RawInputConstants.h"
 #include "HighLevelInputConstants.h"
 #include "../FileIo.h"
+#include "InputContext.h"
 
 #include <map>
 #include <set>
@@ -17,7 +18,7 @@ namespace InputMapping
 {
 
 	// Forward declarations
-	class InputContext;
+	
 
 	class InputMapperSerializer;
 
@@ -43,6 +44,7 @@ namespace InputMapping
 	// Handy type shortcuts
 	using InputCallback = void(*)(MappedInput& inputs);
 
+	template <typename InputType>
 	class InputMapper
 	{
 		friend class InputMapperSerializer;
@@ -58,9 +60,9 @@ namespace InputMapping
 			CurrentMappedInput.Action.clear ();
 			CurrentMappedInput.Ranges.clear ();
 		}
-		void PressRawButton (RawInputComputer button);
-		void ReleaseRawButton (RawInputComputer button);
-		void SetRawAxisValue (RawInputComputer axis, double value);
+		void PressRawButton (InputType button);
+		void ReleaseRawButton (InputType button);
+		void SetRawAxisValue (InputType axis, double value);
 
 		// Input dispatching interface
 	public:
@@ -85,8 +87,8 @@ namespace InputMapping
 
 		// Internal tracking
 	private:
-		std::map<std::string, InputContext*> InputContexts;
-		std::list<InputContext*> ActiveContexts;
+		std::map<std::string, InputContext<InputType>*> InputContexts;
+		std::list<InputContext<InputType>*> ActiveContexts;
 		//std::vector<InputContext*> ActiveContexts; ///TODO REVERSE ITERATOR VECTOR, and then we don't need to insert do push_front
 
 		std::multimap<int, InputCallback> CallbackTable; //If contexts are same => we can register more callbacks

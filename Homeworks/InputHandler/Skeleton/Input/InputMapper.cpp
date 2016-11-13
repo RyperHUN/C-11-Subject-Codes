@@ -7,7 +7,11 @@
 
 namespace InputMapping {
 
-InputMapper::InputMapper(std::string contextsFile)
+template class InputMapper<RawInputComputer>;
+template class InputMapper<RawGamePadInput>;
+
+template <typename InputType>
+InputMapper<InputType>::InputMapper(std::string contextsFile)
 {
 	unsigned count;
 	std::ifstream infile(contextsFile);
@@ -17,15 +21,16 @@ InputMapper::InputMapper(std::string contextsFile)
 	{
 		std::string name = AttemptRead<std::string>(infile);
 		std::string file = AttemptRead<std::string>(infile);
-		InputContexts[name] = new InputContext(file);
+		InputContexts[name] = new InputContext<InputType>(file);
 	}
 }
 
-void InputMapper::PressRawButton(RawInputComputer button)
+template <typename InputType>
+void InputMapper<InputType>::PressRawButton(InputType button)
 {
 	Action action;
 	State state;
-	for (InputContext* context : ActiveContexts)
+	for (InputContext<InputType>* context : ActiveContexts)
 	{
 		if (context->MapButtonToAction(button, action))
 		{
@@ -39,12 +44,12 @@ void InputMapper::PressRawButton(RawInputComputer button)
 		}
 	}
 }
-
-void InputMapper::ReleaseRawButton(RawInputComputer button)
+template <typename InputType>
+void InputMapper<InputType>::ReleaseRawButton(InputType button)
 {
 	Action action;
 	State state;
-	for (InputContext* context : ActiveContexts)
+	for (InputContext<InputType>* context : ActiveContexts)
 	{
 		if (context->MapButtonToAction(button, action))
 		{
@@ -58,11 +63,11 @@ void InputMapper::ReleaseRawButton(RawInputComputer button)
 		}
 	}
 }
-
-void InputMapper::SetRawAxisValue(RawInputComputer axis, double value)
+template <typename InputType>
+void InputMapper<InputType>::SetRawAxisValue(InputType axis, double value)
 {
 	Range range;
-	for (InputContext* context : ActiveContexts) {
+	for (InputContext<InputType>* context : ActiveContexts) {
 		if (context->MapAxisToRange(axis, range))
 			CurrentMappedInput.Ranges[range] = value;
 	}
@@ -71,9 +76,10 @@ void InputMapper::SetRawAxisValue(RawInputComputer axis, double value)
 //
 // Push an active input context onto the stack
 //
-void InputMapper::PushContext(const std::string& name)
+template <typename InputType>
+void InputMapper<InputType>::PushContext(const std::string& name)
 {
-	std::map<std::string, InputContext*>::iterator iter = InputContexts.find(name);
+	std::map<std::string, InputContext<InputType>*>::iterator iter = InputContexts.find(name);
 	if (iter == InputContexts.end())
 		throw std::exception("Invalid input context pushed");
 
@@ -83,7 +89,8 @@ void InputMapper::PushContext(const std::string& name)
 //
 // Pop the current input context off the stack
 //
-void InputMapper::PopContext()
+template <typename InputType>
+void InputMapper<InputType>::PopContext()
 {
 	if (ActiveContexts.empty())
 		throw std::exception("Cannot pop input context, no contexts active!");

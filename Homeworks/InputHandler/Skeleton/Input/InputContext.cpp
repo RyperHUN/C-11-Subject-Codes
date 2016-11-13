@@ -2,14 +2,19 @@
 
 namespace InputMapping {
 
-InputContext::InputContext(const std::string& contextfilename)
+template class InputContext<RawInputComputer>;
+template class InputContext<RawGamePadInput>;
+
+
+template <typename InputType>
+InputContext<InputType>::InputContext(const std::string& contextfilename)
 {
 	std::ifstream infile(contextfilename.c_str());
 
 	unsigned rangecount = AttemptRead<unsigned>(infile);
 	for (unsigned i = 0; i < rangecount; ++i)
 	{
-		RawInputComputer axis = static_cast<RawInputComputer>(AttemptRead<unsigned>(infile));
+		InputType axis = static_cast<InputType>(AttemptRead<unsigned>(infile));
 		Range range = static_cast<Range>(AttemptRead<unsigned>(infile));
 		RangeMap[axis] = range;
 	}
@@ -17,7 +22,7 @@ InputContext::InputContext(const std::string& contextfilename)
 	unsigned statecount = AttemptRead<unsigned>(infile);
 	for (unsigned i = 0; i < statecount; ++i)
 	{
-		RawInputComputer button = static_cast<RawInputComputer>(AttemptRead<unsigned>(infile));
+		InputType button = static_cast<InputType>(AttemptRead<unsigned>(infile));
 		State state = static_cast<State>(AttemptRead<unsigned>(infile));
 		StateMap[button] = state;
 	}
@@ -25,7 +30,7 @@ InputContext::InputContext(const std::string& contextfilename)
 	unsigned actioncount = AttemptRead<unsigned>(infile);
 	for (unsigned i = 0; i < actioncount; ++i)
 	{
-		RawInputComputer button = static_cast<RawInputComputer>(AttemptRead<unsigned>(infile));
+		InputType button = static_cast<InputType>(AttemptRead<unsigned>(infile));
 		Action action = static_cast<Action>(AttemptRead<unsigned>(infile));
 		ActionMap[button] = action;
 	}
