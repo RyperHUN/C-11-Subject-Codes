@@ -11,12 +11,12 @@
 #include "Input/RawInputConstants.h"
 #include "Input/InputMapper.h"
 #include "Input/InputContext.h"
-#include "Input/InputMappingSerializer.h"
+#include "Input/Serializers.h"
 
 namespace InputMapping {
 
 static void createContextFromCode() {
-	contextCreator<RawGamePadInput>
+	ContextCreator<RawGamePadInput>
 		("ContextMainGamepad.txt",
 		{ // Ranges
 			std::make_pair(RawGamePadInput::L_ThumbAxisX, Range::MoveX),

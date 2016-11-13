@@ -1,5 +1,4 @@
 #include "InputContext.h"
-#include "InputMappingSerializer.h"
 
 namespace InputMapping {
 
@@ -45,8 +44,6 @@ InputContext<InputType>::InputContext(const std::string& contextfilename)
 		double sensitivity = AttemptRead<double>(infile);
 		SensitivityMap[range] = sensitivity;
 	}
-
-	contextCreator ("testCreation.txt", RangeMap, StateMap, ActionMap);
 }
 
 } //NS InputMapping
