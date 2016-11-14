@@ -22,10 +22,10 @@ static void createContextFromCode() {
 			std::make_pair(RawGamePadInput::L_ThumbAxisX, Range::MoveX),
 			std::make_pair(RawGamePadInput::L_ThumbAxisY, Range::MoveY)
 		},
-		{ // Ranges
+		{ // States
 			std::make_pair(RawGamePadInput::R_Shoulder, State::Sprint)
 		},
-		{ // Ranges
+		{ // Actions
 			std::make_pair(RawGamePadInput::X, Action::Teleport)
 		});
 }
