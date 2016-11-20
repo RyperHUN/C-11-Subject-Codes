@@ -28,8 +28,7 @@ int majorVersion = 3, minorVersion = 0;
 
 #include "Input/GamePad.h"
 
-InputMapping::Gamepad * player1Controller;
-InputMapping::InputHandler* inputHandler;
+InputMapping::GamepadInputHandler* gamepadHandler;
 
 void pugXmlTest()
 {
@@ -64,7 +63,7 @@ long oldTimeSinceStart;
 void onInitialization() {
 	glViewport(0, 0, windowWidth, windowHeight);
 	oldTimeSinceStart = glutGet(GLUT_ELAPSED_TIME);
-	player1Controller = new InputMapping::Gamepad (1); ///TODO Leak
+
 
 	Shader * shader = new Shader ();
 	shader->createShader ();
@@ -73,10 +72,10 @@ void onInitialization() {
 	rect.loadToGpu ();
 
 	//pugXmlTest ();
-	inputHandler = new InputMapping::InputHandler (); ///TODO LEAK
+	gamepadHandler = new InputMapping::GamepadInputHandler (1); ///TODO LEAK
 	
 	auto bindedFv = std::bind(&GameObject::Rectangle::HandleInput, &rect, std::placeholders::_1);
-	inputHandler->AddCallback (bindedFv);
+	gamepadHandler->AddCallbackAll (bindedFv);
 }
 
 
@@ -126,7 +125,7 @@ void onIdle() {
 	float deltaSec = deltaTime / 1000.0f;
 	oldTimeSinceStart = timeSinceStart;
 
-	inputHandler->handleGamepad(*player1Controller);
+	gamepadHandler->UpdateGamepads ();
 	rect.update (deltaSec);
 	glutPostRedisplay();					// redraw the scene
 }

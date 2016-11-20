@@ -57,6 +57,7 @@ struct XButtonIDs
 class Gamepad
 {
 	friend class InputHandler;
+	friend class GamepadInputHandler;
 public:
 	// Function prototypes
 	//---------------------//
