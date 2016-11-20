@@ -82,11 +82,6 @@ print(T val)
 	std::cout << "\"" << val << "\" ";
 }
 
-
-//print <typename T>
-//typename std::enable_if<std::is
-
-
 	
 int main()
 {
@@ -94,6 +89,8 @@ int main()
 	print (5);
 	print (5.1);
 	print (5.1f);
+	const int a = 5;
+	print (a);
 
 	std::cout << std::endl << std::endl << "Char test:" << std::endl;
 	print('c');
@@ -102,7 +99,7 @@ int main()
 	std::cout << std::endl << std::endl <<"String test:" << std::endl;
 
 	print("Easy game");
-	std::string str("test");
+	const std::string str("test");
 	print(str);
 
 
