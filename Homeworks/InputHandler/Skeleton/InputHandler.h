@@ -97,14 +97,24 @@ public:
 			gamepadHandlers.emplace_back (new InputMapperPtr(new InputMapperType("ContextGamepad.txt")));
 			gamepadHandlers[i]->PushContext ("maincontext");
 
-			gamepads.emplace_back (new std::unique_ptr<Gamepad>)
+			gamepads.emplace_back (new GamepadPtr (new Gamepad (i + 1)));
 		}
+
+		assert (gamepads.size() == gamepadHandlers.size());
 	}
 
-	void AddCallback(std::function<void(MappedInput&)> callback, size_t gamepad)
+	void AddCallback(std::function<void(MappedInput&)> callback, size_t gamepadIndex)
 	{
-		for (auto& inputMapper : gamepadHandlers)
-		mapper->AddCallback(callback, 0);
+		assert (gamepadIndex < gamepadHandlers.size ());
+
+		gamepadHandlers [gamepadIndex]->AddCallback (callback, 0);
+	}
+	void AddCallbackAll(std::function<void(MappedInput&)> callback)
+	{
+		for (InputMapperPtr& inputMapper : gamepadHandlers) 
+		{
+			inputMapper->AddCallback (callback, 0);
+		}
 	}
 private:
 	using InputMapperType = InputMapper<RawGamePadInput>;
