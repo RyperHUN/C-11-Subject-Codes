@@ -63,6 +63,8 @@ public:
 
 	// Constructors
 	Gamepad() = delete;
+	Gamepad( Gamepad &) = delete;
+	Gamepad( Gamepad &&) = delete;
 	Gamepad(int a_iIndex);
 
 	void Update();       // Update gamepad state
@@ -88,7 +90,7 @@ public:
 
 	//// Utility functions
 	XINPUT_STATE GetState(); // Return gamepad state
-	int GetIndex();          // Return gamepad index
+	size_t GetIndex();          // Return gamepad index
 	bool Connected();        // Return true if gamepad is connected
 
 	//						 // Vibrate the gamepad (0.0f cancel, 1.0f max speed)
@@ -103,7 +105,7 @@ private:
 	//---------------------//
 
 	XINPUT_STATE m_State; // Current gamepad state
-	int m_iGamepadIndex;  // Gamepad index (eg. 1,2,3,4)
+	size_t m_iGamepadIndex;  // Gamepad index (eg. 1,2,3,4)
 
 	static const int ButtonCount = 14;    // Total gamepad buttons
 	bool bPrev_ButtonStates[ButtonCount]; // Previous frame button states

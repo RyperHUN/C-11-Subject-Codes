@@ -68,7 +68,7 @@ XINPUT_STATE Gamepad::GetState()
 }
 
 // Return gamepad index
-int Gamepad::GetIndex()
+size_t Gamepad::GetIndex()
 {
 	return m_iGamepadIndex;
 }

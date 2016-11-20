@@ -44,7 +44,7 @@ namespace GameObject {
 		void Draw ()
 		{
 			RenderState state;
-			state.M = Scale (0.04f, 0.04f, 0.04f) * Translate (pos.x, pos.y, pos.z);
+			state.M = Scale (0.06f, 0.06f, 0.06f) * Translate (pos.x, pos.y, pos.z);
 			shader->Bind (state);
 			// 1rst attribute buffer : vertices
 			glEnableVertexAttribArray(0);

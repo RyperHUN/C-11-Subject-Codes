@@ -84,6 +84,37 @@ private:
 	std::vector<InputMapper<RawInputComputer>*> keyboardHandlers;
 };
 
+class GamepadInputHandler {
+public:
+	GamepadInputHandler (size_t numberOfControllers )
+	{
+		createContextFromCode();
+		gamepadHandlers.reserve (numberOfControllers);
+		gamepads.reserve (numberOfControllers);
+		for (size_t i = 0; i < numberOfControllers; i++)
+		{
+			//Emplace back == placement new
+			gamepadHandlers.emplace_back (new InputMapperPtr(new InputMapperType("ContextGamepad.txt")));
+			gamepadHandlers[i]->PushContext ("maincontext");
+
+			gamepads.emplace_back (new std::unique_ptr<Gamepad>)
+		}
+	}
+
+	void AddCallback(std::function<void(MappedInput&)> callback, size_t gamepad)
+	{
+		for (auto& inputMapper : gamepadHandlers)
+		mapper->AddCallback(callback, 0);
+	}
+private:
+	using InputMapperType = InputMapper<RawGamePadInput>;
+	using InputMapperPtr  = std::unique_ptr<InputMapperType>;
+	std::vector<InputMapperPtr> gamepadHandlers;
+
+	using GamepadPtr = std::unique_ptr<Gamepad>;
+	std::vector<GamepadPtr> gamepads;
+};
+
 
 
 } // NS InputMapper
