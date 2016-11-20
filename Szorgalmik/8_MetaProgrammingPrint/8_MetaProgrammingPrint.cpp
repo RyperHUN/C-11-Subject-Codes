@@ -25,6 +25,20 @@ struct IsNumber<float> {
 	static constexpr bool value = true;
 };
 
+template <typename T>
+struct IsChar {
+	static constexpr bool value = false;
+};
+
+template <>
+struct IsChar<char> {
+	static constexpr bool value = true;
+};
+
+template <>
+struct IsChar<char16_t> {
+	static constexpr bool value = true;
+};
 
 template <typename T>
 typename std::enable_if<IsNumber <T>::value>::type 
@@ -32,6 +46,17 @@ print (T val)
 {
 	std::cout << val << " ";
 }
+
+//typename std::enable_if<std::_Is_character<T>::value>::type
+///std::_is_character nem mukodik char_16t re
+
+template <typename T>
+typename std::enable_if<IsChar<T>::value>::type
+print(T val)
+{
+	std::cout << "'" << val << "' ";
+}
+
 
 //print <typename T>
 //typename std::enable_if<std::is
@@ -45,8 +70,11 @@ int main()
 	print (5.1);
 	print (5.1f);
 
-	std::cout << std::endl << "";
-
+	std::cout << std::endl << "Char test:" << std::endl;
+	print('c');
+	print(static_cast<char16_t>('b'));
+	
+	std::cout << std::endl << "String test:" << std::endl;
 
     return 0;
 }
