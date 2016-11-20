@@ -14,7 +14,6 @@
 
 namespace InputMapping
 {
-	///TODO Maybe template
 	template <typename InputType>
 	class InputContext
 	{

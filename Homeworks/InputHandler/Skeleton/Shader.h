@@ -118,7 +118,7 @@ private:
 			VertexShaderStream.close();
 		}
 		else {
-			printf("Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !\n", fileName);
+			printf("Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !\n", fileName.c_str());
 			getchar();
 			return 0;
 		}

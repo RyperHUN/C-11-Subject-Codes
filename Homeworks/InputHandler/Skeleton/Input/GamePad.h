@@ -66,7 +66,7 @@ public:
 	Gamepad() = delete;
 	Gamepad( Gamepad &) = delete;
 	Gamepad( Gamepad &&) = delete;
-	Gamepad(int a_iIndex);
+	Gamepad(int controllerIndex);
 
 	void Update();       // Update gamepad state
 	void RefreshState(); // Update button states for next frame
@@ -86,8 +86,8 @@ public:
 	//					  // Button functions
 	//					  // - 'Pressed' - Return true if pressed, false if not
 	//					  // - 'Down'    - Same as 'Pressed', but ONLY on current frame
-	bool GetButtonPressed(int a_iButton);
-	bool GetButtonDown(int a_iButton);
+	bool GetButtonPressed(int );
+	bool GetButtonDown(int );
 
 	//// Utility functions
 	XINPUT_STATE GetState(); // Return gamepad state
@@ -108,7 +108,7 @@ private:
 	XINPUT_STATE m_State; // Current gamepad state
 	size_t m_iGamepadIndex;  // Gamepad index (eg. 1,2,3,4)
 
-	static const int ButtonCount = 14;    // Total gamepad buttons
+	static const size_t ButtonCount = 14;    // Total gamepad buttons
 	bool bPrev_ButtonStates[ButtonCount]; // Previous frame button states
 	bool bButtonStates[ButtonCount];      // Current frame button states
 

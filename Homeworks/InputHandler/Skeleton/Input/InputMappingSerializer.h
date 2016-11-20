@@ -6,6 +6,8 @@
 
 namespace InputMapping {
 
+	//Serializer beta
+
 //template <typename InputType>
 //class InputMapperSerializer
 //{

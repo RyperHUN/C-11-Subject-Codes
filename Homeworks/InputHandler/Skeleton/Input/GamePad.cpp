@@ -36,7 +36,7 @@ XButtonIDs::XButtonIDs()
 	Back = 13;
 }
 
-// index 0-4
+// index 1-4
 Gamepad::Gamepad(int controllerIndex)
 {
 	// in XInput the xbox controller is identified from 0-3
@@ -177,9 +177,9 @@ float Gamepad::RightTrigger()
 }
 
 // Return true if button is pressed, false if not
-bool Gamepad::GetButtonPressed(int a_iButton)
+bool Gamepad::GetButtonPressed(int buttonId)
 {
-	if (m_State.Gamepad.wButtons & XINPUT_Buttons[a_iButton])
+	if (m_State.Gamepad.wButtons & XINPUT_Buttons[buttonId])
 	{
 		return true; // The button is pressed
 	}
@@ -187,9 +187,9 @@ bool Gamepad::GetButtonPressed(int a_iButton)
 	return false; // The button is not pressed
 }
 
-bool Gamepad::GetButtonDown(int a_iButton)
+bool Gamepad::GetButtonDown(int buttonId)
 {
-	return bGamepad_ButtonsDown[a_iButton];
+	return bGamepad_ButtonsDown[buttonId];
 }
 
 // Return true if the gamepad is connected

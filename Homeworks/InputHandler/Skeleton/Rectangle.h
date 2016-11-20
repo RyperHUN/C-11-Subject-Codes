@@ -64,9 +64,9 @@ namespace GameObject {
 
 		void HandleInput (InputMapping::MappedInput& input)
 		{
-			float MoveX = input.Ranges[InputMapping::Range::MoveX];
-			float MoveY = input.Ranges[InputMapping::Range::MoveY];
-			velocity = vec3 (MoveX, MoveY, 0) * 0.1;
+			float MoveX = static_cast<float> (input.Ranges[InputMapping::Range::MoveX]);
+			float MoveY = static_cast<float> (input.Ranges[InputMapping::Range::MoveY]);
+			velocity = vec3 (MoveX, MoveY, 0) * 0.1f;
 
 			if (input.Action.find (InputMapping::Action::Teleport) != input.Action.end ())
 				pos = pos + velocity * 4; //TODO teleport

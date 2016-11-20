@@ -16,7 +16,7 @@ void ContextCreator(std::string fileName,
 	std::map<InputType, Action> conversion*/
 	)
 {
-	std::ofstream file(fileName); ///TODO Error handling
+	std::ofstream file(fileName);
 	mapWriter(ranges, file);
 	mapWriter(states, file);
 	mapWriter(actions, file);
