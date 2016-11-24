@@ -31,7 +31,7 @@ public:
 	auto operator() (Types &&... types)
 		-> decltype (_val(std::forward<Types>(types)...))
 	{
-		_val (std::forward<Types>(types)...);
+		return _val (std::forward<Types>(types)...);
 	}
 };
 
