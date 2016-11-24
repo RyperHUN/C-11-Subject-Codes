@@ -35,6 +35,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab10_DeclerativeLambdaMagi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab11_VectorStrategyTemplate", "Lab11_VectorStrategyTemplate\Lab11_VectorStrategyTemplate.vcxproj", "{DBF31149-F15C-4470-AFF1-8D60EF535747}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab11_OwnIsBaseOf", "Lab11_OwnIsBaseOf\Lab11_OwnIsBaseOf.vcxproj", "{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -169,6 +171,14 @@ Global
 		{DBF31149-F15C-4470-AFF1-8D60EF535747}.Release|x64.Build.0 = Release|x64
 		{DBF31149-F15C-4470-AFF1-8D60EF535747}.Release|x86.ActiveCfg = Release|Win32
 		{DBF31149-F15C-4470-AFF1-8D60EF535747}.Release|x86.Build.0 = Release|Win32
+		{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}.Debug|x64.ActiveCfg = Debug|x64
+		{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}.Debug|x64.Build.0 = Debug|x64
+		{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}.Debug|x86.ActiveCfg = Debug|Win32
+		{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}.Debug|x86.Build.0 = Debug|Win32
+		{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}.Release|x64.ActiveCfg = Release|x64
+		{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}.Release|x64.Build.0 = Release|x64
+		{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}.Release|x86.ActiveCfg = Release|Win32
+		{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
