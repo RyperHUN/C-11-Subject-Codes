@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab11_VectorStrategyTemplat
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab11_OwnIsBaseOf", "Lab11_OwnIsBaseOf\Lab11_OwnIsBaseOf.vcxproj", "{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab11_FibonacciMeta", "Lab11_FibonacciMeta\Lab11_FibonacciMeta.vcxproj", "{A22AD16C-3BEE-40C3-B23B-31D6BAA5C4A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -179,6 +181,14 @@ Global
 		{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}.Release|x64.Build.0 = Release|x64
 		{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}.Release|x86.ActiveCfg = Release|Win32
 		{B4AE05DE-4AD0-4480-A37A-F11615EEBFE2}.Release|x86.Build.0 = Release|Win32
+		{A22AD16C-3BEE-40C3-B23B-31D6BAA5C4A4}.Debug|x64.ActiveCfg = Debug|x64
+		{A22AD16C-3BEE-40C3-B23B-31D6BAA5C4A4}.Debug|x64.Build.0 = Debug|x64
+		{A22AD16C-3BEE-40C3-B23B-31D6BAA5C4A4}.Debug|x86.ActiveCfg = Debug|Win32
+		{A22AD16C-3BEE-40C3-B23B-31D6BAA5C4A4}.Debug|x86.Build.0 = Debug|Win32
+		{A22AD16C-3BEE-40C3-B23B-31D6BAA5C4A4}.Release|x64.ActiveCfg = Release|x64
+		{A22AD16C-3BEE-40C3-B23B-31D6BAA5C4A4}.Release|x64.Build.0 = Release|x64
+		{A22AD16C-3BEE-40C3-B23B-31D6BAA5C4A4}.Release|x86.ActiveCfg = Release|Win32
+		{A22AD16C-3BEE-40C3-B23B-31D6BAA5C4A4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
