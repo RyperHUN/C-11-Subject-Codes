@@ -28,7 +28,9 @@ public:
 
 	/*operator T& () {return _val;}*/
 	template< class... Types>
-	void operator() (Types &&... types) {
+	auto operator() (Types &&... types)
+		-> decltype (_val(std::forward<Types>(types)...))
+	{
 		_val (std::forward<Types>(types)...);
 	}
 };
@@ -59,10 +61,10 @@ int main()
 	//ref (1); // Compile time error
 
 	//wrappedIntPrinter (); // Compile time error
-	wrappedIntPrinter (1, 2);
+	wrappedIntPrinter (1, 2); //Works now
 	wrappedIntPrinter (2);
 	for_each(std::begin(arr1), std::end(arr1), ref(p));     /* 1. 2. 3. 4. */
-	for_each(std::begin(arr2), std::end(arr2), p);     /* 5. 6. 7. 8. 9. */
+	for_each(std::begin(arr2), std::end(arr2), ref(p));     /* 5. 6. 7. 8. 9. */
 
     return 0;
 }
