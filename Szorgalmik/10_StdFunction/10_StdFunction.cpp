@@ -82,6 +82,12 @@ namespace Ryper{
 			return fv;
 		}
 		
+		template <typename T>
+		void operator= (T const& anything)
+		{
+			ptr.set<T>(anything);
+		}
+
 		//FUNCPTR& operator= (FUNCPTR& fv) {
 		//	ptr = fv;
 
@@ -118,10 +124,13 @@ int main() {
 	
 	f = [](double x) { return x*x; };
 	std::cout << 2.3*2.3 << "==" << f(2.3) << std::endl;
-	/*
+	
 	f = std::bind(static_cast<double(*)(double, int)>(pow), std::placeholders::_1, 4);
 	std::cout << pow(2.3, 4) << "==" << f(2.3) << std::endl;
-	*/
+
+	f = [&](double x) { return x * 2;}; //More test with Lambda
+	std::cout << 2 << "==" << f (1.0) << std::endl;
+
 	///TODO Solve nullptr
 	//f = nullptr;
 	//try {
