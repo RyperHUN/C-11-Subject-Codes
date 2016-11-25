@@ -16,7 +16,7 @@ namespace Ryper{
 		reference_wrapper(T &val)
 			:_val(val) {}
 
-		/*operator T& () {return _val;}*/
+		/*operator FUNCPTR& () {return _val;}*/
 		template< class... Types>
 		auto operator() (Types &&... types)
 			-> decltype (_val(std::forward<Types>(types)...))
@@ -25,36 +25,40 @@ namespace Ryper{
 		}
 	};
 
-	//template <typename T>
+	//template <typename FUNCPTR>
 	//class functionStoringBase {
-	//	auto operator() -> decltype (T()) 
+	//	auto operator() -> decltype (FUNCPTR()) 
 	//	{
 	//		
 	//	}
 	//};
 
-	template <typename T>
-	class function {
-		T* ptr = nullptr;
+	template <typename FUNC>
+	class function;
+
+
+	template <typename RET, typename ... ARGS>
+	class function<RET(ARGS...)> {
+		using FUNCPTR = RET (ARGS...);
+		FUNCPTR* ptr = nullptr;
 	public:
 
-		T* operator= (T* fv) {
+		FUNCPTR* operator= (FUNCPTR* fv) {
 			ptr = fv;
 
 			return fv;
 		}
-		T& operator= (T& fv) {
+		FUNCPTR& operator= (FUNCPTR& fv) {
 			ptr = fv;
 
 			return fv;
 		}
-		template< class... Types>
-		auto operator() (Types &&... types)
-			-> decltype (ptr(std::forward<Types>(types)...))
+		
+		RET operator() (ARGS &&... args)
 		{
 			if (ptr == nullptr)
 				throw std::bad_function_call ();
-			return ptr(std::forward<Types>(types)...);
+			return ptr(std::forward<ARGS>(args)...);
 		}
 
 		explicit operator bool () {
@@ -71,7 +75,7 @@ int main() {
 	//std::function<double(double)> f;
 	Ryper::function<double(double)> f;
 	
-	
+
 	if (!f)
 		std::cout << "Egyelore nullptr" << std::endl;
 	
@@ -88,7 +92,7 @@ int main() {
 	try {
 		f(2.3);
 	}
-	catch (std::bad_function_call &e) {
+	catch (std::bad_function_call &/*e*/) {
 		std::cout << "Megint nullptr" << std::endl;
 	}
 }
