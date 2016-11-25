@@ -26,22 +26,30 @@ public:
 
 
 //IsFunction<T>::value: függvény - e, pl. int(bool) függvény, mert int f(bool);
-template <typename FUNC>
-class IsFunction;
 
-template <typename RET, typename ... ARGS>
-class IsFunction<RET(ARGS...)> {
-private:
+template <typename FUNCTION>
+struct IsFunction {
+	template <typename FUNC>
+	class isFunction;
 
-public:
-	static constexpr bool value = true;
+	template <typename RET, typename ... ARGS>
+	class isFunction<RET(ARGS...)> {
+	private:
+
+	public:
+		static constexpr bool value = true;
+	};
+
+	template <typename FUNC>
+	class isFunction {
+	public:
+		static constexpr bool value = false;
+	};
+
+	static constexpr bool value = isFunction<FUNCTION>::value;
 };
 
-template <typename FUNC>
-class IsFunction {
-public:
-	static constexpr bool value = false;
-};
+
 
 } // NS Ryper
 
