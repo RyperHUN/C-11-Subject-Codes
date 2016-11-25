@@ -8,62 +8,96 @@
 
 namespace Ryper{
 
-	template< class T >
-	class reference_wrapper {
-		static_assert (std::is_class<T>::value, "Only accepts Objects");
-		T& _val;
-	public:
-		reference_wrapper(T &val)
-			:_val(val) {}
-
-		/*operator FUNCPTR& () {return _val;}*/
-		template< class... Types>
-		auto operator() (Types &&... types)
-			-> decltype (_val(std::forward<Types>(types)...))
-		{
-			return _val(std::forward<Types>(types)...);
-		}
-	};
-
-	//template <typename FUNCPTR>
-	//class functionStoringBase {
-	//	auto operator() -> decltype (FUNCPTR()) 
-	//	{
-	//		
-	//	}
-	//};
-
 	template <typename FUNC>
 	class function;
 
 
 	template <typename RET, typename ... ARGS>
 	class function<RET(ARGS...)> {
+		template <typename RET, typename ... ARGS>
+		class Any {
+		private:
+			template <typename RETins, typename ... ARGSins>
+			class ContainerBase {
+			public:
+				virtual ~ContainerBase () {}
+				virtual ContainerBase *clone () const = 0;
+				virtual RETins operator() (ARGSins &&... args) = 0;
+			};
+			typedef ContainerBase<RET, ARGS...> ContainerBaseT;
+
+			template <typename T, typename RETins, typename ... ARGSins>
+			class Container : public ContainerBaseT {
+			public:
+				T data;
+				Container (T const &what) : data (what) {}
+				ContainerBaseT *clone () const { return new Container<T, RETins, ARGSins...> (*this); }
+				RETins operator() (ARGSins &&... args) override
+				{
+					return data (std::forward<ARGS> (args)...);
+				}
+			};
+
+			ContainerBase<RET, ARGS ...> *ptr;
+
+		public:
+			Any () : ptr (nullptr) {}
+			Any (Any const &to_copy)
+			{
+				ptr = to_copy.ptr->clone ();
+			}
+			Any& operator=(Any const& to_copy)
+			{
+				ContainerBaseT* copy = to_copy.ptr->clone ();
+				delete ptr;
+				ptr = copy;
+				return *this;
+			}
+			~Any () { delete ptr; }
+
+			template <typename T>
+			void set (T const &what)
+			{
+				ContainerBaseT *newptr = new Container<T, RET, ARGS...> (what);
+				delete ptr;
+				ptr = newptr;
+			}
+
+			RET operator() (ARGS &&... args)
+			{
+				if (ptr == nullptr)
+					throw std::bad_function_call ();
+				return (*ptr) (std::forward<ARGS> (args)...);
+			}
+		};
+
 		using FUNCPTR = RET (ARGS...);
-		FUNCPTR* ptr = nullptr;
+		//FUNCPTR* ptr = nullptr;
+		Any<RET, ARGS...> ptr;
 	public:
 
 		FUNCPTR* operator= (FUNCPTR* fv) {
-			ptr = fv;
-
-			return fv;
-		}
-		FUNCPTR& operator= (FUNCPTR& fv) {
-			ptr = fv;
+			ptr.set(fv);
 
 			return fv;
 		}
 		
+		//FUNCPTR& operator= (FUNCPTR& fv) {
+		//	ptr = fv;
+
+		//	return fv;
+		//}
+		
 		RET operator() (ARGS &&... args)
 		{
-			if (ptr == nullptr)
-				throw std::bad_function_call ();
 			return ptr(std::forward<ARGS>(args)...);
 		}
 
-		explicit operator bool () {
-			return ptr != nullptr;
-		}
+		//explicit operator bool () {
+		//	return ptr != nullptr;
+		//}
+
+		
 	};
 
 	
@@ -76,8 +110,8 @@ int main() {
 	Ryper::function<double(double)> f;
 	
 
-	if (!f)
-		std::cout << "Egyelore nullptr" << std::endl;
+	//if (!f)
+	//	std::cout << "Egyelore nullptr" << std::endl;
 	
 	f = static_cast<double(*)(double)>(sin);
 	std::cout << sin(2.3) << "==" << f(2.3) << std::endl;
@@ -88,12 +122,13 @@ int main() {
 	f = std::bind(static_cast<double(*)(double, int)>(pow), std::placeholders::_1, 4);
 	std::cout << pow(2.3, 4) << "==" << f(2.3) << std::endl;
 	*/
-	f = nullptr;
-	try {
-		f(2.3);
-	}
-	catch (std::bad_function_call &/*e*/) {
-		std::cout << "Megint nullptr" << std::endl;
-	}
+	///TODO Solve nullptr
+	//f = nullptr;
+	//try {
+	//	f(2.3);
+	//}
+	//catch (std::bad_function_call &/*e*/) {
+	//	std::cout << "Megint nullptr" << std::endl;
+	//}
 }
 
