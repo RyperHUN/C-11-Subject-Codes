@@ -38,7 +38,7 @@ namespace Ryper{
 				}
 			};
 
-			ContainerBase<RET, ARGS ...> *ptr;
+			ContainerBaseT *ptr;
 
 		public:
 			Any () : ptr (nullptr) {}
@@ -48,7 +48,9 @@ namespace Ryper{
 			}
 			Any& operator=(Any const& to_copy)
 			{
-				ContainerBaseT* copy = to_copy.ptr->clone ();
+				ContainerBaseT* copy = nullptr;
+				if (to_copy.ptr != nullptr)
+					copy = to_copy.ptr->clone ();
 				delete ptr;
 				ptr = copy;
 				return *this;
@@ -79,28 +81,44 @@ namespace Ryper{
 				return ptr != nullptr;
 			}
 		};
-
+		//Typedefs
 		using FUNCPTR = RET (ARGS...);
-		//FUNCPTR* ptr = nullptr;
+		using FunctionT = function<RET (ARGS...)>;
 		Any<RET, ARGS...> ptr;
 	public:
+		FunctionT () {}
+		FunctionT (FunctionT& rhs) {
+			this->ptr = rhs.ptr;
+		}
+		FunctionT (FunctionT&&) = delete; //Lazy
 
-		function<RET (ARGS...)> operator= (FUNCPTR* fv) {
+		FunctionT& operator= (FUNCPTR* fv) {
 			ptr.set(fv);
 
 			return *this;
 		}
 		
 		template <typename T>
-		void operator= (T const& anything)
+		FunctionT& operator= (T const& anything)
 		{
 			ptr.set<T>(anything);
+
+			return *this;
 		}
 
-		void operator= (nullptr_t)
+		FunctionT operator= (nullptr_t)
 		{
 			ptr.clear ();
+
+			return *this;
 		}
+		FunctionT operator= (FunctionT const& rhs)
+		{
+			ptr = rhs.ptr;
+
+			return *this;
+		}
+
 		
 		RET operator() (ARGS &&... args)
 		{
@@ -141,7 +159,9 @@ int main() {
 	f = [&](double x) { return x * 2;}; //More test with Lambda
 	std::cout << 2 << "==" << f (1.0) << std::endl;
 
-	///TODO Solve nullptr
+	Ryper::function<double(double)> fCopy = f;
+	std::cout << fCopy(2) << "==" << f(2) << std::endl;
+
 	f = nullptr;
 	try {
 		f(2.3);
