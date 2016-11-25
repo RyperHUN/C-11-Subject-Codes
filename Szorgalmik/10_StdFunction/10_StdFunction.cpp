@@ -65,9 +65,18 @@ namespace Ryper{
 
 			RET operator() (ARGS &&... args)
 			{
-				if (ptr == nullptr)
-					throw std::bad_function_call ();
 				return (*ptr) (std::forward<ARGS> (args)...);
+			}
+
+			void clear ()
+			{
+				delete ptr;
+				ptr = nullptr;
+			}
+
+			bool is_valid ()
+			{
+				return ptr != nullptr;
 			}
 		};
 
@@ -76,10 +85,10 @@ namespace Ryper{
 		Any<RET, ARGS...> ptr;
 	public:
 
-		FUNCPTR* operator= (FUNCPTR* fv) {
+		function<RET (ARGS...)> operator= (FUNCPTR* fv) {
 			ptr.set(fv);
 
-			return fv;
+			return *this;
 		}
 		
 		template <typename T>
@@ -88,20 +97,21 @@ namespace Ryper{
 			ptr.set<T>(anything);
 		}
 
-		//FUNCPTR& operator= (FUNCPTR& fv) {
-		//	ptr = fv;
-
-		//	return fv;
-		//}
+		void operator= (nullptr_t)
+		{
+			ptr.clear ();
+		}
 		
 		RET operator() (ARGS &&... args)
 		{
+			if (!ptr.is_valid ())
+				throw std::bad_function_call ();
 			return ptr(std::forward<ARGS>(args)...);
 		}
 
-		//explicit operator bool () {
-		//	return ptr != nullptr;
-		//}
+		explicit operator bool () {
+			return ptr.is_valid ();
+		}
 
 		
 	};
@@ -116,8 +126,8 @@ int main() {
 	Ryper::function<double(double)> f;
 	
 
-	//if (!f)
-	//	std::cout << "Egyelore nullptr" << std::endl;
+	if (!f)
+		std::cout << "Egyelore nullptr" << std::endl;
 	
 	f = static_cast<double(*)(double)>(sin);
 	std::cout << sin(2.3) << "==" << f(2.3) << std::endl;
@@ -132,12 +142,12 @@ int main() {
 	std::cout << 2 << "==" << f (1.0) << std::endl;
 
 	///TODO Solve nullptr
-	//f = nullptr;
-	//try {
-	//	f(2.3);
-	//}
-	//catch (std::bad_function_call &/*e*/) {
-	//	std::cout << "Megint nullptr" << std::endl;
-	//}
+	f = nullptr;
+	try {
+		f(2.3);
+	}
+	catch (std::bad_function_call &/*e*/) {
+		std::cout << "Megint nullptr" << std::endl;
+	}
 }
 
