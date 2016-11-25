@@ -5,8 +5,81 @@
 #include <functional>
 #include <iostream>
 #include <cmath>
+#include <cstddef>
 
 namespace Ryper{
+
+
+	template <typename RET, typename ... ARGS>
+	class Any {
+	private:
+		template <typename RETins, typename ... ARGSins>
+		class ContainerBase {
+		public:
+			virtual ~ContainerBase() {}
+			virtual ContainerBase *clone() const = 0;
+			virtual RETins operator() (ARGSins &&... args) = 0;
+		};
+		typedef ContainerBase<RET, ARGS...> ContainerBaseT;
+
+		template <typename T, typename RETins, typename ... ARGSins>
+		class Container : public ContainerBaseT {
+		public:
+			T data;
+			Container(T const &what) : data(what) {}
+			ContainerBaseT *clone() const override
+			{
+				return new Container<T, RETins, ARGSins...>(*this);
+			}
+			RETins operator() (ARGSins &&... args) override
+			{
+				return data(std::forward<ARGS>(args)...);
+			}
+		};
+
+		ContainerBaseT *ptr;
+
+	public:
+		Any() : ptr(nullptr) {}
+		Any(Any const &to_copy)
+		{
+			ptr = to_copy.ptr->clone();
+		}
+		Any& operator=(Any const& to_copy)
+		{
+			ContainerBaseT* copy = nullptr;
+			if (to_copy.ptr != nullptr)
+				copy = to_copy.ptr->clone();
+			delete ptr;
+			ptr = copy;
+			return *this;
+		}
+		~Any() { delete ptr; }
+
+		template <typename T>
+		void set(T const &what)
+		{
+			ContainerBaseT *newptr = new Container<T, RET, ARGS...>(what);
+			delete ptr;
+			ptr = newptr;
+		}
+
+		RET operator() (ARGS &&... args)
+		{
+			return (*ptr) (std::forward<ARGS>(args)...);
+		}
+
+		void clear()
+		{
+			delete ptr;
+			ptr = nullptr;
+		}
+
+		bool is_valid()
+		{
+			return ptr != nullptr;
+		}
+	};
 
 	template <typename FUNC>
 	class function;
@@ -14,83 +87,17 @@ namespace Ryper{
 
 	template <typename RET, typename ... ARGS>
 	class function<RET(ARGS...)> {
-		template <typename RET, typename ... ARGS>
-		class Any {
-		private:
-			template <typename RETins, typename ... ARGSins>
-			class ContainerBase {
-			public:
-				virtual ~ContainerBase () {}
-				virtual ContainerBase *clone () const = 0;
-				virtual RETins operator() (ARGSins &&... args) = 0;
-			};
-			typedef ContainerBase<RET, ARGS...> ContainerBaseT;
-
-			template <typename T, typename RETins, typename ... ARGSins>
-			class Container : public ContainerBaseT {
-			public:
-				T data;
-				Container (T const &what) : data (what) {}
-				ContainerBaseT *clone () const { return new Container<T, RETins, ARGSins...> (*this); }
-				RETins operator() (ARGSins &&... args) override
-				{
-					return data (std::forward<ARGS> (args)...);
-				}
-			};
-
-			ContainerBaseT *ptr;
-
-		public:
-			Any () : ptr (nullptr) {}
-			Any (Any const &to_copy)
-			{
-				ptr = to_copy.ptr->clone ();
-			}
-			Any& operator=(Any const& to_copy)
-			{
-				ContainerBaseT* copy = nullptr;
-				if (to_copy.ptr != nullptr)
-					copy = to_copy.ptr->clone ();
-				delete ptr;
-				ptr = copy;
-				return *this;
-			}
-			~Any () { delete ptr; }
-
-			template <typename T>
-			void set (T const &what)
-			{
-				ContainerBaseT *newptr = new Container<T, RET, ARGS...> (what);
-				delete ptr;
-				ptr = newptr;
-			}
-
-			RET operator() (ARGS &&... args)
-			{
-				return (*ptr) (std::forward<ARGS> (args)...);
-			}
-
-			void clear ()
-			{
-				delete ptr;
-				ptr = nullptr;
-			}
-
-			bool is_valid ()
-			{
-				return ptr != nullptr;
-			}
-		};
+		
 		//Typedefs
 		using FUNCPTR = RET (ARGS...);
 		using FunctionT = function<RET (ARGS...)>;
 		Any<RET, ARGS...> ptr;
 	public:
-		FunctionT () {}
-		FunctionT (FunctionT& rhs) {
+		function () {}
+		function (FunctionT& rhs) {
 			this->ptr = rhs.ptr;
 		}
-		FunctionT (FunctionT&&) = delete; //Lazy
+		function (FunctionT&&) = delete; //Lazy 
 
 		FunctionT& operator= (FUNCPTR* fv) {
 			ptr.set(fv);
@@ -101,7 +108,8 @@ namespace Ryper{
 		template <typename T>
 		FunctionT& operator= (T const& anything)
 		{
-			ptr.set<T>(anything);
+			//ptr.set<T>(anything);
+			ptr.  template set<T>(anything);
 
 			return *this;
 		}
@@ -153,7 +161,7 @@ int main() {
 	f = [](double x) { return x*x; };
 	std::cout << 2.3*2.3 << "==" << f(2.3) << std::endl;
 	
-	f = std::bind(static_cast<double(*)(double, int)>(pow), std::placeholders::_1, 4);
+	f = std::bind(static_cast<double(*)(double, double)>(pow), std::placeholders::_1, 4);
 	std::cout << pow(2.3, 4) << "==" << f(2.3) << std::endl;
 
 	f = [&](double x) { return x * 2;}; //More test with Lambda
