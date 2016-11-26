@@ -202,10 +202,33 @@ struct IsEmpty {
 	static constexpr bool value = IsClass<T>::value && sizeof(T) == 1; // sizeof(Empty) class always == 1
 };
 
+///////////////////////////////////////////////////////////////////////
 //template <typename T>
 //struct IsEnum {
-//	
+//	static constexpr bool value = false;
 //};
+//
+//template <>
+//struct IsEnum<enum> {
+//	static constexpr bool value = true;
+//};
+//template <typename T>
+//class IsEnum {
+//private:
+//	template <typename U>
+//	static constexpr bool helper(int U::*) { return true; }
+//
+//	template <typename U>
+//	static constexpr bool helper(...) { return false; }
+//
+//	enum Another {
+//		EnumVal
+//	};
+//
+//public:
+//	static constexpr bool value = IsSame<Another,T>::value;
+//};
+///////////////////////////////////////////////////////////////////////
 
 
 } // NS Ryper
@@ -218,9 +241,21 @@ struct Derived : public Base {};
 struct Empty {};
 struct NotEmpty { int i; };
 
+enum EnumType {
+	EnumValue
+};
+
 using namespace Ryper;
 int main()
 {
+	/*std::cout << "IsEnum test:" << std::endl;
+	std::cout << "Empty => " << IsEnum<Empty>::value << std::endl;
+	std::cout << "EnumType => " << IsEnum<EnumType>::value << std::endl;
+	std::cout << std::endl << "--------------------------" << std::endl;*/
+	/*std::cout << "IsEnum test:" << std::endl;
+	std::cout << "Empty => " << IsEnum<Empty>::value << std::endl;
+	std::cout << "EnumType => " << IsEnum<EnumType>::value << std::endl;
+	std::cout << std::endl << "--------------------------" << std::endl;*/
 	std::cout << "IsEmpty test:" << std::endl;
 	std::cout << "Empty => "    << IsEmpty<Empty>::value << std::endl;
 	std::cout << "NotEmpty => " << IsEmpty<NotEmpty>::value << std::endl;
