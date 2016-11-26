@@ -70,6 +70,8 @@ int main()
 
 	test(iterTest{});
 
+	std::cout << NameOfType<int[2][2]>::get ();
+
 	int i;
 	cin >> i;
     return 0;

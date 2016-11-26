@@ -60,6 +60,11 @@ private:
 	};
 
 	template <typename RET>
+	struct isArray<RET*[]> {
+		static constexpr bool value = true;
+	};
+
+	template <typename RET>
 	struct isArray {
 		static constexpr bool value = false;
 	};
@@ -67,6 +72,30 @@ public:
 	static constexpr bool value = isArray<Type>::value;
 };
 
+template <typename Type>
+struct RemoveExtent;
+
+template <typename Type>
+struct RemoveExtent<Type[]>
+{
+	using type = Type;
+	//static constexpr char* value = "Type";
+};
+//template <typename Type>
+//struct RemoveExtent<Type[][]>
+//{
+//	using type = Type[];
+//	//static constexpr char* value = "Type";
+//};
+
+/*template <typename T, size_t S>
+struct NameOfType<T[S]> {
+	static std::string get() {
+		char s[100];
+		sprintf(s, "%d", (int)S);
+		return "array[" + std::string(s) + "] of " + NameOfType<T>::get();
+	}
+}*/;
 
 
 } // NS Ryper
@@ -79,11 +108,16 @@ struct Derived : public Base {};
 using namespace Ryper;
 int main()
 {
+	std::cout << "RemoveExtent test:" << std::endl;
+	std::cout << IsArray<RemoveExtent<int[]>::type>::value;
+	//std:: cout << IsArray<RemoveExtent<int[2][2]>::type>::value;
+	//std::cout << "int[] ->" << RemoveExtent<int[]>::type << std::endl;
+	std::cout << std::endl << "--------------------------" << std::endl;
 	std::cout << "IsArray test:" << std::endl;
-	std::cout << "int "  << IsArray<int>::value << std::endl;
-	std::cout << "int[] "<< IsArray<int[]>::value << std::endl;
-	std::cout << "int* " << IsArray<int*>::value << std::endl;
-	//std::cout << IsArray<int[][]>::value << std::endl; // Not works :(
+	std::cout << "int "    << IsArray<int>::value << std::endl;
+	std::cout << "int[] "  << IsArray<int[]>::value << std::endl;
+	std::cout << "int* "   << IsArray<int*>::value << std::endl;
+	std::cout << "int[][]" << IsArray<int[2][3]>::value << std::endl; // Not works :(
 	std::cout << std::endl << "--------------------------" << std::endl;
 	std::cout << "IsFunction test:" << std::endl;
 	std::cout << "int test: " << IsFunction<int>::value <<std::endl;
