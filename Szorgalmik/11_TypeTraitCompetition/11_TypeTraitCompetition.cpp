@@ -4,6 +4,11 @@
 
 #include <iostream>
 #include "NameOfType.h"
+#include <iterator>
+#include <vector>
+#include <list>
+using Vector = std::vector<int>::iterator;
+using List = std::list<int>::iterator;
 
 namespace Ryper {
 
@@ -142,6 +147,42 @@ public:
 	static constexpr int value = arrayDimensions<Type>::value;
 };
 
+//-IsIterable<T>::value: megeszi - e az std::begin() függvény.
+
+template<typename T>
+struct HasFunction
+{
+	template<typename U, size_t(U::*)() const> struct SFINAE {};
+	template<typename U> static char Test(SFINAE<U, &U::begin>*);
+	template<typename U> static int Test(...);
+	static const bool value = sizeof(Test<T>(0)) == sizeof(char);
+};
+
+template <typename ITER>
+class IsIterable {
+public:
+	static constexpr bool val2 = HasFunction<ITER>::value;
+	static constexpr bool value = IsArray <ITER>::value || val2;
+	
+};
+
+//-HasRandomAccessIterator<T>::value: mint az elõzõ, de az is feltétel, hogy random access iterálható legyen.
+
+template <typename ITER>
+class HasRandomAccessIterator {
+public:
+	template <typename T>
+	static constexpr bool IsRandomAccess() {
+		/*typename std::iterator_traits<ITER>::iterator_category tag;*/
+		return IsSame<std::random_access_iterator_tag, typename std::iterator_traits<T>::iterator_category>::value;
+	}
+	//template <typename T>
+	//static constexpr bool IsRandomAccess(...) {
+	//	return true;
+	//}
+	static constexpr int value = IsIterable<ITER>::value && IsRandomAccess<ITER> ();
+};
+
 } // NS Ryper
 
 
@@ -152,6 +193,17 @@ struct Derived : public Base {};
 using namespace Ryper;
 int main()
 {
+	//std::begin ()
+	std::cout << "HasRandomAccessIterator test:" << std::endl;
+	//std::cout << "int[] => " << HasRandomAccessIterator<int[]>::value << std::endl;
+	//std::cout << "VectorIt => " << HasRandomAccessIterator<Vector>::value << std::endl;
+	//std::cout << "ListIt => " << HasRandomAccessIterator<List>::value << std::endl;
+	std::cout << std::endl << "--------------------------" << std::endl;
+	std::cout << "IsIterable test:" << std::endl;
+	std::cout << "int[2] => " << IsIterable<int[2]>::value << std::endl;
+	std::cout << "VectorIt => " << IsIterable<Vector>::value << std::endl;
+	std::cout << "ListIt => " << IsIterable<List>::value << std::endl;
+	std::cout << std::endl << "--------------------------" << std::endl;
 	std::cout << "ArrayDimensions test:" << std::endl;
 	std::cout << "int[] => " << ArrayDimensions<int[]>::value << std::endl;
 	std::cout << "int[2][3] => " << ArrayDimensions<int[2][3]>::value << std::endl;
