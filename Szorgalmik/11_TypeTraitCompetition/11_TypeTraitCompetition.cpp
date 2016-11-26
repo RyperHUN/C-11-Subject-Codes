@@ -193,8 +193,19 @@ public:
 	//static constexpr bool IsRandomAccess(...) {
 	//	return true;
 	//}
-	static constexpr int value = IsIterable<ITER>::value && IsRandomAccess<ITER> ();
+	static constexpr bool value = IsIterable<ITER>::value && IsRandomAccess<ITER> ();
 };
+
+//-IsPolymorphic<T>::value: van - e virtuális függvénye.
+template <typename T>
+class IsPolymorphic {
+	class AddVtable : public T {
+		virtual void VtableAdderFv() = 0;
+	};
+public:
+	static constexpr bool value = sizeof(T) == sizeof(AddVtable);
+};
+
 
 //-IsEmptyClass<T>::value: igaz, ha üres a T osztály, nincs adattagja, pl. struct X {}.
 template <typename T>
@@ -319,6 +330,11 @@ struct decay_equiv :
 using namespace Ryper;
 int main()
 {
+	std::cout << "IsPolymorphic test:" << std::endl;
+	std::cout << "AbstractClass = " << IsPolymorphic<AbstractClass>::value << std::endl;
+	std::cout << "EmptyClass = " << IsPolymorphic<Empty>::value << std::endl;
+	std::cout << std::endl << "--------------------------" << std::endl;
+
 	std::cout << "IsDecay test:" << std::endl;
 	std::cout << std::boolalpha
 		<< decay_equiv<int, int>::value << std::endl
@@ -326,6 +342,7 @@ int main()
 		<< decay_equiv<int&&, int>::value << std::endl
 		<< decay_equiv<const int&, int>::value << std::endl
 		<< decay_equiv<int[2], int*>::value << std::endl
+		<< decay_equiv<int[2][3], int(*)[3]>::value << std::endl
 		<< decay_equiv<int(int), int(*)(int)>::value << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;
 
