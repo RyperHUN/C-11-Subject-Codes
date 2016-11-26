@@ -3,6 +3,8 @@
 
 
 #include <iostream>
+#include "NameOfType.h"
+
 namespace Ryper {
 
 template <typename T, typename T2>
@@ -97,6 +99,26 @@ struct NameOfType<T[S]> {
 	}
 }*/;
 
+//RemoveAllExtents<T>::type: az összes dimenziót leveszi : T[x][y]...->T, amúgy általában T->T.
+
+template <typename Type>
+class RemoveAllExtents {
+private:
+	template <typename T>
+	struct removeAllExtents;
+
+	template <typename T>
+	struct removeAllExtents {
+		using type = T;
+	};
+
+	template <typename T, size_t SIZE>
+	struct removeAllExtents<T[SIZE]> {
+		using type = typename removeAllExtents<T>::type;
+	};
+public:
+	using type = typename removeAllExtents<Type>::type;
+};
 
 } // NS Ryper
 
@@ -108,6 +130,11 @@ struct Derived : public Base {};
 using namespace Ryper;
 int main()
 {
+	std::cout << "RemoveALLExtent test:" << std::endl;
+	std::cout << "int[2][3] => " << NameOfType<RemoveAllExtents<int[2][3]>::type>::get () << std::endl;
+	std::cout << "int[3][6][19][20] => " << NameOfType<RemoveAllExtents<int[3][6][19][20]>::type>::get() << std::endl;
+	//std::cout << "int[]" << NameOfType<RemoveAllExtents<int[]>::type>::get() << std::endl;
+	std::cout << std::endl << "--------------------------" << std::endl;
 	std::cout << "RemoveExtent test:" << std::endl;
 	std::cout << IsArray<RemoveExtent<int[]>::type>::value;
 	//std:: cout << IsArray<RemoveExtent<int[2][2]>::type>::value;
