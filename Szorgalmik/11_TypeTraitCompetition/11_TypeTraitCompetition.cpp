@@ -7,10 +7,23 @@
 #include <iterator>
 #include <vector>
 #include <list>
-using Vector = std::vector<int>::iterator;
+using Vector = std::vector<int>/*::iterator*/;
 using List = std::list<int>::iterator;
 
 namespace Ryper {
+
+template <typename T>
+class IsClass {
+private:
+	template <typename U>
+	static constexpr bool helper(int U::*) { return true; }
+
+	template <typename U>
+	static constexpr bool helper(...) { return false; }
+
+public:
+	static constexpr bool value = helper<T>(0);
+};
 
 template <typename T, typename T2>
 class IsSame {
@@ -183,6 +196,18 @@ public:
 	static constexpr int value = IsIterable<ITER>::value && IsRandomAccess<ITER> ();
 };
 
+//-IsEmptyClass<T>::value: igaz, ha üres a T osztály, nincs adattagja, pl. struct X {}.
+template <typename T>
+struct IsEmpty {
+	static constexpr bool value = IsClass<T>::value && sizeof(T) == 1; // sizeof(Empty) class always == 1
+};
+
+//template <typename T>
+//struct IsEnum {
+//	
+//};
+
+
 } // NS Ryper
 
 
@@ -190,9 +215,16 @@ struct Base {};
 
 struct Derived : public Base {};
 
+struct Empty {};
+struct NotEmpty { int i; };
+
 using namespace Ryper;
 int main()
 {
+	std::cout << "IsEmpty test:" << std::endl;
+	std::cout << "Empty => "    << IsEmpty<Empty>::value << std::endl;
+	std::cout << "NotEmpty => " << IsEmpty<NotEmpty>::value << std::endl;
+	std::cout << std::endl << "--------------------------" << std::endl;
 	//std::begin ()
 	std::cout << "HasRandomAccessIterator test:" << std::endl;
 	//std::cout << "int[] => " << HasRandomAccessIterator<int[]>::value << std::endl;
