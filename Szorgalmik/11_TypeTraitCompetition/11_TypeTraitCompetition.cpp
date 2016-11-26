@@ -74,30 +74,26 @@ public:
 	static constexpr bool value = isArray<Type>::value;
 };
 
-template <typename Type>
-struct RemoveExtent;
+template <typename T>
+class RemoveExtent {
+private:
+	template <typename Type>
+	struct removeExtent;
 
-template <typename Type>
-struct RemoveExtent<Type[]>
-{
-	using type = Type;
-	//static constexpr char* value = "Type";
+	template <typename Type, size_t SIZE>
+	struct removeExtent<Type[SIZE]>
+	{
+		using type = Type;
+	};
+
+	template <typename Type>
+	struct removeExtent<Type[]> //Empty => int[]
+	{
+		using type = Type;
+	};
+public:
+	using type = typename removeExtent<T>::type;
 };
-//template <typename Type>
-//struct RemoveExtent<Type[][]>
-//{
-//	using type = Type[];
-//	//static constexpr char* value = "Type";
-//};
-
-/*template <typename T, size_t S>
-struct NameOfType<T[S]> {
-	static std::string get() {
-		char s[100];
-		sprintf(s, "%d", (int)S);
-		return "array[" + std::string(s) + "] of " + NameOfType<T>::get();
-	}
-}*/;
 
 //RemoveAllExtents<T>::type: az összes dimenziót leveszi : T[x][y]...->T, amúgy általában T->T.
 
@@ -136,9 +132,8 @@ int main()
 	//std::cout << "int[]" << NameOfType<RemoveAllExtents<int[]>::type>::get() << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;
 	std::cout << "RemoveExtent test:" << std::endl;
-	std::cout << IsArray<RemoveExtent<int[]>::type>::value;
-	//std:: cout << IsArray<RemoveExtent<int[2][2]>::type>::value;
-	//std::cout << "int[] ->" << RemoveExtent<int[]>::type << std::endl;
+	std::cout << "int[2] =>" << NameOfType<RemoveExtent<int[2]>::type>::get () << std::endl;
+	std::cout << "int[2][3] =>" << NameOfType<RemoveExtent<int[2][3]>::type>::get() << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;
 	std::cout << "IsArray test:" << std::endl;
 	std::cout << "int "    << IsArray<int>::value << std::endl;
