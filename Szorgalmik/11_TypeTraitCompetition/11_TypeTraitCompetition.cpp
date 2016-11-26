@@ -230,6 +230,65 @@ struct IsEmpty {
 //};
 ///////////////////////////////////////////////////////////////////////
 
+//-IsAbstract<T>::value
+//template <typename T>
+//class IsAbstract {
+//private:
+//	template <typename U>
+//	static constexpr bool helper(int ) { return false; }
+//
+//	template <typename U>
+//	static constexpr bool helper(...) { return true; }
+//
+//public:
+//	static constexpr bool value = helper<T>(0);
+//};
+/////////////////////////////////////////////////////////////////////////
+
+//-Decay<T>::type: a benne lévõ típus a T típus függvényparaméter átadáskori transzformáltja, pl. int const -> int, int[10] -> int*, int& -> int.
+template <typename TYPE>
+class Decay {
+private:
+	template <typename T>
+	struct decay;
+
+	template <typename T, size_t S>
+	struct decay<T[S]> {
+		using type = T*;
+	};
+
+	template <typename T>
+	struct decay {
+		using type = T;
+	};
+
+	template <typename T>
+	struct decay<T&> {
+		using type = T;
+	};
+
+	template <typename T>
+	struct decay<T&&> {
+		using type = T;
+	};
+
+	template <typename T>
+	struct decay<const T> {
+		using type = T;
+	};
+
+	template <typename T>
+	struct decay<const T&> {
+		using type = T;
+	};
+
+	template <typename RET, typename ...ARGS>
+	struct decay<RET(ARGS...)> {
+		using type = RET(*)(ARGS...);
+	};
+public:
+	using type = typename decay<TYPE>::type;
+};
 
 } // NS Ryper
 
@@ -238,6 +297,11 @@ struct Base {};
 
 struct Derived : public Base {};
 
+class AbstractClass {
+public:
+	virtual void abstractFv() = 0;
+};
+
 struct Empty {};
 struct NotEmpty { int i; };
 
@@ -245,57 +309,84 @@ enum EnumType {
 	EnumValue
 };
 
+
+template <typename T, typename U>
+struct decay_equiv :
+	Ryper::IsSame<typename Ryper::Decay<T>::type, U>
+{};
+
+
 using namespace Ryper;
 int main()
 {
+	std::cout << "IsDecay test:" << std::endl;
+	std::cout << std::boolalpha
+		<< decay_equiv<int, int>::value << std::endl
+		<< decay_equiv<int&, int>::value << std::endl
+		<< decay_equiv<int&&, int>::value << std::endl
+		<< decay_equiv<const int&, int>::value << std::endl
+		<< decay_equiv<int[2], int*>::value << std::endl
+		<< decay_equiv<int(int), int(*)(int)>::value << std::endl;
+	std::cout << std::endl << "--------------------------" << std::endl;
+
+	//std::cout << "IsAbstract test:" << std::endl;
+	//std::cout << "Empty => " << IsAbstract<Empty>::value << std::endl;
+	//std::cout << "AbstractClass => " << IsAbstract<AbstractClass>::value << std::endl;
+	//std::cout << std::endl << "--------------------------" << std::endl;
+
 	/*std::cout << "IsEnum test:" << std::endl;
 	std::cout << "Empty => " << IsEnum<Empty>::value << std::endl;
 	std::cout << "EnumType => " << IsEnum<EnumType>::value << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;*/
-	/*std::cout << "IsEnum test:" << std::endl;
-	std::cout << "Empty => " << IsEnum<Empty>::value << std::endl;
-	std::cout << "EnumType => " << IsEnum<EnumType>::value << std::endl;
-	std::cout << std::endl << "--------------------------" << std::endl;*/
+
 	std::cout << "IsEmpty test:" << std::endl;
 	std::cout << "Empty => "    << IsEmpty<Empty>::value << std::endl;
 	std::cout << "NotEmpty => " << IsEmpty<NotEmpty>::value << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;
+
 	//std::begin ()
 	std::cout << "HasRandomAccessIterator test:" << std::endl;
 	//std::cout << "int[] => " << HasRandomAccessIterator<int[]>::value << std::endl;
 	//std::cout << "VectorIt => " << HasRandomAccessIterator<Vector>::value << std::endl;
 	//std::cout << "ListIt => " << HasRandomAccessIterator<List>::value << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;
+
 	std::cout << "IsIterable test:" << std::endl;
 	std::cout << "int[2] => " << IsIterable<int[2]>::value << std::endl;
 	std::cout << "VectorIt => " << IsIterable<Vector>::value << std::endl;
 	std::cout << "ListIt => " << IsIterable<List>::value << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;
+
 	std::cout << "ArrayDimensions test:" << std::endl;
 	std::cout << "int[] => " << ArrayDimensions<int[]>::value << std::endl;
 	std::cout << "int[2][3] => " << ArrayDimensions<int[2][3]>::value << std::endl;
 	std::cout << "int[3][6][19][20] => " << ArrayDimensions<int[3][6][19][20]>::value << std::endl;
 	//std::cout << "int[3][6][19][20] => " << NameOfType<RemoveAllExtents<int[3][6][19][20]>::type>::get() << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;
+
 	std::cout << "RemoveALLExtent test:" << std::endl;
 	std::cout << "int[2][3] => " << NameOfType<RemoveAllExtents<int[2][3]>::type>::get () << std::endl;
 	std::cout << "int[3][6][19][20] => " << NameOfType<RemoveAllExtents<int[3][6][19][20]>::type>::get() << std::endl;
 	//std::cout << "int[]" << NameOfType<RemoveAllExtents<int[]>::type>::get() << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;
+
 	std::cout << "RemoveExtent test:" << std::endl;
 	std::cout << "int[2] =>" << NameOfType<RemoveExtent<int[2]>::type>::get () << std::endl;
 	std::cout << "int[2][3] =>" << NameOfType<RemoveExtent<int[2][3]>::type>::get() << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;
+
 	std::cout << "IsArray test:" << std::endl;
 	std::cout << "int "    << IsArray<int>::value << std::endl;
 	std::cout << "int[] "  << IsArray<int[]>::value << std::endl;
 	std::cout << "int* "   << IsArray<int*>::value << std::endl;
 	std::cout << "int[][]" << IsArray<int[2][3]>::value << std::endl; // Not works :(
 	std::cout << std::endl << "--------------------------" << std::endl;
+
 	std::cout << "IsFunction test:" << std::endl;
 	std::cout << "int test: " << IsFunction<int>::value <<std::endl;
 	std::cout << "int () test: " << IsFunction<int()>::value << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;
+
 	std::cout << "IsSame test:" << std::endl;
 	std::cout << "int == double " << IsSame<int,double>::value << std::endl;
 	std::cout << "Base == Derived " << IsSame<Base,Derived>::value << std::endl;
