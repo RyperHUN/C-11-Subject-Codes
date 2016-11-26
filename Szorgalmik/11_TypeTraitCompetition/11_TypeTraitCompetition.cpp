@@ -116,6 +116,32 @@ public:
 	using type = typename removeAllExtents<Type>::type;
 };
 
+//-ArrayDimensions<T>::value: a tömb dimenzióinak száma, pl.T[x][y][z] esetén 3.
+
+template <typename Type>
+class ArrayDimensions {
+private:
+	template <typename T>
+	struct arrayDimensions;
+
+	template <typename T>
+	struct arrayDimensions {
+		static constexpr int value = 0;
+	};
+
+	template <typename T>
+	struct arrayDimensions<T[]> {
+		static constexpr int value = 1;
+	};
+
+	template <typename T, size_t SIZE>
+	struct arrayDimensions<T[SIZE]> {
+		static constexpr int value = 1 + arrayDimensions<T>::value;
+	};
+public:
+	static constexpr int value = arrayDimensions<Type>::value;
+};
+
 } // NS Ryper
 
 
@@ -126,6 +152,12 @@ struct Derived : public Base {};
 using namespace Ryper;
 int main()
 {
+	std::cout << "ArrayDimensions test:" << std::endl;
+	std::cout << "int[] => " << ArrayDimensions<int[]>::value << std::endl;
+	std::cout << "int[2][3] => " << ArrayDimensions<int[2][3]>::value << std::endl;
+	std::cout << "int[3][6][19][20] => " << ArrayDimensions<int[3][6][19][20]>::value << std::endl;
+	//std::cout << "int[3][6][19][20] => " << NameOfType<RemoveAllExtents<int[3][6][19][20]>::type>::get() << std::endl;
+	std::cout << std::endl << "--------------------------" << std::endl;
 	std::cout << "RemoveALLExtent test:" << std::endl;
 	std::cout << "int[2][3] => " << NameOfType<RemoveAllExtents<int[2][3]>::type>::get () << std::endl;
 	std::cout << "int[3][6][19][20] => " << NameOfType<RemoveAllExtents<int[3][6][19][20]>::type>::get() << std::endl;
