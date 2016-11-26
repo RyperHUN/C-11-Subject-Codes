@@ -26,7 +26,6 @@ public:
 
 
 //IsFunction<T>::value: függvény - e, pl. int(bool) függvény, mert int f(bool);
-
 template <typename FUNCTION>
 struct IsFunction {
 	template <typename FUNC>
@@ -49,6 +48,25 @@ struct IsFunction {
 	static constexpr bool value = isFunction<FUNCTION>::value;
 };
 
+template <typename Type>
+class IsArray {
+private:
+	template <typename FUNC>
+	struct isArray;
+
+	template <typename RET>
+	struct isArray<RET[]> {
+		static constexpr bool value = true;
+	};
+
+	template <typename RET>
+	struct isArray {
+		static constexpr bool value = false;
+	};
+public:
+	static constexpr bool value = isArray<Type>::value;
+};
+
 
 
 } // NS Ryper
@@ -61,9 +79,15 @@ struct Derived : public Base {};
 using namespace Ryper;
 int main()
 {
+	std::cout << "IsArray test:" << std::endl;
+	std::cout << "int "  << IsArray<int>::value << std::endl;
+	std::cout << "int[] "<< IsArray<int[]>::value << std::endl;
+	std::cout << "int* " << IsArray<int*>::value << std::endl;
+	//std::cout << IsArray<int[][]>::value << std::endl; // Not works :(
+	std::cout << std::endl << "--------------------------" << std::endl;
 	std::cout << "IsFunction test:" << std::endl;
-	std::cout << IsFunction<int>::value <<std::endl;
-	std::cout << IsFunction<int()>::value << std::endl;
+	std::cout << "int test: " << IsFunction<int>::value <<std::endl;
+	std::cout << "int () test: " << IsFunction<int()>::value << std::endl;
 	std::cout << std::endl << "--------------------------" << std::endl;
 	std::cout << "IsSame test:" << std::endl;
 	std::cout << "int == double " << IsSame<int,double>::value << std::endl;
