@@ -61,8 +61,8 @@ private:
 		static constexpr bool value = true;
 	};
 
-	template <typename RET>
-	struct isArray<RET*[]> {
+	template <typename RET, size_t SIZE>
+	struct isArray<RET[SIZE]> {
 		static constexpr bool value = true;
 	};
 
