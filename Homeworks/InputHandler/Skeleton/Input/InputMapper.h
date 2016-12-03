@@ -33,7 +33,7 @@ namespace InputMapping
 		// Consumption helpers
 		void EatAction(InputMapping::Action action) { Action.erase(action); }
 		void EatState(InputMapping::State state) { State.erase(state); }
-		void EatRange(Range /*range*/) {;}
+		void EatRange(Range /*range*/) {;} ///I think it is not neccesary
 		//{
 		//	std::map<Range, double>::iterator iter = Ranges.find(range);
 		//	if (iter != Ranges.end())

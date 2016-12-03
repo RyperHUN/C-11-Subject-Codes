@@ -77,27 +77,29 @@ public:
 			auto const& gamepad = gamepads[i];
 			auto const& mapper  = gamepadHandlers[i];
 			
-			if (gamepad->Connected()) ///TODO Handle not connected state
+			///TODO Better not conected gamepad handler
+			if (gamepad->Connected()) {
 				gamepad->Update();
 
-			// The i equals the XButtonIDs, and the Enums values
-			for (size_t i = 0; i < gamepad->ButtonCount; i++)
-			{
-				if (gamepad->bGamepad_ButtonsDown[i])
-					mapper->PressRawButton(static_cast<RawGamePadInput> (i));
-				if (gamepad->bGamepad_ButtonsReleased[i])
-					mapper->ReleaseRawButton(static_cast<RawGamePadInput> (i));
-			}
-			//Assign axises
-			mapper->SetRawAxisValue(InputMapping::RawGamePadInput::L_ThumbAxisX, gamepad->LeftStick_X());
-			mapper->SetRawAxisValue(InputMapping::RawGamePadInput::L_ThumbAxisY, gamepad->LeftStick_Y());
-			mapper->SetRawAxisValue(InputMapping::RawGamePadInput::R_ThumbAxisX, gamepad->RightStick_Y());
-			mapper->SetRawAxisValue(InputMapping::RawGamePadInput::R_ThumbAxisY, gamepad->RightStick_Y());
-			mapper->SetRawAxisValue(InputMapping::RawGamePadInput::R_TriggerAxis, gamepad->RightTrigger());
-			mapper->SetRawAxisValue(InputMapping::RawGamePadInput::L_TriggerAxis, gamepad->LeftTrigger());
+				// The i equals the XButtonIDs, and the Enums values
+				for (size_t i = 0; i < gamepad->ButtonCount; i++)
+				{
+					if (gamepad->bGamepad_ButtonsDown[i])
+						mapper->PressRawButton(static_cast<RawGamePadInput> (i));
+					if (gamepad->bGamepad_ButtonsReleased[i])
+						mapper->ReleaseRawButton(static_cast<RawGamePadInput> (i));
+				}
+				//Assign axises
+				mapper->SetRawAxisValue(InputMapping::RawGamePadInput::L_ThumbAxisX, gamepad->LeftStick_X());
+				mapper->SetRawAxisValue(InputMapping::RawGamePadInput::L_ThumbAxisY, gamepad->LeftStick_Y());
+				mapper->SetRawAxisValue(InputMapping::RawGamePadInput::R_ThumbAxisX, gamepad->RightStick_Y());
+				mapper->SetRawAxisValue(InputMapping::RawGamePadInput::R_ThumbAxisY, gamepad->RightStick_Y());
+				mapper->SetRawAxisValue(InputMapping::RawGamePadInput::R_TriggerAxis, gamepad->RightTrigger());
+				mapper->SetRawAxisValue(InputMapping::RawGamePadInput::L_TriggerAxis, gamepad->LeftTrigger());
 
-			mapper->FireCallbacks();
-			mapper->Clear();
+				mapper->FireCallbacks();
+				mapper->Clear();
+			}
 		}
 	}
 private:

@@ -22,6 +22,15 @@
     <Filter Include="Input">
       <UniqueIdentifier>{4168c68b-5aeb-4e02-879c-e326e23ce43d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{298d8d41-cd23-4f25-8315-0c1a88982c8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\PugXMl">
+      <UniqueIdentifier>{57ba8b37-feb7-48c4-8c08-27ba7898d7d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\GamePad">
+      <UniqueIdentifier>{ca1b5992-2812-4bc5-823e-277500a63750}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -36,17 +45,17 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdParty\pugixml.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Input\GamePad.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
     <ClCompile Include="Input\InputMapper.cpp">
       <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="Input\InputContext.cpp">
       <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\pugixml.cpp">
+      <Filter>ThirdParty\PugXMl</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\GamePad.cpp">
+      <Filter>Input\GamePad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,17 +65,11 @@
     <ClInclude Include="Shader.h">
       <Filter>Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="ErrorHandler.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="vectormath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RenderState.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\GamePad.h">
-      <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="InputHandler.h">
       <Filter>Input</Filter>
@@ -77,14 +80,17 @@
     <ClInclude Include="Input\InputContext.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="FileIO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Input\Serializers.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="Input\InputMappingSerializer.h">
+    <ClInclude Include="FileIO.h">
       <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\GamePad.h">
+      <Filter>Input\GamePad</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorHandler.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

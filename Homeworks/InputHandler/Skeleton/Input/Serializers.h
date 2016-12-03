@@ -35,4 +35,32 @@ static void mapWriter(std::map<InputType, ActionType> map, std::ofstream& file)
 	}
 }
 
+void pugXmlTest()
+{
+	pugi::xml_document doc;
+
+	pugi::xml_parse_result result = doc.load_file("cd_catalog.xml");
+
+	std::cout << "Load result: " << result.description() << std::endl;
+
+	for (auto catalog : doc.children("CATALOG"))
+	{
+		for (auto cd : catalog.children("CD"))
+		{
+			std::cout << "CD - ";
+
+			for (auto attr : cd.attributes())
+			{
+				std::cout << " " << attr.name() << "=" << attr.value();
+			}
+
+			for (pugi::xml_node child : cd.children())
+			{
+				std::cout << ", child " << child.name() << "val=" << child.first_child().value();
+			}
+			std::cout << std::endl;
+		}
+	}
+}
+
 } //NS InputMapp

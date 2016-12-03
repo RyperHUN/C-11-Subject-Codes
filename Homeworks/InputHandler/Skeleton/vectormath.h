@@ -148,12 +148,11 @@ public:
 			throw "hibas lekeres"; // Ezt esetleg kivenni
 		}
 		else
-			glUniformMatrix4fv(location, 1, GL_TRUE, *this); ///TODO False vagy true kell??
+			glUniformMatrix4fv(location, 1, GL_TRUE, *this);
 	}
 };
 
 // 3D point in homogeneous coordinates
-///TODO atnezni talan nem jo
 class vec4 {
 public:
 	float v[4];

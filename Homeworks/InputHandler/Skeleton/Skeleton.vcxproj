@@ -94,7 +94,6 @@
     <ClInclude Include="Input\GamePad.h" />
     <ClInclude Include="Input\InputContext.h" />
     <ClInclude Include="Input\InputMapper.h" />
-    <ClInclude Include="Input\InputMappingSerializer.h" />
     <ClInclude Include="Input\Serializers.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderState.h" />
