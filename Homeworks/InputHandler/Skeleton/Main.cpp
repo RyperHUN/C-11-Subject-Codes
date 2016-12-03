@@ -29,6 +29,7 @@ int majorVersion = 3, minorVersion = 0;
 #include "Input/GamePad.h"
 
 InputMapping::GamepadInputHandler* gamepadHandler;
+ColorableShader* colorableShader;
 
 GameObject::Rectangle rect;
 GameObject::Rectangle rect2;
@@ -38,10 +39,7 @@ void onInitialization() {
 	glViewport(0, 0, windowWidth, windowHeight);
 	oldTimeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 
-
-	//Shader * shader = new Shader (); ///TODO leak
-	//shader->createShader ();
-	ColorableShader* colorableShader = new ColorableShader (); ///TODO leak
+	colorableShader = new ColorableShader();
 
 	rect.setShader (colorableShader);
 	rect.loadToGpu ();
@@ -51,7 +49,6 @@ void onInitialization() {
 	rect2.loadToGpu();
 	rect2.color = vec3(0, 1, 0);
 
-	//pugXmlTest ();
 	gamepadHandler = new InputMapping::GamepadInputHandler (2);
 	
 	auto bindedFv = std::bind(&GameObject::Rectangle::HandleInput, &rect, std::placeholders::_1);
@@ -66,6 +63,7 @@ void onInitialization() {
 void onExit() {
 	printf("exit");
 	delete gamepadHandler;
+	delete colorableShader;
 }
 
 // Window has become invalid: Redraw
