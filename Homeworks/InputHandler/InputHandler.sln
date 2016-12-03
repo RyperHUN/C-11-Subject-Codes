@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InputHandler", "Skeleton\Skeleton.vcxproj", "{8B83E48F-726D-48E2-93F3-06B9AEE4BF72}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnumCodeGen", "EnumCodeGen\EnumCodeGen.vcxproj", "{2115A18D-3215-46CB-B35C-9C99295BD241}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnumCodeGen", "OtherProjects\EnumCodeGen\EnumCodeGen.vcxproj", "{2115A18D-3215-46CB-B35C-9C99295BD241}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XBOXControllerInputTest", "XBOXControllerInputTest\XBOXControllerInputTest.vcxproj", "{AFA04728-AE36-4AA0-A486-2117AF7F6586}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XBOXControllerInputTest", "OtherProjects\XBOXControllerInputTest\XBOXControllerInputTest.vcxproj", "{AFA04728-AE36-4AA0-A486-2117AF7F6586}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

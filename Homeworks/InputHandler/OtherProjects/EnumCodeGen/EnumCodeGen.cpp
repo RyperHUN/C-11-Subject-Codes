@@ -176,7 +176,7 @@ int main()
 	EnumCreator creatorRaw {RawInputButton, RawGamePadInput};
 	//Or creator.AddEnumType ()
 
-	creatorRaw.createFile ("../Skeleton/Input/RawInputConstants.h");
+	creatorRaw.createFile ("../../Skeleton/Input/RawInputConstants.h");
 
 	EnumCreator::EnumType Actions("Action");
 	Actions.AddEnumString ("Teleport");
