@@ -13,8 +13,11 @@ namespace GameObject {
 
 	class Rectangle : Gameobject{
 	public:
+		vec3 color;
 		Rectangle ()
-			: pos (0, 0, 0), sprint (false)
+			: pos (0, 0, 0), 
+			  sprint (false),
+			  color(1,0,0)
 		{
 		}
 		void setShader (Shader * shader) { this->shader = shader; }
@@ -45,6 +48,7 @@ namespace GameObject {
 		{
 			RenderState state;
 			state.M = Scale (0.06f, 0.06f, 0.06f) * Translate (pos.x, pos.y, pos.z);
+			state.color = color;
 			shader->Bind (state);
 			// 1rst attribute buffer : vertices
 			glEnableVertexAttribArray(0);

@@ -40,6 +40,9 @@
     <None Include="SimpleFragmentShader.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="ColorableFragmentShader.glsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

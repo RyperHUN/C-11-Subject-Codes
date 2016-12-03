@@ -24,13 +24,13 @@ public:
 		return location;
 	}
 	///TODO Arguments Shader name
-	void createShader()
+	void createShader(const char* vertexShaderName, const char* fragmentShaderName)
 	{
 		unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 		if (!vertexShader) {
 			printf("Error in vertex shader creation\n");
 		}
-		std::string vertexShaderCode = Shader::loadShader ("SimpleVertexShader.glsl");
+		std::string vertexShaderCode = Shader::loadShader (vertexShaderName);
 		char const * vertexShaderCodePtr = vertexShaderCode.c_str();
 		glShaderSource(vertexShader, 1, &vertexShaderCodePtr, NULL);
 		glCompileShader(vertexShader);
@@ -42,7 +42,7 @@ public:
 			printf("Error in fragment shader creation\n");
 			exit(1);
 		}
-		std::string fragmentShaderCode = Shader::loadShader("SimpleFragmentShader.glsl");
+		std::string fragmentShaderCode = Shader::loadShader(fragmentShaderName);
 		char const * fragmentShaderCodePtr = fragmentShaderCode.c_str();
 		glShaderSource(fragmentShader, 1, &fragmentShaderCodePtr, NULL);
 		glCompileShader(fragmentShader);
@@ -123,6 +123,23 @@ private:
 			return 0;
 		}
 		return shaderCode;
+	}
+};
+
+class ColorableShader : public Shader {
+public:
+	ColorableShader() 
+	{
+		createShader ("SimpleVertexShader.glsl", "ColorableFragmentShader.glsl");
+	}
+	virtual void Bind(RenderState& state) {
+		///TODO
+		glUseProgram(shaderProgram);
+		mat4 MVP = state.M;
+		MVP.SetUniform(shaderProgram, "MVP");
+
+		int location = getUniform("customColor");
+		glUniform3f(location, state.color.x, state.color.y, state.color.z);
 	}
 };
 

@@ -4,6 +4,7 @@
 
 struct RenderState {
 	mat4 M;
+	vec3 color;
 	//mat4 V, P, Minv;
 	//Material* material;
 	//Texture* texture;

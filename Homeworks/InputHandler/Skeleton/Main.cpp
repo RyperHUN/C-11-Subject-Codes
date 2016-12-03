@@ -31,6 +31,7 @@ int majorVersion = 3, minorVersion = 0;
 InputMapping::GamepadInputHandler* gamepadHandler;
 
 GameObject::Rectangle rect;
+GameObject::Rectangle rect2;
 // Initialization, create an OpenGL context
 long oldTimeSinceStart;
 void onInitialization() {
@@ -38,17 +39,25 @@ void onInitialization() {
 	oldTimeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 
 
-	Shader * shader = new Shader ();
-	shader->createShader ();
+	//Shader * shader = new Shader (); ///TODO leak
+	//shader->createShader ();
+	ColorableShader* colorableShader = new ColorableShader (); ///TODO leak
 
-	rect.setShader (shader);
+	rect.setShader (colorableShader);
 	rect.loadToGpu ();
+	rect.color = vec3(0,0,1);
+
+	rect2.setShader(colorableShader);
+	rect2.loadToGpu();
+	rect2.color = vec3(0, 1, 0);
 
 	//pugXmlTest ();
-	gamepadHandler = new InputMapping::GamepadInputHandler (1);
+	gamepadHandler = new InputMapping::GamepadInputHandler (2);
 	
 	auto bindedFv = std::bind(&GameObject::Rectangle::HandleInput, &rect, std::placeholders::_1);
-	gamepadHandler->AddCallbackAll (bindedFv);
+	gamepadHandler->AddCallback (bindedFv, 0);
+	auto bindedFv1 = std::bind(&GameObject::Rectangle::HandleInput, &rect2, std::placeholders::_1);
+	gamepadHandler->AddCallback (bindedFv1, 1);
 }
 
 
@@ -65,6 +74,7 @@ void onDisplay() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the screen
 
 	rect.Draw ();
+	rect2.Draw ();
 
 	glutSwapBuffers();									// exchange the two buffers
 }
@@ -101,6 +111,7 @@ void onIdle() {
 
 	gamepadHandler->UpdateGamepads ();
 	rect.update (deltaSec);
+	rect2.update(deltaSec);
 	glutPostRedisplay();					// redraw the scene
 }
 
