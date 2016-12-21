@@ -13,15 +13,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4_DeclType", "Projects\4_De
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5_MergeSort", "Projects\5_MergeSort\5_MergeSort.vcxproj", "{68EF6D6B-CAA2-4854-BABC-5741A9B5A168}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "6_LambdaHanoi", "6_LambdaHanoi\6_LambdaHanoi.vcxproj", "{46829DDC-D605-41F5-A582-414A8A138859}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "6_LambdaHanoi", "Projects\6_LambdaHanoi\6_LambdaHanoi.vcxproj", "{46829DDC-D605-41F5-A582-414A8A138859}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "8_MetaProgrammingPrint", "8_MetaProgrammingPrint\8_MetaProgrammingPrint.vcxproj", "{9480073C-1AC5-4598-9BB8-8AC62AF9D5F3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "8_MetaProgrammingPrint", "Projects\8_MetaProgrammingPrint\8_MetaProgrammingPrint.vcxproj", "{9480073C-1AC5-4598-9BB8-8AC62AF9D5F3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "9_StdRef", "9_StdRef\9_StdRef.vcxproj", "{A34E0DA6-1FB3-4CE8-A35E-71E0C23576C9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "9_StdRef", "Projects\9_StdRef\9_StdRef.vcxproj", "{A34E0DA6-1FB3-4CE8-A35E-71E0C23576C9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_StdFunction", "10_StdFunction\10_StdFunction.vcxproj", "{AD5ECEB4-FE53-4F6D-AE13-03307231E8E7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_StdFunction", "Projects\10_StdFunction\10_StdFunction.vcxproj", "{AD5ECEB4-FE53-4F6D-AE13-03307231E8E7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11_TypeTraitCompetition", "11_TypeTraitCompetition\11_TypeTraitCompetition.vcxproj", "{815D5B85-9D26-4560-9565-4999131FD87E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11_TypeTraitCompetition", "Projects\11_TypeTraitCompetition\11_TypeTraitCompetition.vcxproj", "{815D5B85-9D26-4560-9565-4999131FD87E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
