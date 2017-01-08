@@ -113,6 +113,7 @@ void onIdle() {
 	glutPostRedisplay();					// redraw the scene
 }
 
+#undef main
 int main(int argc, char * argv[]) {
 	glutInit(&argc, argv);
 

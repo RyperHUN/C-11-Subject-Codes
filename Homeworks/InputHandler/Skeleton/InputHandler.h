@@ -12,10 +12,12 @@
 #include "Input/InputMapper.h"
 #include "Input/InputContext.h"
 #include "Input/Serializers.h"
+#include "Input/Keyboard.h"
+#include <SDL2/SDL_scancode.h>
 
 namespace InputMapping {
 
-static void createContextFromCode() {
+static void createGamepadContextFromCode() {
 	ContextCreator<RawGamePadInput>
 		("ContextMainGamepad.txt",
 		{ // Ranges
@@ -30,7 +32,69 @@ static void createContextFromCode() {
 		});
 }
 
-class Keyboard; ///TODO
+static void createKeyboardContextFromCode() {
+	ContextCreator<SDL_Keyboard::KeyType>
+		("ContextMainKeyboard.txt",
+		{ // Ranges
+			std::make_pair(SDL_SCANCODE_RIGHT, Range::MoveX),
+			std::make_pair(SDL_SCANCODE_UP, Range::MoveY)
+		},
+		{ // States
+			std::make_pair(SDL_SCANCODE_LSHIFT, State::Sprint)
+		},
+		{ // Actions
+			std::make_pair(SDL_SCANCODE_SPACE, Action::Teleport)
+		});
+}
+
+
+
+class KeyboardInputHandler {
+	KeyboardInputHandler(KeyboardInputHandler &) = delete;
+	KeyboardInputHandler(KeyboardInputHandler &&) = delete;
+
+	KeyboardInputHandler()
+	{
+		createKeyboardContextFromCode();
+
+		keyboardHandler = InputMapperPtr(new InputMapperType("ContextGamepad.txt"));
+		keyboardHandler->PushContext("maincontext");
+	}
+
+	void AddCallback(std::function<void(MappedInput&)> callback)
+	{
+		keyboardHandler->AddCallback(callback, 0);
+	}
+
+	void UpdateKeyboard()
+	{
+		auto const& mapper = keyboardHandler;
+
+		keyboard->Update();
+
+		// The i equals the XButtonIDs, and the Enums values
+		for (size_t i = 0; i < keyboard->ButtonCount; i++)
+		{
+			if (keyboard->bGamepad_ButtonsDown[i])
+				mapper->PressRawButton(static_cast<SDL_Keyboard::KeyType> (i));
+			if (keyboard->bGamepad_ButtonsReleased[i])
+				mapper->ReleaseRawButton(static_cast<SDL_Keyboard::KeyType> (i));
+		}
+		//Assign axises
+		mapper->SetRawAxisValue(SDL_Keyboard::KeyType::SDL_SCANCODE_RIGHT, keyboard->ArrowRight ());
+		mapper->SetRawAxisValue(SDL_Keyboard::KeyType::SDL_SCANCODE_UP, keyboard->ArrowUp());
+
+		mapper->FireCallbacks();
+		mapper->Clear();
+	}
+private:
+	using InputMapperType = InputMapper<SDL_Keyboard::KeyType>;
+	using InputMapperPtr = std::unique_ptr<InputMapperType>;
+	InputMapperPtr keyboardHandler;
+
+	using KeyboardPtr = std::unique_ptr<SDL_Keyboard>;
+	KeyboardPtr keyboard;
+};
 
 class GamepadInputHandler {
 public:
@@ -40,7 +104,7 @@ public:
 
 	GamepadInputHandler (size_t numberOfControllers )
 	{
-		createContextFromCode();
+		createGamepadContextFromCode();
 		gamepadHandlers.reserve (numberOfControllers);
 		gamepads.reserve (numberOfControllers);
 		for (size_t i = 0; i < numberOfControllers; i++)
