@@ -50,6 +50,7 @@ static void createKeyboardContextFromCode() {
 
 
 class KeyboardInputHandler {
+public:
 	KeyboardInputHandler(KeyboardInputHandler &) = delete;
 	KeyboardInputHandler(KeyboardInputHandler &&) = delete;
 
@@ -59,6 +60,7 @@ class KeyboardInputHandler {
 
 		keyboardHandler = InputMapperPtr(new InputMapperType("ContextGamepad.txt"));
 		keyboardHandler->PushContext("maincontext");
+		keyboard = KeyboardPtr(new SDL_Keyboard ());
 	}
 
 	void AddCallback(std::function<void(MappedInput&)> callback)

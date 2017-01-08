@@ -1,9 +1,11 @@
 #include "InputContext.h"
+#include <SDL2/SDL_scancode.h>
 
 namespace InputMapping {
 
 template class InputContext<RawInputComputer>;
 template class InputContext<RawGamePadInput>;
+template class InputContext<SDL_Scancode>;
 
 
 template <typename InputType>

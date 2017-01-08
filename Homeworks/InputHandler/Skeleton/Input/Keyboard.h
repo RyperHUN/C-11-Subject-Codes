@@ -46,7 +46,7 @@ public:
 		return m_State[SDL_SCANCODE_UP] - m_State[SDL_SCANCODE_DOWN];
 	}
 private:
-	const Uint8 *m_State = SDL_GetKeyboardState(NULL);
+	const Uint8 *m_State;
 	static const size_t ButtonCount = SDL_SCANCODE_APP2;    // Total gamepad buttons
 	bool bPrev_ButtonStates[ButtonCount]; // Previous frame button states
 	bool bButtonStates[ButtonCount];      // Current frame button states

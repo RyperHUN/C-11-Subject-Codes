@@ -28,7 +28,8 @@ int majorVersion = 3, minorVersion = 0;
 
 #include "Input/GamePad.h"
 
-InputMapping::GamepadInputHandler* gamepadHandler;
+InputMapping::GamepadInputHandler*	gamepadHandler;
+InputMapping::KeyboardInputHandler* keyboardHandler;
 ColorableShader* colorableShader;
 
 GameObject::Rectangle rect;
@@ -49,12 +50,14 @@ void onInitialization() {
 	rect2.loadToGpu();
 	rect2.color = vec3(0, 1, 0);
 
+	keyboardHandler = new InputMapping::KeyboardInputHandler ();
 	gamepadHandler = new InputMapping::GamepadInputHandler (2);
 	
 	auto bindedFv = std::bind(&GameObject::Rectangle::HandleInput, &rect, std::placeholders::_1);
 	gamepadHandler->AddCallback (bindedFv, 0);
 	auto bindedFv1 = std::bind(&GameObject::Rectangle::HandleInput, &rect2, std::placeholders::_1);
 	gamepadHandler->AddCallback (bindedFv1, 1);
+	keyboardHandler->AddCallback (bindedFv);
 }
 
 
@@ -108,6 +111,7 @@ void onIdle() {
 	oldTimeSinceStart = timeSinceStart;
 
 	gamepadHandler->UpdateGamepads ();
+	keyboardHandler->UpdateKeyboard ();
 	rect.update (deltaSec);
 	rect2.update(deltaSec);
 	glutPostRedisplay();					// redraw the scene

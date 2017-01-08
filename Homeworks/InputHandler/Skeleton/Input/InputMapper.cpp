@@ -4,11 +4,13 @@
 #include "../FileIO.h"
 #include <fstream>
 #include "InputContext.h"
+#include <SDL2/SDL_scancode.h>
 
 namespace InputMapping {
 
 template class InputMapper<RawInputComputer>;
 template class InputMapper<RawGamePadInput>;
+template class InputMapper<SDL_Scancode>;
 
 template <typename InputType>
 InputMapper<InputType>::InputMapper(std::string contextsFile)
