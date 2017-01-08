@@ -39,8 +39,8 @@ public:
 		std::ofstream file (fileName);
 		prepareHeader (file);
 		writeEnums (file);
-		WriteStringToEnum (file);
-		WriteEnumToString (file);
+		//WriteStringToEnum (file);
+		//WriteEnumToString (file);
 		finishHeader (file);
 	}
 private:
@@ -190,7 +190,7 @@ int main()
 
 	EnumCreator creatorHighLevel {Actions, Axises, States};
 
-	creatorHighLevel.createFile ("../Skeleton/Input/HighLevelInputConstants.h");
+	creatorHighLevel.createFile ("../../Skeleton/Input/HighLevelInputConstants.h");
 
     return 0;
 }
