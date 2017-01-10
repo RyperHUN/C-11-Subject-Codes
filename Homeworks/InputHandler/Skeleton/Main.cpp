@@ -19,7 +19,7 @@
 
 #include "Shader.h"
 #include "Rectangle.h"
-#include "InputHandler.h"
+#include "Input/InputHandler.h"
 
 const unsigned int windowWidth = 600, windowHeight = 600;
 
