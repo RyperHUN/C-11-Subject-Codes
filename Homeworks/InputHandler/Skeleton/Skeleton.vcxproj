@@ -91,9 +91,9 @@
   <ItemGroup>
     <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="FileIO.h" />
-    <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Input\GamePad.h" />
     <ClInclude Include="Input\InputContext.h" />
+    <ClInclude Include="Input\InputHandler.h" />
     <ClInclude Include="Input\InputMapper.h" />
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\Serializers.h" />

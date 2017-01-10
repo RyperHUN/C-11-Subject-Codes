@@ -58,7 +58,7 @@ public:
 	{
 		createKeyboardContextFromCode();
 
-		keyboardHandler = InputMapperPtr(new InputMapperType("ContextGamepad.txt"));
+		keyboardHandler = InputMapperPtr(new InputMapperType("ContextKeyboard.txt"));
 		keyboardHandler->PushContext("maincontext");
 		keyboard = KeyboardPtr(new SDL_Keyboard ());
 	}

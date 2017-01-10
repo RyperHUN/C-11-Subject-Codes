@@ -111,7 +111,7 @@ void onIdle() {
 	oldTimeSinceStart = timeSinceStart;
 
 	gamepadHandler->UpdateGamepads ();
-	keyboardHandler->UpdateKeyboard ();
+	//keyboardHandler->UpdateKeyboard ();
 	rect.update (deltaSec);
 	rect2.update(deltaSec);
 	glutPostRedisplay();					// redraw the scene

@@ -74,9 +74,6 @@
     <ClInclude Include="RenderState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Input</Filter>
-    </ClInclude>
     <ClInclude Include="Input\InputMapper.h">
       <Filter>Input</Filter>
     </ClInclude>
@@ -96,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Input\Keyboard.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputHandler.h">
       <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>
